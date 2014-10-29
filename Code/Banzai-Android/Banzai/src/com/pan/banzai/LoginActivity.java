@@ -1,11 +1,14 @@
 package com.pan.banzai;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 
 public class LoginActivity extends Activity {
 
@@ -18,16 +21,21 @@ public class LoginActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.dashboard, menu);
+		//getMenuInflater().inflate(R.menu.dashboard, menu);
+		
+		final Context context = this;
 		
 		Button button = (Button) findViewById(R.id.button1);
 		button.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				setContentView(R.layout.activity_dashboard);
+				Intent intent = new Intent(context, Dashboard.class);
+				startActivity(intent);
 			}			
 		});
 				
+	    EditText e1=(EditText) findViewById(R.id.editText1);
+		e1.requestFocus();
 		
 		return true;
 	}
