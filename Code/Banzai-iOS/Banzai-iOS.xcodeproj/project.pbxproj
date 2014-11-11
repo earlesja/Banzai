@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A7CBD0F1A114665002D2FCE /* SignInController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7CBD0E1A114665002D2FCE /* SignInController.swift */; };
+		0A7CBD111A123823002D2FCE /* DashboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7CBD101A123823002D2FCE /* DashboardController.swift */; };
+		0A7CBD131A1239C7002D2FCE /* SideMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7CBD121A1239C7002D2FCE /* SideMenuController.swift */; };
 		0AA4EDA019F805890064B29A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA4ED9F19F805890064B29A /* AppDelegate.swift */; };
-		0AA4EDA219F805890064B29A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA4EDA119F805890064B29A /* ViewController.swift */; };
 		0AA4EDA519F805890064B29A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AA4EDA319F805890064B29A /* Main.storyboard */; };
 		0AA4EDA719F805890064B29A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0AA4EDA619F805890064B29A /* Images.xcassets */; };
-		0AA4EDAA19F805890064B29A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0AA4EDA819F805890064B29A /* LaunchScreen.xib */; };
 		0AA4EDB619F805890064B29A /* Bonzai_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA4EDB519F805890064B29A /* Bonzai_iOSTests.swift */; };
-		0AA4EDC619F80EDA0064B29A /* LoginError.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AA4EDC519F80EDA0064B29A /* LoginError.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,17 +27,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0AA4ED9A19F805890064B29A /* Bonzai-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bonzai-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0A7CBD0E1A114665002D2FCE /* SignInController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInController.swift; sourceTree = "<group>"; };
+		0A7CBD101A123823002D2FCE /* DashboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardController.swift; sourceTree = "<group>"; };
+		0A7CBD121A1239C7002D2FCE /* SideMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuController.swift; sourceTree = "<group>"; };
+		0AA4ED9A19F805890064B29A /* Banzai-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Banzai-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AA4ED9E19F805890064B29A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0AA4ED9F19F805890064B29A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		0AA4EDA119F805890064B29A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		0AA4EDA419F805890064B29A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0AA4EDA619F805890064B29A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		0AA4EDA919F805890064B29A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		0AA4EDAF19F805890064B29A /* Bonzai-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Bonzai-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0AA4EDAF19F805890064B29A /* Banzai-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Banzai-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AA4EDB419F805890064B29A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0AA4EDB519F805890064B29A /* Bonzai_iOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bonzai_iOSTests.swift; sourceTree = "<group>"; };
-		0AA4EDC519F80EDA0064B29A /* LoginError.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LoginError.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,8 +70,8 @@
 		0AA4ED9B19F805890064B29A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0AA4ED9A19F805890064B29A /* Bonzai-iOS.app */,
-				0AA4EDAF19F805890064B29A /* Bonzai-iOSTests.xctest */,
+				0AA4ED9A19F805890064B29A /* Banzai-iOS.app */,
+				0AA4EDAF19F805890064B29A /* Banzai-iOSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -80,12 +80,12 @@
 			isa = PBXGroup;
 			children = (
 				0AA4ED9F19F805890064B29A /* AppDelegate.swift */,
-				0AA4EDA119F805890064B29A /* ViewController.swift */,
 				0AA4EDA319F805890064B29A /* Main.storyboard */,
 				0AA4EDA619F805890064B29A /* Images.xcassets */,
-				0AA4EDA819F805890064B29A /* LaunchScreen.xib */,
 				0AA4ED9D19F805890064B29A /* Supporting Files */,
-				0AA4EDC519F80EDA0064B29A /* LoginError.storyboard */,
+				0A7CBD0E1A114665002D2FCE /* SignInController.swift */,
+				0A7CBD101A123823002D2FCE /* DashboardController.swift */,
+				0A7CBD121A1239C7002D2FCE /* SideMenuController.swift */,
 			);
 			path = "Bonzai-iOS";
 			sourceTree = "<group>";
@@ -118,9 +118,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		0AA4ED9919F805890064B29A /* Bonzai-iOS */ = {
+		0AA4ED9919F805890064B29A /* Banzai-iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0AA4EDB919F805890064B29A /* Build configuration list for PBXNativeTarget "Bonzai-iOS" */;
+			buildConfigurationList = 0AA4EDB919F805890064B29A /* Build configuration list for PBXNativeTarget "Banzai-iOS" */;
 			buildPhases = (
 				0AA4ED9619F805890064B29A /* Sources */,
 				0AA4ED9719F805890064B29A /* Frameworks */,
@@ -130,14 +130,14 @@
 			);
 			dependencies = (
 			);
-			name = "Bonzai-iOS";
+			name = "Banzai-iOS";
 			productName = "Bonzai-iOS";
-			productReference = 0AA4ED9A19F805890064B29A /* Bonzai-iOS.app */;
+			productReference = 0AA4ED9A19F805890064B29A /* Banzai-iOS.app */;
 			productType = "com.apple.product-type.application";
 		};
-		0AA4EDAE19F805890064B29A /* Bonzai-iOSTests */ = {
+		0AA4EDAE19F805890064B29A /* Banzai-iOSTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0AA4EDBC19F805890064B29A /* Build configuration list for PBXNativeTarget "Bonzai-iOSTests" */;
+			buildConfigurationList = 0AA4EDBC19F805890064B29A /* Build configuration list for PBXNativeTarget "Banzai-iOSTests" */;
 			buildPhases = (
 				0AA4EDAB19F805890064B29A /* Sources */,
 				0AA4EDAC19F805890064B29A /* Frameworks */,
@@ -148,9 +148,9 @@
 			dependencies = (
 				0AA4EDB119F805890064B29A /* PBXTargetDependency */,
 			);
-			name = "Bonzai-iOSTests";
+			name = "Banzai-iOSTests";
 			productName = "Bonzai-iOSTests";
-			productReference = 0AA4EDAF19F805890064B29A /* Bonzai-iOSTests.xctest */;
+			productReference = 0AA4EDAF19F805890064B29A /* Banzai-iOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -171,7 +171,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 0AA4ED9519F805890064B29A /* Build configuration list for PBXProject "Bonzai-iOS" */;
+			buildConfigurationList = 0AA4ED9519F805890064B29A /* Build configuration list for PBXProject "Banzai-iOS" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -184,8 +184,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				0AA4ED9919F805890064B29A /* Bonzai-iOS */,
-				0AA4EDAE19F805890064B29A /* Bonzai-iOSTests */,
+				0AA4ED9919F805890064B29A /* Banzai-iOS */,
+				0AA4EDAE19F805890064B29A /* Banzai-iOSTests */,
 			);
 		};
 /* End PBXProject section */
@@ -196,9 +196,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0AA4EDA519F805890064B29A /* Main.storyboard in Resources */,
-				0AA4EDAA19F805890064B29A /* LaunchScreen.xib in Resources */,
 				0AA4EDA719F805890064B29A /* Images.xcassets in Resources */,
-				0AA4EDC619F80EDA0064B29A /* LoginError.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,8 +214,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0AA4EDA219F805890064B29A /* ViewController.swift in Sources */,
 				0AA4EDA019F805890064B29A /* AppDelegate.swift in Sources */,
+				0A7CBD131A1239C7002D2FCE /* SideMenuController.swift in Sources */,
+				0A7CBD111A123823002D2FCE /* DashboardController.swift in Sources */,
+				0A7CBD0F1A114665002D2FCE /* SignInController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -234,7 +234,7 @@
 /* Begin PBXTargetDependency section */
 		0AA4EDB119F805890064B29A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 0AA4ED9919F805890064B29A /* Bonzai-iOS */;
+			target = 0AA4ED9919F805890064B29A /* Banzai-iOS */;
 			targetProxy = 0AA4EDB019F805890064B29A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -246,14 +246,6 @@
 				0AA4EDA419F805890064B29A /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		0AA4EDA819F805890064B29A /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				0AA4EDA919F805890064B29A /* Base */,
-			);
-			name = LaunchScreen.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -344,7 +336,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "Bonzai-iOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Banzai-iOS";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -354,7 +347,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "Bonzai-iOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Banzai-iOS";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -372,7 +366,7 @@
 				);
 				INFOPLIST_FILE = "Bonzai-iOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Banzai-iOSTests";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bonzai-iOS.app/Bonzai-iOS";
 			};
 			name = Debug;
@@ -387,7 +381,7 @@
 				);
 				INFOPLIST_FILE = "Bonzai-iOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Banzai-iOSTests";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bonzai-iOS.app/Bonzai-iOS";
 			};
 			name = Release;
@@ -395,7 +389,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0AA4ED9519F805890064B29A /* Build configuration list for PBXProject "Bonzai-iOS" */ = {
+		0AA4ED9519F805890064B29A /* Build configuration list for PBXProject "Banzai-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0AA4EDB719F805890064B29A /* Debug */,
@@ -404,21 +398,23 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0AA4EDB919F805890064B29A /* Build configuration list for PBXNativeTarget "Bonzai-iOS" */ = {
+		0AA4EDB919F805890064B29A /* Build configuration list for PBXNativeTarget "Banzai-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0AA4EDBA19F805890064B29A /* Debug */,
 				0AA4EDBB19F805890064B29A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
-		0AA4EDBC19F805890064B29A /* Build configuration list for PBXNativeTarget "Bonzai-iOSTests" */ = {
+		0AA4EDBC19F805890064B29A /* Build configuration list for PBXNativeTarget "Banzai-iOSTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0AA4EDBD19F805890064B29A /* Debug */,
 				0AA4EDBE19F805890064B29A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

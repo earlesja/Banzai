@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "0AA4ED9919F805890064B29A"
-               BuildableName = "Bonzai-iOS.app"
-               BlueprintName = "Bonzai-iOS"
-               ReferencedContainer = "container:Bonzai-iOS.xcodeproj">
+               BuildableName = "Banzai-iOS.app"
+               BlueprintName = "Banzai-iOS"
+               ReferencedContainer = "container:Banzai-iOS.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -29,9 +29,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "0AA4EDAE19F805890064B29A"
-               BuildableName = "Bonzai-iOSTests.xctest"
-               BlueprintName = "Bonzai-iOSTests"
-               ReferencedContainer = "container:Bonzai-iOS.xcodeproj">
+               BuildableName = "Banzai-iOSTests.xctest"
+               BlueprintName = "Banzai-iOSTests"
+               ReferencedContainer = "container:Banzai-iOS.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -47,9 +47,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "0AA4EDAE19F805890064B29A"
-               BuildableName = "Bonzai-iOSTests.xctest"
-               BlueprintName = "Bonzai-iOSTests"
-               ReferencedContainer = "container:Bonzai-iOS.xcodeproj">
+               BuildableName = "Banzai-iOSTests.xctest"
+               BlueprintName = "Banzai-iOSTests"
+               ReferencedContainer = "container:Banzai-iOS.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -57,9 +57,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "0AA4ED9919F805890064B29A"
-            BuildableName = "Bonzai-iOS.app"
-            BlueprintName = "Bonzai-iOS"
-            ReferencedContainer = "container:Bonzai-iOS.xcodeproj">
+            BuildableName = "Banzai-iOS.app"
+            BlueprintName = "Banzai-iOS"
+            ReferencedContainer = "container:Banzai-iOS.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -76,9 +76,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "0AA4ED9919F805890064B29A"
-            BuildableName = "Bonzai-iOS.app"
-            BlueprintName = "Bonzai-iOS"
-            ReferencedContainer = "container:Bonzai-iOS.xcodeproj">
+            BuildableName = "Banzai-iOS.app"
+            BlueprintName = "Banzai-iOS"
+            ReferencedContainer = "container:Banzai-iOS.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -94,9 +94,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "0AA4ED9919F805890064B29A"
-            BuildableName = "Bonzai-iOS.app"
-            BlueprintName = "Bonzai-iOS"
-            ReferencedContainer = "container:Bonzai-iOS.xcodeproj">
+            BuildableName = "Banzai-iOS.app"
+            BlueprintName = "Banzai-iOS"
+            ReferencedContainer = "container:Banzai-iOS.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

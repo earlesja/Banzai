@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>28EB2798-5C21-437D-B200-73F703A93B72</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Banzai-iOS</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>601D1ED15BBE833E922835AB5EB59946F732E007</key>
+		<string>https://github.com/earlesja/Banzai.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Code/Banzai-iOS/Banzai-iOS.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>601D1ED15BBE833E922835AB5EB59946F732E007</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/earlesja/Banzai.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>601D1ED15BBE833E922835AB5EB59946F732E007</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>601D1ED15BBE833E922835AB5EB59946F732E007</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Banzai</string>
+		</dict>
+	</array>
+</dict>
+</plist>
