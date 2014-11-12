@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0A7CBD0F1A114665002D2FCE /* SignInController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7CBD0E1A114665002D2FCE /* SignInController.swift */; };
-		0A7CBD111A123823002D2FCE /* DashboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7CBD101A123823002D2FCE /* DashboardController.swift */; };
-		0A7CBD131A1239C7002D2FCE /* SideMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7CBD121A1239C7002D2FCE /* SideMenuController.swift */; };
 		0AA4EDA019F805890064B29A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA4ED9F19F805890064B29A /* AppDelegate.swift */; };
 		0AA4EDA519F805890064B29A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AA4EDA319F805890064B29A /* Main.storyboard */; };
 		0AA4EDA719F805890064B29A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0AA4EDA619F805890064B29A /* Images.xcassets */; };
@@ -27,9 +24,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0A7CBD0E1A114665002D2FCE /* SignInController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInController.swift; sourceTree = "<group>"; };
-		0A7CBD101A123823002D2FCE /* DashboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardController.swift; sourceTree = "<group>"; };
-		0A7CBD121A1239C7002D2FCE /* SideMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuController.swift; sourceTree = "<group>"; };
 		0AA4ED9A19F805890064B29A /* Banzai-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Banzai-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AA4ED9E19F805890064B29A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0AA4ED9F19F805890064B29A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -83,9 +77,6 @@
 				0AA4EDA319F805890064B29A /* Main.storyboard */,
 				0AA4EDA619F805890064B29A /* Images.xcassets */,
 				0AA4ED9D19F805890064B29A /* Supporting Files */,
-				0A7CBD0E1A114665002D2FCE /* SignInController.swift */,
-				0A7CBD101A123823002D2FCE /* DashboardController.swift */,
-				0A7CBD121A1239C7002D2FCE /* SideMenuController.swift */,
 			);
 			path = "Bonzai-iOS";
 			sourceTree = "<group>";
@@ -215,9 +206,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0AA4EDA019F805890064B29A /* AppDelegate.swift in Sources */,
-				0A7CBD131A1239C7002D2FCE /* SideMenuController.swift in Sources */,
-				0A7CBD111A123823002D2FCE /* DashboardController.swift in Sources */,
-				0A7CBD0F1A114665002D2FCE /* SignInController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
