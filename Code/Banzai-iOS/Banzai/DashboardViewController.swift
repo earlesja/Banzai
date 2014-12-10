@@ -8,15 +8,23 @@
 
 import UIKit
 
+@objc
+protocol DashboardViewControllerDelegate {
+    optional func toggleSideMenu()
+    optional func collapseSideMenu()
+}
 
-class DashboardController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class DashboardViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var dataObject: AnyObject?
     @IBOutlet weak var dashboardTable: UITableView!
+    var delegate: DashboardViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        // wrap the centerViewController in a navigation controller, so we can push views to it
+        // and display bar button items in the navigation bar
     }
     
     override func didReceiveMemoryWarning() {
@@ -36,4 +44,5 @@ class DashboardController: UIViewController, UITableViewDataSource, UITableViewD
         
         return cell
     }
+
 }

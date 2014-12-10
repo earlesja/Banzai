@@ -7,12 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A4454C51A376F6D00A01635 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4454C41A376F6D00A01635 /* SideMenuViewController.swift */; };
+		0A4454C91A382D5D00A01635 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4454C81A382D5D00A01635 /* ContainerViewController.swift */; };
+		0A4454CB1A3837B900A01635 /* ExController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4454CA1A3837B900A01635 /* ExController.swift */; };
+		0A4454CD1A384C3600A01635 /* CenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4454CC1A384C3600A01635 /* CenterViewController.swift */; };
 		3D30D29C1A2E8B000046F694 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D30D29B1A2E8B000046F694 /* AppDelegate.swift */; };
-		3D30D29E1A2E8B000046F694 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D30D29D1A2E8B000046F694 /* LoginController.swift */; };
+		3D30D29E1A2E8B000046F694 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D30D29D1A2E8B000046F694 /* LoginViewController.swift */; };
 		3D30D2A11A2E8B000046F694 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D30D29F1A2E8B000046F694 /* Main.storyboard */; };
 		3D30D2A31A2E8B000046F694 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D30D2A21A2E8B000046F694 /* Images.xcassets */; };
 		3D30D2B21A2E8B000046F694 /* BanzaiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D30D2B11A2E8B000046F694 /* BanzaiTests.swift */; };
-		3D30D2C01A2EB67F0046F694 /* DashboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D30D2BF1A2EB67F0046F694 /* DashboardController.swift */; };
+		3D30D2C01A2EB67F0046F694 /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D30D2BF1A2EB67F0046F694 /* DashboardViewController.swift */; };
 		3D30D2D71A2FA8D90046F694 /* BanzaiLaunch.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D30D2D61A2FA8D90046F694 /* BanzaiLaunch.xib */; };
 /* End PBXBuildFile section */
 
@@ -27,16 +31,20 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0A4454C41A376F6D00A01635 /* SideMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
+		0A4454C81A382D5D00A01635 /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
+		0A4454CA1A3837B900A01635 /* ExController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExController.swift; sourceTree = "<group>"; };
+		0A4454CC1A384C3600A01635 /* CenterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenterViewController.swift; sourceTree = "<group>"; };
 		3D30D2961A2E8B000046F694 /* Banzai.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Banzai.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D30D29A1A2E8B000046F694 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D30D29B1A2E8B000046F694 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3D30D29D1A2E8B000046F694 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		3D30D29D1A2E8B000046F694 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		3D30D2A01A2E8B000046F694 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3D30D2A21A2E8B000046F694 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		3D30D2AB1A2E8B000046F694 /* BanzaiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BanzaiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D30D2B01A2E8B000046F694 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D30D2B11A2E8B000046F694 /* BanzaiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BanzaiTests.swift; sourceTree = "<group>"; };
-		3D30D2BF1A2EB67F0046F694 /* DashboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardController.swift; sourceTree = "<group>"; };
+		3D30D2BF1A2EB67F0046F694 /* DashboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
 		3D30D2D61A2FA8D90046F694 /* BanzaiLaunch.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BanzaiLaunch.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -79,9 +87,13 @@
 		3D30D2981A2E8B000046F694 /* Banzai */ = {
 			isa = PBXGroup;
 			children = (
-				3D30D2BF1A2EB67F0046F694 /* DashboardController.swift */,
+				3D30D2BF1A2EB67F0046F694 /* DashboardViewController.swift */,
+				0A4454C41A376F6D00A01635 /* SideMenuViewController.swift */,
+				0A4454CA1A3837B900A01635 /* ExController.swift */,
+				0A4454CC1A384C3600A01635 /* CenterViewController.swift */,
+				0A4454C81A382D5D00A01635 /* ContainerViewController.swift */,
 				3D30D29B1A2E8B000046F694 /* AppDelegate.swift */,
-				3D30D29D1A2E8B000046F694 /* LoginController.swift */,
+				3D30D29D1A2E8B000046F694 /* LoginViewController.swift */,
 				3D30D29F1A2E8B000046F694 /* Main.storyboard */,
 				3D30D2A21A2E8B000046F694 /* Images.xcassets */,
 				3D30D2991A2E8B000046F694 /* Supporting Files */,
@@ -215,8 +227,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3D30D29E1A2E8B000046F694 /* LoginController.swift in Sources */,
-				3D30D2C01A2EB67F0046F694 /* DashboardController.swift in Sources */,
+				3D30D29E1A2E8B000046F694 /* LoginViewController.swift in Sources */,
+				0A4454C51A376F6D00A01635 /* SideMenuViewController.swift in Sources */,
+				0A4454CB1A3837B900A01635 /* ExController.swift in Sources */,
+				0A4454CD1A384C3600A01635 /* CenterViewController.swift in Sources */,
+				0A4454C91A382D5D00A01635 /* ContainerViewController.swift in Sources */,
+				3D30D2C01A2EB67F0046F694 /* DashboardViewController.swift in Sources */,
 				3D30D29C1A2E8B000046F694 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -285,7 +301,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -322,7 +338,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -361,6 +377,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = BanzaiTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Banzai.app/Banzai";
@@ -376,6 +393,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = BanzaiTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Banzai.app/Banzai";
