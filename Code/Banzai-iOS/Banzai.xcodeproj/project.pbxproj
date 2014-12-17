@@ -35,8 +35,8 @@
 
 /* Begin PBXFileReference section */
 		0A7D111E1A4190C800580977 /* MainNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainNavigationController.swift; sourceTree = "<group>"; };
-		0A7D11521A41914B00580977 /* ENSideMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ENSideMenu.swift; path = "../../../../../../Downloads/ENSwiftSideMenu-master 2/Library/ENSideMenu.swift"; sourceTree = "<group>"; };
-		0A7D11531A41914B00580977 /* ENSideMenuNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ENSideMenuNavigationController.swift; path = "../../../../../../Downloads/ENSwiftSideMenu-master 2/Library/ENSideMenuNavigationController.swift"; sourceTree = "<group>"; };
+		0A7D11521A41914B00580977 /* ENSideMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ENSideMenu.swift; sourceTree = "<group>"; };
+		0A7D11531A41914B00580977 /* ENSideMenuNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ENSideMenuNavigationController.swift; sourceTree = "<group>"; };
 		0A7D11561A41919700580977 /* SideMenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuTableViewController.swift; sourceTree = "<group>"; };
 		0A7D11581A41965300580977 /* ServerDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerDetailsViewController.swift; sourceTree = "<group>"; };
 		0A7D115A1A41965E00580977 /* SystemErrorsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemErrorsViewController.swift; sourceTree = "<group>"; };
