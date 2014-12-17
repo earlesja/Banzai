@@ -45,4 +45,7 @@ class DashboardViewController: UIViewController, UITableViewDataSource, UITableV
         return cell
     }
 
+    @IBAction func toggleSideMenu(sender: AnyObject) {
+        toggleSideMenuView()
+    }
 }
