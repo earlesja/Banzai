@@ -14,6 +14,8 @@
 		0A7D11591A41965300580977 /* ServerDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7D11581A41965300580977 /* ServerDetailsViewController.swift */; };
 		0A7D115B1A41965E00580977 /* SystemErrorsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7D115A1A41965E00580977 /* SystemErrorsViewController.swift */; };
 		0A7D115D1A41966600580977 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7D115C1A41966600580977 /* SettingsViewController.swift */; };
+		0A8661951A5D0C45009687FA /* OSUsageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8661941A5D0C45009687FA /* OSUsageViewController.swift */; };
+		0A8661971A5D0DE3009687FA /* BrowserUsageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8661961A5D0DE3009687FA /* BrowserUsageViewController.swift */; };
 		3D30D29C1A2E8B000046F694 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D30D29B1A2E8B000046F694 /* AppDelegate.swift */; };
 		3D30D29E1A2E8B000046F694 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D30D29D1A2E8B000046F694 /* LoginViewController.swift */; };
 		3D30D2A11A2E8B000046F694 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D30D29F1A2E8B000046F694 /* Main.storyboard */; };
@@ -41,6 +43,8 @@
 		0A7D11581A41965300580977 /* ServerDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerDetailsViewController.swift; sourceTree = "<group>"; };
 		0A7D115A1A41965E00580977 /* SystemErrorsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemErrorsViewController.swift; sourceTree = "<group>"; };
 		0A7D115C1A41966600580977 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		0A8661941A5D0C45009687FA /* OSUsageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSUsageViewController.swift; sourceTree = "<group>"; };
+		0A8661961A5D0DE3009687FA /* BrowserUsageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserUsageViewController.swift; sourceTree = "<group>"; };
 		3D30D2961A2E8B000046F694 /* Banzai.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Banzai.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D30D29A1A2E8B000046F694 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D30D29B1A2E8B000046F694 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -93,16 +97,18 @@
 		3D30D2981A2E8B000046F694 /* Banzai */ = {
 			isa = PBXGroup;
 			children = (
+				3D30D29B1A2E8B000046F694 /* AppDelegate.swift */,
+				0A8661961A5D0DE3009687FA /* BrowserUsageViewController.swift */,
+				3D30D2BF1A2EB67F0046F694 /* DashboardViewController.swift */,
 				0A7D11521A41914B00580977 /* ENSideMenu.swift */,
 				0A7D11531A41914B00580977 /* ENSideMenuNavigationController.swift */,
-				3D30D2BF1A2EB67F0046F694 /* DashboardViewController.swift */,
-				0A7D111E1A4190C800580977 /* MainNavigationController.swift */,
-				0A7D11561A41919700580977 /* SideMenuTableViewController.swift */,
-				3D30D29B1A2E8B000046F694 /* AppDelegate.swift */,
 				3D30D29D1A2E8B000046F694 /* LoginViewController.swift */,
+				0A7D111E1A4190C800580977 /* MainNavigationController.swift */,
+				0A8661941A5D0C45009687FA /* OSUsageViewController.swift */,
 				0A7D11581A41965300580977 /* ServerDetailsViewController.swift */,
-				0A7D115A1A41965E00580977 /* SystemErrorsViewController.swift */,
 				0A7D115C1A41966600580977 /* SettingsViewController.swift */,
+				0A7D11561A41919700580977 /* SideMenuTableViewController.swift */,
+				0A7D115A1A41965E00580977 /* SystemErrorsViewController.swift */,
 				3D30D29F1A2E8B000046F694 /* Main.storyboard */,
 				3D30D2A21A2E8B000046F694 /* Images.xcassets */,
 				3D30D2991A2E8B000046F694 /* Supporting Files */,
@@ -245,6 +251,8 @@
 				3D30D2C01A2EB67F0046F694 /* DashboardViewController.swift in Sources */,
 				0A7D11551A41914B00580977 /* ENSideMenuNavigationController.swift in Sources */,
 				3D30D29C1A2E8B000046F694 /* AppDelegate.swift in Sources */,
+				0A8661951A5D0C45009687FA /* OSUsageViewController.swift in Sources */,
+				0A8661971A5D0DE3009687FA /* BrowserUsageViewController.swift in Sources */,
 				0A7D11571A41919700580977 /* SideMenuTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

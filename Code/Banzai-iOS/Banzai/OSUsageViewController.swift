@@ -1,14 +1,14 @@
 //
-//  ServerDetailsViewController.swift
+//  OSUsageViewController.swift
 //  Banzai
 //
-//  Created by Chris O'Hara on 12/17/14.
-//  Copyright (c) 2014 Rose-Hulman. All rights reserved.
+//  Created by CSSE Department on 1/7/15.
+//  Copyright (c) 2015 Rose-Hulman. All rights reserved.
 //
 
 import UIKit
 
-class ServerDetailsViewController: UIViewController {
+class OSUsageViewController: UIViewController {
     
     
     override func viewDidLoad() {
@@ -26,6 +26,6 @@ class ServerDetailsViewController: UIViewController {
     }
     
     @IBAction func refreshData(sender: AnyObject) {
-        println("Refresh the Server Details page")
+        println("Referesh the OS Usage page")
     }
 }

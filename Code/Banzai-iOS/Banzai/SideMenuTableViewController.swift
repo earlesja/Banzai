@@ -39,7 +39,7 @@ class SideMenuTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Return the number of rows in the section.
-        return 5
+        return 7
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -61,10 +61,14 @@ class SideMenuTableViewController: UITableViewController {
         case 1:
             cell!.textLabel?.text = "Server Details"
         case 2:
-            cell!.textLabel?.text = "System Errors"
+            cell!.textLabel?.text = "OS Usage"
         case 3:
-            cell!.textLabel?.text = "Settings"
+            cell!.textLabel?.text = "Browser Usage"
         case 4:
+            cell!.textLabel?.text = "System Errors"
+        case 5:
+            cell!.textLabel?.text = "Settings"
+        case 6:
             cell!.textLabel?.text = "Log Out"
         default:
             cell!.textLabel?.text = "ERROR..."
@@ -92,27 +96,42 @@ class SideMenuTableViewController: UITableViewController {
         switch (indexPath.row) {
         case 0:
             destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("DashboardViewController") as UIViewController
+            sideMenuController()?.setContentViewController(destViewController)
             break
         case 1:
             destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ServerDetailsViewController") as UIViewController
+            sideMenuController()?.setContentViewController(destViewController)
             break
         case 2:
-            destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("SystemErrorsViewController") as UIViewController
+            destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("OSUsageViewController") as UIViewController
+            sideMenuController()?.setContentViewController(destViewController)
             break
         case 3:
-            destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("SettingsViewController") as UIViewController
+            destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("BrowserUsageController") as UIViewController
+            sideMenuController()?.setContentViewController(destViewController)
             break
         case 4:
+            destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("SystemErrorsViewController") as UIViewController
+            sideMenuController()?.setContentViewController(destViewController)
+            break
+        case 5:
             destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("SettingsViewController") as UIViewController
-            let vc : AnyObject! = mainStoryboard.instantiateViewControllerWithIdentifier("LoginViewController")
-            self.showViewController(vc as UIViewController, sender: vc)
+            sideMenuController()?.setContentViewController(destViewController)
+            break
+        case 6:
+            destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("LoginViewController") as UIViewController
+            self.presentViewController(destViewController, animated: true, completion: nil)
+            //self.showViewController(destViewController, sender: destViewController)
+            //destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("SettingsViewController") as UIViewController
+            //let vc : AnyObject! = mainStoryboard.instantiateViewControllerWithIdentifier("LoginViewController")
+            //self.showViewController(vc as UIViewController, sender: vc)
             break
         default:
             // ERROR!!!
             destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("LoginViewController") as UIViewController
             break
         }
-        sideMenuController()?.setContentViewController(destViewController)
+        
     }
     
     /*

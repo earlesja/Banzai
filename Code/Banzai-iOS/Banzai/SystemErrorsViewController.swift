@@ -24,4 +24,8 @@ class SystemErrorsViewController: UIViewController {
     @IBAction func toggleSideMenu(sender: AnyObject) {
         toggleSideMenuView()
     }
+    
+    @IBAction func refreshData(sender: AnyObject) {
+        println("Referesh the System Errors page")
+    }
 }
