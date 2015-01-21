@@ -134,13 +134,13 @@ class RangeSlider: UIControl {
 
     override func continueTrackingWithTouch(touch: UITouch, withEvent event: UIEvent) -> Bool {
         let location = touch.locationInView(self)
-
+        
         // 1. Determine by how much the user has dragged
         let deltaLocation = Double(location.x - previousLocation.x)
-        let deltaValue = (maximumValue - minimumValue) * deltaLocation / Double(bounds.width - bounds.height)
-
+        let deltaValue = (maximumValue - minimumValue) * deltaLocation / Double(bounds.width - thumbWidth)
+        
         previousLocation = location
-
+        
         // 2. Update the values
         if lowerThumbLayer.highlighted {
             lowerValue += deltaValue
@@ -149,7 +149,9 @@ class RangeSlider: UIControl {
             upperValue += deltaValue
             upperValue = boundValue(upperValue, toLowerValue: lowerValue, upperValue: maximumValue)
         }
-
+        
+        sendActionsForControlEvents(.ValueChanged)
+        
         return true
     }
 

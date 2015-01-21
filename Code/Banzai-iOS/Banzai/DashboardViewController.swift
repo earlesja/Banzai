@@ -20,6 +20,8 @@ class DashboardViewController: UIViewController, UITableViewDataSource, UITableV
     @IBOutlet weak var dashboardTable: UITableView!
     var delegate: DashboardViewControllerDelegate?
     
+    let testDoughtnut = PNCircleChart();
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.dashboardTable.tableFooterView = UIView()
@@ -27,9 +29,8 @@ class DashboardViewController: UIViewController, UITableViewDataSource, UITableV
         // and display bar button items in the navigation bar
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func initDoughnuts(){
+        
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
