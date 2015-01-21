@@ -3,8 +3,12 @@ package com.pan.banzai;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 
 public class MainActivity extends Activity {
@@ -13,10 +17,48 @@ public class MainActivity extends Activity {
 	public static final SettingsFragment sSettingsFragment = new SettingsFragment();
 	public static final OsUsageFragment sOsUsageFragment = new OsUsageFragment();
 
+	private DrawerLayout mDrawerLayout;
+	private ActionBarDrawerToggle mDrawerToggle;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		// nav stuff
+		String[] navOptions = getResources().getStringArray(
+				R.array.nav_drawer_items);
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+		ListView drawerList = (ListView) findViewById(R.id.nav_list);
+		drawerList.setAdapter(new NavArrayAdapter(this, navOptions));
+		drawerList.setOnItemClickListener(new NavListViewOnItemClickListener(
+				this, drawerList, mDrawerLayout));
+
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+				R.drawable.ic_drawer, R.string.nav_drawer_open,
+				R.string.nav_drawer_close) {
+
+			/** Called when a drawer has settled in a completely closed state. */
+			public void onDrawerClosed(View view) {
+				super.onDrawerClosed(view);
+				invalidateOptionsMenu(); // creates call to
+											// onPrepareOptionsMenu()
+			}
+
+			/** Called when a drawer has settled in a completely open state. */
+			public void onDrawerOpened(View drawerView) {
+				super.onDrawerOpened(drawerView);
+				invalidateOptionsMenu(); // creates call to
+											// onPrepareOptionsMenu()
+			}
+		};
+
+		// Set the drawer toggle as the DrawerListener
+		mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setHomeButtonEnabled(true);
+		drawerList.setItemChecked(0, true);
 
 		SharedPreferenceHelper.setSharedPreferences(this);
 		DefaultValues.storeDefaultInSharedPref();
@@ -28,15 +70,31 @@ public class MainActivity extends Activity {
 					.commit();
 		}
 
-		// nav stuff
-		String[] navOptions = getResources().getStringArray(
-				R.array.nav_drawer_items);
-		DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-		ListView drawerList = (ListView) findViewById(R.id.nav_list);
-		drawerList.setAdapter(new NavArrayAdapter(this, navOptions));
-		drawerList.setOnItemClickListener(new NavListViewOnItemClickListener(
-				this, drawerList, drawerLayout));
-		drawerList.setItemChecked(0, true);
+	}
+
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		// Sync the toggle state after onRestoreInstanceState has occurred.
+		mDrawerToggle.syncState();
+	}
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		mDrawerToggle.onConfigurationChanged(newConfig);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Pass the event to ActionBarDrawerToggle, if it returns
+		// true, then it has handled the app icon touch event
+		if (mDrawerToggle.onOptionsItemSelected(item)) {
+			return true;
+		}
+		// Handle your other action bar items...
+
+		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
