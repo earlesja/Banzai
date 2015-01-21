@@ -2,6 +2,7 @@ package com.pan.banzai;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -9,7 +10,7 @@ import android.widget.TextView;
 public class ThresholdView extends LinearLayout {
 
 	public static final int sThresholdMax = 100;
-	public static final int sThresholdMin = 100;
+	public static final int sThresholdMin = 0;
 
 	private RangeSeekBar<Integer> mRangeSeekBar;
 	private TextView mDescTextView;
@@ -28,9 +29,12 @@ public class ThresholdView extends LinearLayout {
 		TypedArray a = context.obtainStyledAttributes(attrs,
 				R.styleable.ThresholdView, 0, 0);
 		String desc = "";
+		int descTextColor = Color.BLACK;
 		float descTextSize = 20;
 		try {
 			desc = a.getString(R.styleable.ThresholdView_descText);
+			descTextColor = a.getColor(R.styleable.ThresholdView_descTextColor,
+					descTextColor);
 			descTextSize = a.getFloat(R.styleable.ThresholdView_descTextSize,
 					descTextSize);
 		} finally {
@@ -41,6 +45,7 @@ public class ThresholdView extends LinearLayout {
 		mDescTextView = new TextView(context);
 		mDescTextView.setTextSize(descTextSize);
 		mDescTextView.setText(desc);
+		mDescTextView.setTextColor(descTextColor);
 		mDescTextView.setPadding(0, 0, 0, 5);
 		addView(mDescTextView);
 		mRangeSeekBar = new RangeSeekBar<Integer>(sThresholdMin, sThresholdMax,
@@ -52,4 +57,20 @@ public class ThresholdView extends LinearLayout {
 		mDescTextView.setText(text);
 	}
 
+	public void setThresholds(int warningThreshold, int criticalThreshold) {
+		if (criticalThreshold >= warningThreshold
+				&& warningThreshold >= mRangeSeekBar.getAbsoluteMinValue()
+				&& criticalThreshold <= mRangeSeekBar.getAbsoluteMaxValue()) {
+			mRangeSeekBar.setSelectedMinValue(warningThreshold);
+			mRangeSeekBar.setSelectedMaxValue(criticalThreshold);
+		}
+	}
+
+	public int getWarningThreshold() {
+		return mRangeSeekBar.getSelectedMinValue();
+	}
+
+	public int getCriticalThreshold() {
+		return mRangeSeekBar.getSelectedMaxValue();
+	}
 }

@@ -1,6 +1,7 @@
 package com.pan.banzai;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -9,17 +10,59 @@ import android.util.AttributeSet;
 
 public class DonutGraph extends PieGraph {
 
-	public static final float sDonutCriticalThreshHold = 90;
-	public static final float sDonutWarningThreshHold = 75;
 	public static final int sDonutInnerCircleRatio = 175;
+
+	public enum DonutType {
+		CPU {
+			@Override
+			public int getWarning() {
+				return DefaultValues.getCpuWarningThreshold();
+			}
+
+			@Override
+			public int getCritical() {
+				return DefaultValues.getCpuCriticalThreshold();
+			}
+		},
+		RAM {
+			@Override
+			public int getWarning() {
+				return DefaultValues.getRamWarningThreshold();
+			}
+
+			@Override
+			public int getCritical() {
+				return DefaultValues.getRamCriticalThreshold();
+			}
+		},
+		STORAGE {
+			@Override
+			public int getWarning() {
+				return DefaultValues.getStorageWarningThreshold();
+			}
+
+			@Override
+			public int getCritical() {
+				return DefaultValues.getStorageCriticalThreshold();
+			}
+		};
+
+		public abstract int getWarning();
+
+		public abstract int getCritical();
+	}
+
+	private static DonutType[] sDonutTypes = DonutType.values();
 
 	private PieSlice coloredSlice;
 	private PieSlice bufferSlice;
 	private float percentage;
+	private DonutType mType;
+
 	private Rect mBounds = new Rect();
 
 	public DonutGraph(Context context) {
-		this(context, null);
+		super(context);
 	}
 
 	public DonutGraph(Context context, AttributeSet attrs) {
@@ -29,6 +72,15 @@ public class DonutGraph extends PieGraph {
 	public DonutGraph(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs);
 
+		TypedArray styledAttrs = context.obtainStyledAttributes(attrs,
+				R.styleable.DonutGraph, 0, 0);
+		int type = 0;
+		try {
+			type = styledAttrs.getInt(R.styleable.DonutGraph_type, type);
+		} finally {
+			styledAttrs.recycle();
+		}
+		mType = sDonutTypes[type];
 		this.setInnerCircleRatio(sDonutInnerCircleRatio);
 
 		coloredSlice = new PieSlice();
@@ -40,7 +92,8 @@ public class DonutGraph extends PieGraph {
 
 	public void setPercentage(float percent) {
 		percentage = percent;
-		coloredSlice.setColor(determineDonutColor(percentage));
+		coloredSlice.setColor(determineDonutColor(percentage,
+				mType.getWarning(), mType.getCritical()));
 		coloredSlice.setValue(percentage);
 
 		// invisible second part of donut that's 100%-value
@@ -86,15 +139,15 @@ public class DonutGraph extends PieGraph {
 	 *            Value to check
 	 * @return Int representing color of the graph
 	 */
-	private int determineDonutColor(float value) {
-		if (value >= sDonutCriticalThreshHold) {
+	private int determineDonutColor(float value, int warningThreshold,
+			int criticalThreshold) {
+		if (value >= criticalThreshold) {
 			return getResources().getColor(R.color.critical);
-		} else if (value >= sDonutWarningThreshHold) {
+		} else if (value >= warningThreshold) {
 			return getResources().getColor(R.color.warning);
 		} else {
 			return getResources().getColor(R.color.safe);
 
 		}
 	}
-
 }

@@ -15,10 +15,6 @@ public class ServerStatusExpandableListAdapter extends
 		BaseExpandableListAdapter {
 	public static final int sNumChildren = 1;
 	// TODO replace these with saved values
-	public static final float sDonutCriticalThreshHold = 90;
-	public static final float sDonutWarningThreshHold = 75;
-	public static final float sQueueCriticalThreshHold = 1500;
-	public static final float sQueueWarningThreshHold = 500;
 	public static final int sDonutInnerCircleRatio = 175;
 
 	private ArrayList<ServerTierStatus> mTierStatuses;
@@ -146,11 +142,8 @@ public class ServerStatusExpandableListAdapter extends
 	}
 
 	private int determineQueueLengthColor(int value) {
-		if (value >= sQueueCriticalThreshHold) {
+		if (value >= DefaultValues.getQueueWaitLength()) {
 			return mContext.getResources().getColor(R.color.critical);
-
-		} else if (value >= sQueueWarningThreshHold) {
-			return mContext.getResources().getColor(R.color.warning);
 
 		} else {
 			return Color.BLACK;

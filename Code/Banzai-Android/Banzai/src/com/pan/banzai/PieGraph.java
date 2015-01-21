@@ -25,6 +25,7 @@ package com.pan.banzai;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -162,6 +163,7 @@ public class PieGraph extends View implements HoloGraphAnimate {
 		}
 	}
 
+	@SuppressLint("ClickableViewAccessibility")
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		if (mDrawCompleted) {
@@ -331,15 +333,8 @@ public class PieGraph extends View implements HoloGraphAnimate {
 		va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
 			@Override
 			public void onAnimationUpdate(ValueAnimator animation) {
-				float f = Math.max(animation.getAnimatedFraction(), 0.01f);// avoid
-																			// blank
-																			// frames;
-																			// never
-																			// multiply
-																			// values
-																			// by
-																			// 0
-				// Log.d("f", String.valueOf(f));
+				// avoid blank frames; never multiply values by 0
+				float f = Math.max(animation.getAnimatedFraction(), 0.01f);
 				for (PieSlice s : mSlices) {
 					float x = s.getGoalValue() - s.getOldValue();
 					s.setValue(s.getOldValue() + (x * f));

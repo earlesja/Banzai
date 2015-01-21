@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:background="@color/submitButton"
+            android:background="@color/submit_button"
             android:text="@string/submit_text"
             android:textColor="@color/submitButtonText" />
     </LinearLayout>

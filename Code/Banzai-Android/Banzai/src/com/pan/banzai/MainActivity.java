@@ -11,11 +11,15 @@ public class MainActivity extends Activity {
 
 	public static final DashboardFragment sDashboardFragment = new DashboardFragment();
 	public static final SettingsFragment sSettingsFragment = new SettingsFragment();
+	public static final OsUsageFragment sOsUsageFragment = new OsUsageFragment();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+		SharedPreferenceHelper.setSharedPreferences(this);
+		DefaultValues.storeDefaultInSharedPref();
 
 		FragmentManager fm = getFragmentManager();
 		Fragment frag = fm.findFragmentById(R.id.container);
@@ -33,7 +37,6 @@ public class MainActivity extends Activity {
 		drawerList.setOnItemClickListener(new NavListViewOnItemClickListener(
 				this, drawerList, drawerLayout));
 		drawerList.setItemChecked(0, true);
-
 	}
 
 	@Override

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -32,7 +31,6 @@ public class NavListViewOnItemClickListener implements OnItemClickListener {
 
 	private void selectItem(int position) {
 
-		Log.d("XX", "" + mDrawerList.getSelectedItemPosition());
 		if (position == selectedNavItem) {
 			return;
 		}
@@ -47,6 +45,7 @@ public class NavListViewOnItemClickListener implements OnItemClickListener {
 			break;
 		case 1:
 			// OS usage
+			frag = MainActivity.sOsUsageFragment;
 			break;
 		case 2:
 			// browser usage

@@ -4,7 +4,7 @@
 
     <gradient
         android:angle="90"
-        android:endColor="@color/navSliderItemBgPressed"
-        android:startColor="@color/navSliderItemBgPressed" />
+        android:endColor="@color/nav_slider_item_bg_pressed"
+        android:startColor="@color/nav_slider_item_bg_pressed" />
 
 </shape>

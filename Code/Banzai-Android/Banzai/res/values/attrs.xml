@@ -6,6 +6,14 @@
         <attr name="pieInnerCircleRatio" format="integer" />
         <attr name="pieSlicePadding" format="dimension" />
     </declare-styleable>
+    <declare-styleable name="LineGraph">
+        <attr name="lineStrokeColor" format="color" />
+        <attr name="lineAxisColor" format="color" />
+        <attr name="lineStrokeWidth" format="dimension" />
+        <attr name="lineStrokeSpacing" format="dimension" />
+        <attr name="lineUseDip" format="boolean" />
+        <attr name="lineBackground" format="color" />
+    </declare-styleable>
     <declare-styleable name="BarGraph">
         <attr name="barAxisColor" format="color" />
         <attr name="orientation" format="enum">
@@ -21,6 +29,14 @@
     <declare-styleable name="ThresholdView">
         <attr name="descText" format="string" />
         <attr name="descTextSize" format="float" />
+        <attr name="descTextColor" format="color" />
+    </declare-styleable>
+    <declare-styleable name="DonutGraph">
+        <attr name="type" format="enum">
+            <enum name="cpu" value="0" />
+            <enum name="ram" value="1" />
+            <enum name="storage" value="2" />
+        </attr>
     </declare-styleable>
 
 </resources>

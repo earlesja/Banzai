@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res/com.pan.banzai"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center_horizontal"
@@ -23,7 +24,7 @@
                 android:layout_width="@dimen/donut_pie_chart_radius"
                 android:layout_height="@dimen/donut_pie_chart_radius"
                 android:layout_margin="@dimen/donut_pie_chart_margins"
-                class="com.pan.banzai.DonutGraph" />
+                custom:type="cpu" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -42,7 +43,8 @@
                 android:id="@+id/ramPieGraph"
                 android:layout_width="@dimen/donut_pie_chart_radius"
                 android:layout_height="@dimen/donut_pie_chart_radius"
-                android:layout_margin="@dimen/donut_pie_chart_margins" />
+                android:layout_margin="@dimen/donut_pie_chart_margins" 
+                custom:type="ram" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -61,7 +63,8 @@
                 android:id="@+id/storagePieGraph"
                 android:layout_width="@dimen/donut_pie_chart_radius"
                 android:layout_height="@dimen/donut_pie_chart_radius"
-                android:layout_margin="@dimen/donut_pie_chart_margins" />
+                android:layout_margin="@dimen/donut_pie_chart_margins" 
+                custom:type="storage" />
 
             <TextView
                 android:layout_width="wrap_content"

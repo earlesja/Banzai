@@ -2,6 +2,7 @@ package com.pan.banzai;
 
 import java.math.BigDecimal;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -53,6 +54,7 @@ public class RangeSeekBar<T extends Number> extends ImageView {
 	private Thumb pressedThumb = null;
 	private boolean notifyWhileDragging = false;
 	private OnRangeSeekBarChangeListener<T> listener;
+	private RectF rect = new RectF();
 
 	/**
 	 * Default color of a {@link RangeSeekBar}, #FF33B5E5. This is also known as
@@ -221,6 +223,7 @@ public class RangeSeekBar<T extends Number> extends ImageView {
 	 * Handles thumb selection and movement. Notifies listener callback on
 	 * certain events.
 	 */
+	@SuppressLint("ClickableViewAccessibility")
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 
@@ -396,8 +399,7 @@ public class RangeSeekBar<T extends Number> extends ImageView {
 		super.onDraw(canvas);
 
 		// draw safe section
-		final RectF rect = new RectF(padding,
-				0.5f * (getHeight() - lineHeight),
+		rect.set(padding, 0.5f * (getHeight() - lineHeight),
 				normalizedToScreen(normalizedMinValue),
 				0.5f * (getHeight() + lineHeight));
 		paint.setStyle(Style.FILL);
@@ -665,17 +667,17 @@ public class RangeSeekBar<T extends Number> extends ImageView {
 		public Number toNumber(double value) {
 			switch (this) {
 			case LONG:
-				return new Long((long) value);
+				return Long.valueOf((long) value);
 			case DOUBLE:
 				return value;
 			case INTEGER:
-				return new Integer((int) value);
+				return Integer.valueOf((int) value);
 			case FLOAT:
-				return new Float(value);
+				return Float.valueOf((float) value);
 			case SHORT:
-				return new Short((short) value);
+				return Short.valueOf((short) value);
 			case BYTE:
-				return new Byte((byte) value);
+				return Byte.valueOf((byte) value);
 			case BIG_DECIMAL:
 				return new BigDecimal(value);
 			}
