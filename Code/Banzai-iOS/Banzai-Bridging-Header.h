@@ -3,3 +3,4 @@
 //
 
 #import "PNCircleChart.h"
+#import "CorePlot-CocoaTouch.h"
