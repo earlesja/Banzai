@@ -20,17 +20,11 @@ class DashboardViewController: UIViewController, UITableViewDataSource, UITableV
     @IBOutlet weak var dashboardTable: UITableView!
     var delegate: DashboardViewControllerDelegate?
     
-    let testDoughtnut = PNCircleChart();
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.dashboardTable.tableFooterView = UIView()
+        //self.dashboardTable.tableFooterView = UIView()
         // wrap the centerViewController in a navigation controller, so we can push views to it
         // and display bar button items in the navigation bar
-    }
-    
-    func initDoughnuts(){
-        
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
@@ -39,19 +33,20 @@ class DashboardViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "MyTestCell")
+        let cell = tableView.dequeueReusableCellWithIdentifier(
+            "DashboardCell", forIndexPath: indexPath)
+                as DashboardTableCell
         
         switch(indexPath.row) {
         case 0:
-            cell.textLabel?.text = "App Tier"
+            cell.serverName.text = "App Tier"
         case 1:
-            cell.textLabel?.text = "Web Tier"
+            cell.serverName.text = "Web Tier"
         case 2:
-            cell.textLabel?.text = "Data Tier"
+            cell.serverName.text = "Data Tier"
         default:
-            cell.textLabel?.text = "An Error Occurred"
+            cell.serverName.text = "An Error Occurred"
         }
-        
         return cell
     }
     
@@ -64,7 +59,7 @@ class DashboardViewController: UIViewController, UITableViewDataSource, UITableV
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
         if indexPath == tableView.indexPathForSelectedRow() {
-            return 150.0
+            return 200.0
         }
         return 37.0
     }

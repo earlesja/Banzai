@@ -26,6 +26,7 @@
 		3D30D2B21A2E8B000046F694 /* BanzaiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D30D2B11A2E8B000046F694 /* BanzaiTests.swift */; };
 		3D30D2C01A2EB67F0046F694 /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D30D2BF1A2EB67F0046F694 /* DashboardViewController.swift */; };
 		3D30D2D71A2FA8D90046F694 /* BanzaiLaunch.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D30D2D61A2FA8D90046F694 /* BanzaiLaunch.xib */; };
+		3D48E7B91A6F9D5F00A796A2 /* DashboardTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D48E7B81A6F9D5F00A796A2 /* DashboardTableCell.swift */; };
 		3DAAA3CA1A6F4408009BDE46 /* PNCircleChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DAAA3C91A6F4408009BDE46 /* PNCircleChart.m */; };
 		3DAAA3CD1A6F4441009BDE46 /* PNColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DAAA3CC1A6F4441009BDE46 /* PNColor.m */; };
 		3DAAA3D01A6F449E009BDE46 /* UICountingLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DAAA3CF1A6F449E009BDE46 /* UICountingLabel.m */; };
@@ -65,6 +66,7 @@
 		3D30D2B11A2E8B000046F694 /* BanzaiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BanzaiTests.swift; sourceTree = "<group>"; };
 		3D30D2BF1A2EB67F0046F694 /* DashboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
 		3D30D2D61A2FA8D90046F694 /* BanzaiLaunch.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BanzaiLaunch.xib; sourceTree = "<group>"; };
+		3D48E7B81A6F9D5F00A796A2 /* DashboardTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardTableCell.swift; sourceTree = "<group>"; };
 		3DAAA3C71A6F4408009BDE46 /* Banzai-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Banzai-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		3DAAA3C91A6F4408009BDE46 /* PNCircleChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PNCircleChart.m; sourceTree = "<group>"; };
 		3DAAA3CB1A6F4441009BDE46 /* PNColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PNColor.h; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 		3D30D2981A2E8B000046F694 /* Banzai */ = {
 			isa = PBXGroup;
 			children = (
+				3D48E7B81A6F9D5F00A796A2 /* DashboardTableCell.swift */,
 				3DAAA3C71A6F4408009BDE46 /* Banzai-Bridging-Header.h */,
 				3D30D29B1A2E8B000046F694 /* AppDelegate.swift */,
 				0A8661961A5D0DE3009687FA /* BrowserUsageViewController.swift */,
@@ -289,6 +292,7 @@
 				3D1CCFDF1A63A8970026BA86 /* RangeSliderThumbLayer.swift in Sources */,
 				3D30D29E1A2E8B000046F694 /* LoginViewController.swift in Sources */,
 				0A7D111F1A4190C800580977 /* MainNavigationController.swift in Sources */,
+				3D48E7B91A6F9D5F00A796A2 /* DashboardTableCell.swift in Sources */,
 				0A7D115D1A41966600580977 /* SettingsViewController.swift in Sources */,
 				0A7D115B1A41965E00580977 /* SystemErrorsViewController.swift in Sources */,
 				3D1CCFDE1A63A8970026BA86 /* RangeSlider.swift in Sources */,
