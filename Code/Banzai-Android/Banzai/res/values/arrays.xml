@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="nav_drawer_items">
+        <item>Dashboard</item>
+        <item>OS Usage</item>
+        <item>Browser Usage</item>
+        <item>Sytem Errors</item>
+        <item>Users Logged In</item>
+        <item>Settings</item>
+    </string-array>
+    
+    <array name="nav_drawer_icons">
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+    </array>
+    
+</resources>

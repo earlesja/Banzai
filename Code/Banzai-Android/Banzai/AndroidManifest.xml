@@ -15,7 +15,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".LoginActivity"
-            android:label="@string/title_activity_login" >
+            android:label="@string/title_activity_login"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,8 +24,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Dashboard"
-            android:label="@string/title_activity_dashboard" >
+            android:name=".MainActivity"
+            android:label="@string/dashboard_title"
+            android:screenOrientation="portrait" >
         </activity>
     </application>
 

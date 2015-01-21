@@ -17,26 +17,26 @@ public class LoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		//getMenuInflater().inflate(R.menu.dashboard, menu);
-		
+		// getMenuInflater().inflate(R.menu.dashboard, menu);
+
 		final Context context = this;
-		
-		Button button = (Button) findViewById(R.id.button1);
-		button.setOnClickListener(new OnClickListener(){
+
+		Button button = (Button) findViewById(R.id.signinSubmitButton);
+		button.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(context, Dashboard.class);
+				Intent intent = new Intent(context, MainActivity.class);
 				startActivity(intent);
-			}			
+			}
 		});
-				
-	    EditText e1=(EditText) findViewById(R.id.editText1);
+
+		EditText e1 = (EditText) findViewById(R.id.signinEmail);
 		e1.requestFocus();
-		
+
 		return true;
 	}
 }

@@ -5,5 +5,12 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="navigation_drawer_width">240dp</dimen>
+    <dimen name="donut_pie_chart_radius">100dp</dimen>
+    <dimen name="donut_pie_chart_margins">20dp</dimen>
 
+    
+    
+    <dimen name="expandable_list_group_text_size">25sp</dimen>
+    <dimen name="expandable_list_group_update_text_size">18sp</dimen>
+    <dimen name="expandable_list_child_text_size">18sp</dimen>
 </resources>

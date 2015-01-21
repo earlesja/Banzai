@@ -5,13 +5,30 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_login">Banzai</string>
     <string name="action_settings">Sign out</string>
-    <string name="title_activity_dashboard">Dashboard</string>
+    <string name="dashboard_title">Dashboard</string>
     <string name="title_section1">Dashboard</string>
     <string name="title_section2">OS Usage</string>
-    <string name="title_section3">ServerDetails</string><string name="title_section4">Settings</string>
+    <string name="title_section3">ServerDetails</string>
+    <string name="title_section4">Settings</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
-    
+    <string name="sign_in_text">Sign in</string>
+    <string name="password_text">Password</string>
+    <string name="submit_text">Submit</string>
+    <string name="email_text">Email</string>
+    <string name="cpu_text">CPU</string>
+    <string name="ram_text">RAM</string>
+    <string name="storage_text">Storage</string>
+    <string name="average_disk_queue_length">Disk %1$d average queue length: %2$d</string>
+    <string name="nav_drawer_open">Open</string>
+    <string name="nav_drawer_close">Close</string>
+    <string name="settings_title">Settings</string>
+    <string name="cpu_threshold_desc">CPU Utilization Threshold</string>
+    <string name="ram_threshold_desc">RAM Utilization Threshold</string>
+    <string name="storage_threshold_desc">Storage Utilization Threshold</string>
+    <string name="notifications">Notifications</string>
+    <string name="disk_queue_wait_length">Disk Queue Wait Length</string>
+    <string name="graph_time_frame">Graph Time Frame</string>
 
 </resources>
