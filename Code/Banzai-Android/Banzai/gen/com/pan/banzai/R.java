@@ -177,25 +177,25 @@ containing a value of this type.
         public static final int type=0x7f010011;
     }
     public static final class color {
-        public static final int activityTitle=0x7f060006;
-        public static final int critical=0x7f060000;
-        public static final int deauthorize_button=0x7f06000f;
-        public static final int deauthorize_button_text=0x7f060010;
-        public static final int horizontalBar=0x7f060005;
-        public static final int logoText=0x7f060009;
-        public static final int navSlider=0x7f06000a;
-        public static final int navSliderDivider=0x7f06000c;
-        public static final int navSliderItemBgNormal=0x7f06000d;
-        public static final int navSliderText=0x7f06000b;
-        public static final int nav_slider_item_bg_pressed=0x7f06000e;
-        public static final int osusage_titles_text=0x7f060012;
-        public static final int safe=0x7f060002;
-        public static final int settings_titles_text=0x7f060011;
-        public static final int submitButtonText=0x7f060008;
-        public static final int submit_button=0x7f060007;
-        public static final int title=0x7f060004;
-        public static final int transparent=0x7f060003;
-        public static final int warning=0x7f060001;
+        public static final int activityTitle=0x7f050006;
+        public static final int critical=0x7f050000;
+        public static final int deauthorize_button=0x7f05000f;
+        public static final int deauthorize_button_text=0x7f050010;
+        public static final int horizontalBar=0x7f050005;
+        public static final int logoText=0x7f050009;
+        public static final int navSlider=0x7f05000a;
+        public static final int navSliderDivider=0x7f05000c;
+        public static final int navSliderItemBgNormal=0x7f05000d;
+        public static final int navSliderText=0x7f05000b;
+        public static final int nav_slider_item_bg_pressed=0x7f05000e;
+        public static final int osusage_titles_text=0x7f050012;
+        public static final int safe=0x7f050002;
+        public static final int settings_titles_text=0x7f050011;
+        public static final int submitButtonText=0x7f050008;
+        public static final int submit_button=0x7f050007;
+        public static final int title=0x7f050004;
+        public static final int transparent=0x7f050003;
+        public static final int warning=0x7f050001;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
@@ -205,14 +205,14 @@ containing a value of this type.
          would include 7" and 10" devices in landscape (~960dp and ~1280dp respectively).
     
          */
-        public static final int activity_horizontal_margin=0x7f070000;
-        public static final int activity_vertical_margin=0x7f070001;
-        public static final int donut_pie_chart_margins=0x7f070004;
-        public static final int donut_pie_chart_radius=0x7f070003;
-        public static final int expandable_list_child_text_size=0x7f070007;
-        public static final int expandable_list_group_text_size=0x7f070005;
-        public static final int expandable_list_group_update_text_size=0x7f070006;
-        public static final int navigation_drawer_width=0x7f070002;
+        public static final int activity_horizontal_margin=0x7f060000;
+        public static final int activity_vertical_margin=0x7f060001;
+        public static final int donut_pie_chart_margins=0x7f060004;
+        public static final int donut_pie_chart_radius=0x7f060003;
+        public static final int expandable_list_child_text_size=0x7f060007;
+        public static final int expandable_list_group_text_size=0x7f060005;
+        public static final int expandable_list_group_update_text_size=0x7f060006;
+        public static final int navigation_drawer_width=0x7f060002;
     }
     public static final class drawable {
         public static final int drawer_shadow=0x7f020000;
@@ -227,38 +227,38 @@ containing a value of this type.
         public static final int seek_thumb_pressed=0x7f020009;
     }
     public static final class id {
-        public static final int action_settings=0x7f05001f;
-        public static final int container=0x7f05000a;
-        public static final int cpu=0x7f050002;
-        public static final int cpuPieGraph=0x7f05001a;
-        public static final int cpuThreshold=0x7f050010;
-        public static final int deauthorizeButton=0x7f050015;
-        public static final int diskQueWaitLengthInput=0x7f050013;
-        public static final int donutContainer=0x7f050019;
-        public static final int drawer_layout=0x7f050009;
-        public static final int expandableListView=0x7f05000c;
-        public static final int graphTimeFrameInput=0x7f050014;
-        public static final int horizontal=0x7f050000;
-        public static final int listGroupStatusContainer=0x7f050018;
-        public static final int listGroupTextView=0x7f050017;
-        public static final int navItemTitle=0x7f05001e;
-        public static final int nav_list=0x7f05000b;
-        public static final int notificationsSwitch=0x7f05000f;
-        public static final int osusageGraph=0x7f05000e;
-        public static final int osusagePieChart=0x7f05000d;
-        public static final int queueLengthContainer=0x7f05001d;
-        public static final int ram=0x7f050003;
-        public static final int ramPieGraph=0x7f05001b;
-        public static final int ramThreshold=0x7f050011;
-        public static final int saveSettingsButton=0x7f050016;
-        public static final int signinEmail=0x7f050005;
-        public static final int signinPassword=0x7f050006;
-        public static final int signinSubmitButton=0x7f050007;
-        public static final int storage=0x7f050004;
-        public static final int storagePieGraph=0x7f05001c;
-        public static final int storageThreshold=0x7f050012;
-        public static final int textView2=0x7f050008;
-        public static final int vertical=0x7f050001;
+        public static final int action_settings=0x7f0a001f;
+        public static final int container=0x7f0a000a;
+        public static final int cpu=0x7f0a0002;
+        public static final int cpuPieGraph=0x7f0a001a;
+        public static final int cpuThreshold=0x7f0a0010;
+        public static final int deauthorizeButton=0x7f0a0015;
+        public static final int diskQueWaitLengthInput=0x7f0a0013;
+        public static final int donutContainer=0x7f0a0019;
+        public static final int drawer_layout=0x7f0a0009;
+        public static final int expandableListView=0x7f0a000c;
+        public static final int graphTimeFrameInput=0x7f0a0014;
+        public static final int horizontal=0x7f0a0000;
+        public static final int listGroupStatusContainer=0x7f0a0018;
+        public static final int listGroupTextView=0x7f0a0017;
+        public static final int navItemTitle=0x7f0a001e;
+        public static final int nav_list=0x7f0a000b;
+        public static final int notificationsSwitch=0x7f0a000f;
+        public static final int osusageGraph=0x7f0a000e;
+        public static final int osusagePieChart=0x7f0a000d;
+        public static final int queueLengthContainer=0x7f0a001d;
+        public static final int ram=0x7f0a0003;
+        public static final int ramPieGraph=0x7f0a001b;
+        public static final int ramThreshold=0x7f0a0011;
+        public static final int saveSettingsButton=0x7f0a0016;
+        public static final int signinEmail=0x7f0a0005;
+        public static final int signinPassword=0x7f0a0006;
+        public static final int signinSubmitButton=0x7f0a0007;
+        public static final int storage=0x7f0a0004;
+        public static final int storagePieGraph=0x7f0a001c;
+        public static final int storageThreshold=0x7f0a0012;
+        public static final int textView2=0x7f0a0008;
+        public static final int vertical=0x7f0a0001;
     }
     public static final class layout {
         public static final int activity_login=0x7f030000;
@@ -272,44 +272,44 @@ containing a value of this type.
         public static final int threshold_desc_layout=0x7f030008;
     }
     public static final class menu {
-        public static final int dashboard=0x7f0a0000;
-        public static final int global=0x7f0a0001;
+        public static final int dashboard=0x7f090000;
+        public static final int global=0x7f090001;
     }
     public static final class string {
-        public static final int action_example=0x7f08000b;
-        public static final int action_settings=0x7f080003;
-        public static final int app_name=0x7f080000;
-        public static final int average_disk_queue_length=0x7f080013;
-        public static final int cpu_text=0x7f080010;
-        public static final int cpu_threshold_desc=0x7f080017;
-        public static final int dashboard_title=0x7f080004;
-        public static final int deauthorize=0x7f08001d;
-        public static final int disk_queue_wait_length=0x7f08001b;
-        public static final int email_text=0x7f08000f;
-        public static final int graph_time_frame=0x7f08001c;
-        public static final int nav_drawer_close=0x7f080015;
-        public static final int nav_drawer_open=0x7f080014;
-        public static final int navigation_drawer_close=0x7f08000a;
-        public static final int navigation_drawer_open=0x7f080009;
-        public static final int notifications=0x7f08001a;
-        public static final int osusage_current=0x7f080020;
-        public static final int osusage_historic=0x7f080021;
-        public static final int password_text=0x7f08000d;
-        public static final int preference_file_key=0x7f080001;
-        public static final int ram_text=0x7f080011;
-        public static final int ram_threshold_desc=0x7f080018;
-        public static final int save=0x7f08001e;
-        public static final int settings_saved=0x7f08001f;
-        public static final int settings_title=0x7f080016;
-        public static final int sign_in_text=0x7f08000c;
-        public static final int storage_text=0x7f080012;
-        public static final int storage_threshold_desc=0x7f080019;
-        public static final int submit_text=0x7f08000e;
-        public static final int title_activity_login=0x7f080002;
-        public static final int title_section1=0x7f080005;
-        public static final int title_section2=0x7f080006;
-        public static final int title_section3=0x7f080007;
-        public static final int title_section4=0x7f080008;
+        public static final int action_example=0x7f07000b;
+        public static final int action_settings=0x7f070003;
+        public static final int app_name=0x7f070000;
+        public static final int average_disk_queue_length=0x7f070013;
+        public static final int cpu_text=0x7f070010;
+        public static final int cpu_threshold_desc=0x7f070017;
+        public static final int dashboard_title=0x7f070004;
+        public static final int deauthorize=0x7f07001d;
+        public static final int disk_queue_wait_length=0x7f07001b;
+        public static final int email_text=0x7f07000f;
+        public static final int graph_time_frame=0x7f07001c;
+        public static final int nav_drawer_close=0x7f070015;
+        public static final int nav_drawer_open=0x7f070014;
+        public static final int navigation_drawer_close=0x7f07000a;
+        public static final int navigation_drawer_open=0x7f070009;
+        public static final int notifications=0x7f07001a;
+        public static final int osusage_current=0x7f070020;
+        public static final int osusage_historic=0x7f070021;
+        public static final int password_text=0x7f07000d;
+        public static final int preference_file_key=0x7f070001;
+        public static final int ram_text=0x7f070011;
+        public static final int ram_threshold_desc=0x7f070018;
+        public static final int save=0x7f07001e;
+        public static final int settings_saved=0x7f07001f;
+        public static final int settings_title=0x7f070016;
+        public static final int sign_in_text=0x7f07000c;
+        public static final int storage_text=0x7f070012;
+        public static final int storage_threshold_desc=0x7f070019;
+        public static final int submit_text=0x7f07000e;
+        public static final int title_activity_login=0x7f070002;
+        public static final int title_section1=0x7f070005;
+        public static final int title_section2=0x7f070006;
+        public static final int title_section3=0x7f070007;
+        public static final int title_section4=0x7f070008;
     }
     public static final class style {
         /** 
@@ -333,11 +333,11 @@ containing a value of this type.
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f090000;
+        public static final int AppBaseTheme=0x7f080000;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f090001;
+        public static final int AppTheme=0x7f080001;
     }
     public static final class styleable {
         /** Attributes that can be used with a BarGraph.
