@@ -11,9 +11,9 @@ class RangeSliderTrackLayer: CALayer {
             let path = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
             CGContextAddPath(ctx, path.CGPath)
             
-            let redArea = CGColorCreate(CGColorSpaceCreateDeviceRGB(), [1.0, 0.0, 0.0, 1.0])
-            let orangeArea = CGColorCreate(CGColorSpaceCreateDeviceRGB(), [1.0, 0.64, 0.0, 1.0])
             let greenArea = CGColorCreate(CGColorSpaceCreateDeviceRGB(), [0.0, 1.0, 0.0, 1.0])
+            let orangeArea = CGColorCreate(CGColorSpaceCreateDeviceRGB(), [1.0, 0.64, 0.0, 1.0])
+            let redArea = CGColorCreate(CGColorSpaceCreateDeviceRGB(), [1.0, 0.0, 0.0, 1.0])
             
             let minValuePosition = CGFloat(slider.positionForValue(0))
             let lowerValuePosition = CGFloat(slider.positionForValue(slider.lowerValue))
@@ -21,16 +21,18 @@ class RangeSliderTrackLayer: CALayer {
             let maxValuePosition = CGFloat(slider.positionForValue(1.0))
             
             CGContextSetFillColorWithColor(ctx, greenArea)
-            let rectRed = CGRect(x: minValuePosition, y: 0.0, width: lowerValuePosition - minValuePosition, height: bounds.height)
-            CGContextFillRect(ctx, rectRed)
+
+            let rectGreen = CGRect(x: minValuePosition, y: 0.0, width: lowerValuePosition - minValuePosition, height: bounds.height)
+            CGContextFillRect(ctx, rectGreen)
 
             CGContextSetFillColorWithColor(ctx, orangeArea)
             let rectOrange = CGRect(x: lowerValuePosition, y: 0.0, width: upperValuePosition - lowerValuePosition, height: bounds.height)
             CGContextFillRect(ctx, rectOrange)
             
             CGContextSetFillColorWithColor(ctx, redArea)
-            let rectGreen = CGRect(x: upperValuePosition, y: 0.0, width: maxValuePosition - upperValuePosition, height: bounds.height)
-            CGContextFillRect(ctx, rectGreen)
+
+            let rectRed = CGRect(x: upperValuePosition, y: 0.0, width: maxValuePosition - upperValuePosition, height: bounds.height)
+            CGContextFillRect(ctx, rectRed)
             
         }
     }
