@@ -8,14 +8,16 @@
 
 import UIKit
 
-class OSUsageViewController: UIViewController, CPTPlotDataSource {
+class OSUsageViewController: UIViewController, CPTPlotDataSource, CPTPieChartDataSource {
     
     @IBOutlet weak var graphView: CPTGraphHostingView!
+    var osPercentages = [NSInteger]()
+    var osNames = ["W XP", "W Vista", "W 7", "W 8", "W Mobile", "Mac OS", "iOS", "Linux", "Android"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
+        self.osPercentages = [2, 4, 6, 8, 9, 12, 15, 18, 26]
         // Create sample graph
         var graph = CPTXYGraph(frame: CGRectZero)
         
@@ -30,18 +32,28 @@ class OSUsageViewController: UIViewController, CPTPlotDataSource {
         axes.yAxis.axisLineStyle = lineStyle
         var pie = CPTPieChart()
         pie.dataSource = self
-        pie.pieRadius = 80
+        pie.pieRadius = (self.view.frame.width - 130) / 2
+        pie.centerAnchor = CGPointMake(0.35, 0.5)
         graph.addPlot(pie)
-        
+        var legend = CPTLegend.legendWithGraph(graph) as CPTLegend
+        legend.numberOfColumns = 1
+        graph.legend = legend
+        var legendPadding = -(self.view.bounds.size.width / 8) + pie.pieRadius / 4
+        graph.legendAnchor = CPTRectAnchorRight
+        graph.legendDisplacement = CGPointMake(legendPadding, 0.0)
         self.graphView.hostedGraph = graph
     }
     
+    func legendTitleForPieChart(pieChart: CPTPieChart!, recordIndex idx: UInt) -> String! {
+        return osNames[Int(idx)]
+    }
+    
     func numberOfRecordsForPlot(plot: CPTPlot!) -> UInt {
-        return 4
+        return UInt(osPercentages.count)
     }
     
     func numberForPlot(plot: CPTPlot!, field fieldEnum: UInt, recordIndex idx: UInt) -> NSNumber! {
-        return idx+1
+        return osPercentages[Int(idx)]
     }
     
     override func didReceiveMemoryWarning() {
