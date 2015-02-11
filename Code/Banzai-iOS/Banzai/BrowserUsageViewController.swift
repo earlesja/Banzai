@@ -10,6 +10,7 @@ import UIKit
 
 class BrowserUsageViewController: UIViewController, CPTPlotDataSource, CPTPieChartDataSource {
     
+    @IBOutlet weak var lineGraphView: UIView!
     @IBOutlet weak var graphView: CPTGraphHostingView!
     var browserPercentages = [NSInteger]()
     var browserNames = ["Opera", "Firefox", "Chrome", "Safari", "IE 8", "IE 9", "IE 10", "IE 11"]
@@ -44,6 +45,23 @@ class BrowserUsageViewController: UIViewController, CPTPlotDataSource, CPTPieCha
         graph.legendDisplacement = CGPointMake(legendPadding, 0.0)
         
         self.graphView.hostedGraph = graph
+        
+        var lineRect = CGRect(x: lineGraphView.bounds.minX, y: lineGraphView.bounds.minY, width: lineGraphView.bounds.width, height: lineGraphView.bounds.height - 20)
+        var lineChart = PNLineChart(frame: lineRect) as PNLineChart
+        lineChart.showCoordinateAxis = true
+        var space = lineChart.bounds.width / 7
+        lineChart.setXLabels(["SEP 1", "SEP 2", "SEP 3", "SEP 4", "SEP 5"], withWidth: space)
+        var dataArray = [60.1, 160.1, 126.4, 262.2, 186.2] as [CGFloat]
+        var data = PNLineChartData()
+        //data.color = PNFreshGreen
+        data.itemCount = UInt(lineChart.xLabels.count)
+        data.getData = { (index) -> PNLineChartDataItem in
+            var yValue = dataArray[Int(index)]
+            return PNLineChartDataItem(y: yValue)
+        }
+        lineChart.chartData = [data]
+        lineChart.strokeChart()
+        lineGraphView.addSubview(lineChart)
     }
     
     func legendTitleForPieChart(pieChart: CPTPieChart!, recordIndex idx: UInt) -> String! {

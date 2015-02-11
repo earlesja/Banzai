@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A1B39ED1A8B80ED00CBE1E3 /* CPTMutablePlotRange+SwiftCompat.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B39EC1A8B80ED00CBE1E3 /* CPTMutablePlotRange+SwiftCompat.m */; };
+		0A1B3A091A8BAFCB00CBE1E3 /* PNLineChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B39FA1A8BAFCB00CBE1E3 /* PNLineChart.m */; };
+		0A1B3A0A1A8BAFCB00CBE1E3 /* PNLineChartData.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B39FC1A8BAFCB00CBE1E3 /* PNLineChartData.m */; };
+		0A1B3A0B1A8BAFCB00CBE1E3 /* PNLineChartDataItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B39FE1A8BAFCB00CBE1E3 /* PNLineChartDataItem.m */; };
+		0A69DB301A8BB494002245C4 /* UICountingLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A69DB2F1A8BB494002245C4 /* UICountingLabel.m */; };
+		0A69DB341A8BB6F0002245C4 /* PNChartLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A69DB331A8BB6F0002245C4 /* PNChartLabel.m */; };
 		0A7D111F1A4190C800580977 /* MainNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7D111E1A4190C800580977 /* MainNavigationController.swift */; };
 		0A7D11541A41914B00580977 /* ENSideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7D11521A41914B00580977 /* ENSideMenu.swift */; };
 		0A7D11551A41914B00580977 /* ENSideMenuNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7D11531A41914B00580977 /* ENSideMenuNavigationController.swift */; };
@@ -31,7 +37,6 @@
 		3D48E7B91A6F9D5F00A796A2 /* DashboardTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D48E7B81A6F9D5F00A796A2 /* DashboardTableCell.swift */; };
 		3DAAA3CA1A6F4408009BDE46 /* PNCircleChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DAAA3C91A6F4408009BDE46 /* PNCircleChart.m */; };
 		3DAAA3CD1A6F4441009BDE46 /* PNColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DAAA3CC1A6F4441009BDE46 /* PNColor.m */; };
-		3DAAA3D01A6F449E009BDE46 /* UICountingLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DAAA3CF1A6F449E009BDE46 /* UICountingLabel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +50,19 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0A1B39EB1A8B80ED00CBE1E3 /* CPTMutablePlotRange+SwiftCompat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CPTMutablePlotRange+SwiftCompat.h"; sourceTree = "<group>"; };
+		0A1B39EC1A8B80ED00CBE1E3 /* CPTMutablePlotRange+SwiftCompat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CPTMutablePlotRange+SwiftCompat.m"; sourceTree = "<group>"; };
+		0A1B39F91A8BAFCB00CBE1E3 /* PNLineChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PNLineChart.h; sourceTree = "<group>"; };
+		0A1B39FA1A8BAFCB00CBE1E3 /* PNLineChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PNLineChart.m; sourceTree = "<group>"; };
+		0A1B39FB1A8BAFCB00CBE1E3 /* PNLineChartData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PNLineChartData.h; sourceTree = "<group>"; };
+		0A1B39FC1A8BAFCB00CBE1E3 /* PNLineChartData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PNLineChartData.m; sourceTree = "<group>"; };
+		0A1B39FD1A8BAFCB00CBE1E3 /* PNLineChartDataItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PNLineChartDataItem.h; sourceTree = "<group>"; };
+		0A1B39FE1A8BAFCB00CBE1E3 /* PNLineChartDataItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PNLineChartDataItem.m; sourceTree = "<group>"; };
+		0A69DB2E1A8BB494002245C4 /* UICountingLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICountingLabel.h; sourceTree = "<group>"; };
+		0A69DB2F1A8BB494002245C4 /* UICountingLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICountingLabel.m; sourceTree = "<group>"; };
+		0A69DB311A8BB5AA002245C4 /* PNChartDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PNChartDelegate.h; sourceTree = "<group>"; };
+		0A69DB321A8BB6F0002245C4 /* PNChartLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PNChartLabel.h; sourceTree = "<group>"; };
+		0A69DB331A8BB6F0002245C4 /* PNChartLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PNChartLabel.m; sourceTree = "<group>"; };
 		0A7D111E1A4190C800580977 /* MainNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainNavigationController.swift; sourceTree = "<group>"; };
 		0A7D11521A41914B00580977 /* ENSideMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ENSideMenu.swift; sourceTree = "<group>"; };
 		0A7D11531A41914B00580977 /* ENSideMenuNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ENSideMenuNavigationController.swift; sourceTree = "<group>"; };
@@ -153,8 +171,6 @@
 		3DAAA3C91A6F4408009BDE46 /* PNCircleChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PNCircleChart.m; sourceTree = "<group>"; };
 		3DAAA3CB1A6F4441009BDE46 /* PNColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PNColor.h; sourceTree = "<group>"; };
 		3DAAA3CC1A6F4441009BDE46 /* PNColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PNColor.m; sourceTree = "<group>"; };
-		3DAAA3CE1A6F449E009BDE46 /* UICountingLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICountingLabel.h; sourceTree = "<group>"; };
-		3DAAA3CF1A6F449E009BDE46 /* UICountingLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICountingLabel.m; sourceTree = "<group>"; };
 		3DAAA3D11A6F45D0009BDE46 /* PNCircleChart.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PNCircleChart.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -287,7 +303,7 @@
 			children = (
 				0AA60D361A70182A00DB6268 /* QuartzCore.framework */,
 				0AA60B751A70123000DB6268 /* CorePlot */,
-				3DAAA3C61A6F41A8009BDE46 /* CircleChart */,
+				3DAAA3C61A6F41A8009BDE46 /* PNChart */,
 				3D1CCFDA1A63A8130026BA86 /* CustomSlider */,
 				3D30D2981A2E8B000046F694 /* Banzai */,
 				3D30D2AE1A2E8B000046F694 /* BanzaiTests */,
@@ -307,6 +323,7 @@
 		3D30D2981A2E8B000046F694 /* Banzai */ = {
 			isa = PBXGroup;
 			children = (
+				3DAAA3C71A6F4408009BDE46 /* Banzai-Bridging-Header.h */,
 				3D48E7B81A6F9D5F00A796A2 /* DashboardTableCell.swift */,
 				3D30D2BF1A2EB67F0046F694 /* DashboardViewController.swift */,
 				3D30D29B1A2E8B000046F694 /* AppDelegate.swift */,
@@ -324,6 +341,8 @@
 				3D30D2A21A2E8B000046F694 /* Images.xcassets */,
 				3D30D2991A2E8B000046F694 /* Supporting Files */,
 				3D30D2D61A2FA8D90046F694 /* BanzaiLaunch.xib */,
+				0A1B39EB1A8B80ED00CBE1E3 /* CPTMutablePlotRange+SwiftCompat.h */,
+				0A1B39EC1A8B80ED00CBE1E3 /* CPTMutablePlotRange+SwiftCompat.m */,
 			);
 			path = Banzai;
 			sourceTree = "<group>";
@@ -353,18 +372,26 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		3DAAA3C61A6F41A8009BDE46 /* CircleChart */ = {
+		3DAAA3C61A6F41A8009BDE46 /* PNChart */ = {
 			isa = PBXGroup;
 			children = (
-				3DAAA3C71A6F4408009BDE46 /* Banzai-Bridging-Header.h */,
-				3DAAA3CE1A6F449E009BDE46 /* UICountingLabel.h */,
-				3DAAA3CF1A6F449E009BDE46 /* UICountingLabel.m */,
-				3DAAA3CB1A6F4441009BDE46 /* PNColor.h */,
-				3DAAA3CC1A6F4441009BDE46 /* PNColor.m */,
+				0A69DB311A8BB5AA002245C4 /* PNChartDelegate.h */,
+				0A69DB321A8BB6F0002245C4 /* PNChartLabel.h */,
+				0A69DB331A8BB6F0002245C4 /* PNChartLabel.m */,
 				3DAAA3D11A6F45D0009BDE46 /* PNCircleChart.h */,
 				3DAAA3C91A6F4408009BDE46 /* PNCircleChart.m */,
+				3DAAA3CB1A6F4441009BDE46 /* PNColor.h */,
+				3DAAA3CC1A6F4441009BDE46 /* PNColor.m */,
+				0A1B39F91A8BAFCB00CBE1E3 /* PNLineChart.h */,
+				0A1B39FA1A8BAFCB00CBE1E3 /* PNLineChart.m */,
+				0A1B39FB1A8BAFCB00CBE1E3 /* PNLineChartData.h */,
+				0A1B39FC1A8BAFCB00CBE1E3 /* PNLineChartData.m */,
+				0A1B39FD1A8BAFCB00CBE1E3 /* PNLineChartDataItem.h */,
+				0A1B39FE1A8BAFCB00CBE1E3 /* PNLineChartDataItem.m */,
+				0A69DB2E1A8BB494002245C4 /* UICountingLabel.h */,
+				0A69DB2F1A8BB494002245C4 /* UICountingLabel.m */,
 			);
-			name = CircleChart;
+			name = PNChart;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -468,24 +495,29 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A7D11591A41965300580977 /* ServerDetailsViewController.swift in Sources */,
+				0A1B3A0B1A8BAFCB00CBE1E3 /* PNLineChartDataItem.m in Sources */,
 				3D1CCFE01A63A8970026BA86 /* RangeSliderTrackLayer.swift in Sources */,
 				3D1CCFDF1A63A8970026BA86 /* RangeSliderThumbLayer.swift in Sources */,
 				3D30D29E1A2E8B000046F694 /* LoginViewController.swift in Sources */,
 				0A7D111F1A4190C800580977 /* MainNavigationController.swift in Sources */,
+				0A1B3A091A8BAFCB00CBE1E3 /* PNLineChart.m in Sources */,
 				3D48E7B91A6F9D5F00A796A2 /* DashboardTableCell.swift in Sources */,
 				0A7D115D1A41966600580977 /* SettingsViewController.swift in Sources */,
+				0A69DB341A8BB6F0002245C4 /* PNChartLabel.m in Sources */,
+				0A1B3A0A1A8BAFCB00CBE1E3 /* PNLineChartData.m in Sources */,
 				0A7D115B1A41965E00580977 /* SystemErrorsViewController.swift in Sources */,
 				3D1CCFDE1A63A8970026BA86 /* RangeSlider.swift in Sources */,
 				3DAAA3CD1A6F4441009BDE46 /* PNColor.m in Sources */,
 				0A7D11541A41914B00580977 /* ENSideMenu.swift in Sources */,
 				3D30D2C01A2EB67F0046F694 /* DashboardViewController.swift in Sources */,
-				3DAAA3D01A6F449E009BDE46 /* UICountingLabel.m in Sources */,
 				0A7D11551A41914B00580977 /* ENSideMenuNavigationController.swift in Sources */,
 				3D30D29C1A2E8B000046F694 /* AppDelegate.swift in Sources */,
 				3DAAA3CA1A6F4408009BDE46 /* PNCircleChart.m in Sources */,
 				0A8661951A5D0C45009687FA /* OSUsageViewController.swift in Sources */,
 				0A8661971A5D0DE3009687FA /* BrowserUsageViewController.swift in Sources */,
 				0A7D11571A41919700580977 /* SideMenuTableViewController.swift in Sources */,
+				0A69DB301A8BB494002245C4 /* UICountingLabel.m in Sources */,
+				0A1B39ED1A8B80ED00CBE1E3 /* CPTMutablePlotRange+SwiftCompat.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
