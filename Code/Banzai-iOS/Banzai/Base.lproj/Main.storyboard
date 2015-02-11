@@ -182,7 +182,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="DashboardCell" rowHeight="200" id="Xm8-Iy-SPr" customClass="DashboardTableCell" customModule="Banzai" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="DashboardCell" rowHeight="250" id="Xm8-Iy-SPr" customClass="DashboardTableCell" customModule="Banzai" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Xm8-Iy-SPr" id="lmf-F9-3HG">
@@ -194,13 +194,13 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GIs-pG-dZN">
+                                                <view tag="999" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GIs-pG-dZN">
                                                     <rect key="frame" x="38" y="33.5" width="524" height="125"/>
                                                     <subviews>
-                                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="51h-Zq-uSF" userLabel="disk">
+                                                        <view tag="999" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="51h-Zq-uSF" userLabel="disk">
                                                             <rect key="frame" x="351" y="0.0" width="168" height="125"/>
                                                             <subviews>
-                                                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lhW-ej-D2x" userLabel="diskArea">
+                                                                <view tag="999" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lhW-ej-D2x" userLabel="diskArea">
                                                                     <rect key="frame" x="22" y="0.0" width="125" height="125"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Disk" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OPN-EM-cju">
@@ -248,10 +248,10 @@
                                                                 <rect key="frame" x="259" y="0.0" width="124.5" height="125"/>
                                                             </variation>
                                                         </view>
-                                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CvK-tc-E9r" userLabel="cpu">
+                                                        <view tag="999" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CvK-tc-E9r" userLabel="cpu">
                                                             <rect key="frame" x="5" y="0.0" width="168" height="125"/>
                                                             <subviews>
-                                                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="07m-md-nNr" userLabel="cpuArea">
+                                                                <view tag="999" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="07m-md-nNr" userLabel="cpuArea">
                                                                     <rect key="frame" x="21.5" y="0.0" width="125" height="125"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" secondItem="07m-md-nNr" secondAttribute="height" multiplier="1:1" id="tiG-yn-7Mi">
@@ -309,10 +309,10 @@
                                                                 </mask>
                                                             </variation>
                                                         </view>
-                                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F5Z-St-BkL" userLabel="mem">
+                                                        <view tag="999" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F5Z-St-BkL" userLabel="mem">
                                                             <rect key="frame" x="178" y="0.0" width="168" height="125"/>
                                                             <subviews>
-                                                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mdc-sz-omN" userLabel="memArea">
+                                                                <view tag="999" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mdc-sz-omN" userLabel="memArea">
                                                                     <rect key="frame" x="21.5" y="0.0" width="125" height="125"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" secondItem="Mdc-sz-omN" secondAttribute="height" multiplier="1:1" id="Mfj-hu-Rg4"/>

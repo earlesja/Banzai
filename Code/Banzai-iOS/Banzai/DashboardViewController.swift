@@ -16,7 +16,6 @@ protocol DashboardViewControllerDelegate {
 
 class DashboardViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    @IBOutlet weak var dashBoardTable: UITableView!
     var dataObject: AnyObject?
     @IBOutlet weak var dashboardTable: UITableView!
     var delegate: DashboardViewControllerDelegate?
@@ -33,8 +32,8 @@ class DashboardViewController: UIViewController, UITableViewDataSource, UITableV
             alertController.addAction(defaultAction)
             presentViewController(alertController, animated: true, completion: nil)
         }
-        
-        //self.dashboardTable.tableFooterView = UIView()
+        dashboardTable.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
+        self.dashboardTable.tableFooterView = UIView()
         // wrap the centerViewController in a navigation controller, so we can push views to it
         // and display bar button items in the navigation bar
     }
@@ -95,7 +94,7 @@ class DashboardViewController: UIViewController, UITableViewDataSource, UITableV
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
         if indexPath == tableView.indexPathForSelectedRow() {
-            return 200.0
+            return 250.0
         }
         return 37.0
     }
