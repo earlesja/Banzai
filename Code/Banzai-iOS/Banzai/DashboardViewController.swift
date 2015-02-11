@@ -16,15 +16,37 @@ protocol DashboardViewControllerDelegate {
 
 class DashboardViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
+    @IBOutlet weak var dashBoardTable: UITableView!
     var dataObject: AnyObject?
     @IBOutlet weak var dashboardTable: UITableView!
     var delegate: DashboardViewControllerDelegate?
     
+    let settings = NSUserDefaults.standardUserDefaults()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        if !settings.boolForKey("changed") {
+            let alertController = UIAlertController(title: "Default Settings.", message: "Your settings have been configured to the default values.", preferredStyle: .Alert)
+            let defaultAction = UIAlertAction(title: "Return", style: .Default) { action -> Void in
+                self.defaultSettings()
+            }
+            alertController.addAction(defaultAction)
+            presentViewController(alertController, animated: true, completion: nil)
+        }
+        
         //self.dashboardTable.tableFooterView = UIView()
         // wrap the centerViewController in a navigation controller, so we can push views to it
         // and display bar button items in the navigation bar
+    }
+    
+    func defaultSettings() {
+        settings.setBool(true, forKey: "changed")
+        settings.setDouble(0.2, forKey: "cpuLower")
+        settings.setDouble(0.8, forKey: "cpuUpper")
+        settings.setDouble(0.2, forKey: "memLower")
+        settings.setDouble(0.8, forKey: "memUpper")
+        settings.setDouble(0.2, forKey: "diskLower")
+        settings.setDouble(0.8, forKey: "diskUpper")
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
@@ -52,8 +74,22 @@ class DashboardViewController: UIViewController, UITableViewDataSource, UITableV
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         println("Selected row #\(indexPath.row)")
+        var selectedCell : DashboardTableCell = tableView.cellForRowAtIndexPath(indexPath)! as DashboardTableCell
+        
         tableView.beginUpdates()
+        selectedCell.updateDoughnuts()
+        selectedCell.circleArea.hidden = false
+        selectedCell.accessoryType = .None
+        selectedCell.selectionStyle = UITableViewCellSelectionStyle.None
+        selectedCell.contentView.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleLeftMargin | UIViewAutoresizing.FlexibleRightMargin
         tableView.endUpdates()
+    }
+    
+    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+        var selectedCell : DashboardTableCell = tableView.cellForRowAtIndexPath(indexPath)! as DashboardTableCell
+        selectedCell.clearDoughnuts()
+        selectedCell.accessoryType = .DisclosureIndicator
+        selectedCell.circleArea.hidden = true;
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -62,6 +98,10 @@ class DashboardViewController: UIViewController, UITableViewDataSource, UITableV
             return 200.0
         }
         return 37.0
+    }
+    
+    func updateData(){
+        
     }
 
     @IBAction func toggleSideMenu(sender: AnyObject) {

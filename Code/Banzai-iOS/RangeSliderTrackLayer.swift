@@ -20,7 +20,7 @@ class RangeSliderTrackLayer: CALayer {
             let upperValuePosition = CGFloat(slider.positionForValue(slider.upperValue))
             let maxValuePosition = CGFloat(slider.positionForValue(1.0))
             
-            CGContextSetFillColorWithColor(ctx, redArea)
+            CGContextSetFillColorWithColor(ctx, greenArea)
             let rectRed = CGRect(x: minValuePosition, y: 0.0, width: lowerValuePosition - minValuePosition, height: bounds.height)
             CGContextFillRect(ctx, rectRed)
 
@@ -28,7 +28,7 @@ class RangeSliderTrackLayer: CALayer {
             let rectOrange = CGRect(x: lowerValuePosition, y: 0.0, width: upperValuePosition - lowerValuePosition, height: bounds.height)
             CGContextFillRect(ctx, rectOrange)
             
-            CGContextSetFillColorWithColor(ctx, greenArea)
+            CGContextSetFillColorWithColor(ctx, redArea)
             let rectGreen = CGRect(x: upperValuePosition, y: 0.0, width: maxValuePosition - upperValuePosition, height: bounds.height)
             CGContextFillRect(ctx, rectGreen)
             

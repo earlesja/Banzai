@@ -308,10 +308,9 @@
 			isa = PBXGroup;
 			children = (
 				3D48E7B81A6F9D5F00A796A2 /* DashboardTableCell.swift */,
-				3DAAA3C71A6F4408009BDE46 /* Banzai-Bridging-Header.h */,
+				3D30D2BF1A2EB67F0046F694 /* DashboardViewController.swift */,
 				3D30D29B1A2E8B000046F694 /* AppDelegate.swift */,
 				0A8661961A5D0DE3009687FA /* BrowserUsageViewController.swift */,
-				3D30D2BF1A2EB67F0046F694 /* DashboardViewController.swift */,
 				0A7D11521A41914B00580977 /* ENSideMenu.swift */,
 				0A7D11531A41914B00580977 /* ENSideMenuNavigationController.swift */,
 				3D30D29D1A2E8B000046F694 /* LoginViewController.swift */,
@@ -357,6 +356,7 @@
 		3DAAA3C61A6F41A8009BDE46 /* CircleChart */ = {
 			isa = PBXGroup;
 			children = (
+				3DAAA3C71A6F4408009BDE46 /* Banzai-Bridging-Header.h */,
 				3DAAA3CE1A6F449E009BDE46 /* UICountingLabel.h */,
 				3DAAA3CF1A6F449E009BDE46 /* UICountingLabel.m */,
 				3DAAA3CB1A6F4441009BDE46 /* PNColor.h */,

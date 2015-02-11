@@ -62,7 +62,7 @@ displayCountingLabel:(BOOL)displayCountingLabel
   overrideLineWidth:(NSNumber *)overrideLineWidth
 {
     self = [super initWithFrame:frame];
-
+    
     if (self) {
         _total = total;
         _current = current;
@@ -71,10 +71,10 @@ displayCountingLabel:(BOOL)displayCountingLabel
         _chartType = PNChartFormatTypePercent;
         
         _displayCountingLabel = displayCountingLabel;
-
+        
         CGFloat startAngle = clockwise ? -90.0f : 270.0f;
         CGFloat endAngle = clockwise ? -90.01f : 270.01f;
-
+        
         _lineWidth = overrideLineWidth;
         
         UIBezierPath *circlePath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(self.frame.size.width/2.0f, self.frame.size.height/2.0f)
@@ -82,14 +82,14 @@ displayCountingLabel:(BOOL)displayCountingLabel
                                                               startAngle:DEGREES_TO_RADIANS(startAngle)
                                                                 endAngle:DEGREES_TO_RADIANS(endAngle)
                                                                clockwise:clockwise];
-
+        
         _circle               = [CAShapeLayer layer];
         _circle.path          = circlePath.CGPath;
         _circle.lineCap       = kCALineCapRound;
         _circle.fillColor     = [UIColor clearColor].CGColor;
         _circle.lineWidth     = [_lineWidth floatValue];
         _circle.zPosition     = 1;
-
+        
         _circleBackground             = [CAShapeLayer layer];
         _circleBackground.path        = circlePath.CGPath;
         _circleBackground.lineCap     = kCALineCapRound;
@@ -98,10 +98,10 @@ displayCountingLabel:(BOOL)displayCountingLabel
         _circleBackground.strokeColor = (hasBackgroundShadow ? backgroundShadowColor.CGColor : [UIColor clearColor].CGColor);
         _circleBackground.strokeEnd   = 1.0;
         _circleBackground.zPosition   = -1;
-
+        
         [self.layer addSublayer:_circle];
         [self.layer addSublayer:_circleBackground];
-
+        
         _countingLabel = [[UICountingLabel alloc] initWithFrame:CGRectMake(0, 0, 100.0, 50.0)];
         [_countingLabel setTextAlignment:NSTextAlignmentCenter];
         [_countingLabel setFont:[UIFont boldSystemFontOfSize:16.0f]];
@@ -113,7 +113,7 @@ displayCountingLabel:(BOOL)displayCountingLabel
             [self addSubview:_countingLabel];
         }
     }
-
+    
     return self;
 }
 
@@ -121,7 +121,7 @@ displayCountingLabel:(BOOL)displayCountingLabel
 - (void)strokeChart
 {
     // Add counting label
-
+    
     if (_displayCountingLabel) {
         NSString *format;
         switch (self.chartType) {
@@ -139,15 +139,15 @@ displayCountingLabel:(BOOL)displayCountingLabel
         self.countingLabel.format = format;
         [self addSubview:self.countingLabel];
     }
-
-
+    
+    
     // Add circle params
-
+    
     _circle.lineWidth   = [_lineWidth floatValue];
     _circleBackground.lineWidth = [_lineWidth floatValue];
     _circleBackground.strokeEnd = 1.0;
     _circle.strokeColor = _strokeColor.CGColor;
-
+    
     // Add Animation
     CABasicAnimation *pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
     pathAnimation.duration = self.duration;
@@ -156,13 +156,13 @@ displayCountingLabel:(BOOL)displayCountingLabel
     pathAnimation.toValue = @([_current floatValue] / [_total floatValue]);
     [_circle addAnimation:pathAnimation forKey:@"strokeEndAnimation"];
     _circle.strokeEnd   = [_current floatValue] / [_total floatValue];
-
-    [_countingLabel countFrom:0 to:[_current floatValue] withDuration:1.0];
-
-
+    
+    [_countingLabel countFrom:0 to:[_current floatValue] withDuration:self.duration];
+    
+    
     // Check if user wants to add a gradient from the start color to the bar color
     if (_strokeColorGradientStart) {
-
+        
         // Add gradient
         self.gradientMask = [CAShapeLayer layer];
         self.gradientMask.fillColor = [[UIColor clearColor] CGColor];
@@ -172,7 +172,7 @@ displayCountingLabel:(BOOL)displayCountingLabel
         CGRect gradientFrame = CGRectMake(0, 0, 2*self.bounds.size.width, 2*self.bounds.size.height);
         self.gradientMask.frame = gradientFrame;
         self.gradientMask.path = _circle.path;
-
+        
         CAGradientLayer *gradientLayer = [CAGradientLayer layer];
         gradientLayer.startPoint = CGPointMake(0.5,1.0);
         gradientLayer.endPoint = CGPointMake(0.5,0.0);
@@ -183,13 +183,13 @@ displayCountingLabel:(BOOL)displayCountingLabel
                             (id)_strokeColorGradientStart.CGColor
                             ];
         gradientLayer.colors = colors;
-
+        
         [gradientLayer setMask:self.gradientMask];
-
+        
         [_circle addSublayer:gradientLayer];
-
+        
         self.gradientMask.strokeEnd = [_current floatValue] / [_total floatValue];
-
+        
         [self.gradientMask addAnimation:pathAnimation forKey:@"strokeEndAnimation"];
     }
 }
@@ -199,20 +199,27 @@ displayCountingLabel:(BOOL)displayCountingLabel
 - (void)growChartByAmount:(NSNumber *)growAmount
 {
     NSNumber *updatedValue = [NSNumber numberWithFloat:[_current floatValue] + [growAmount floatValue]];
-
+    
     // Add animation
     [self updateChartByCurrent:updatedValue];
 }
 
 
 -(void)updateChartByCurrent:(NSNumber *)current{
+    
+    [self updateChartByCurrent:current
+                       byTotal:_total];
+    
+}
+
+-(void)updateChartByCurrent:(NSNumber *)current byTotal:(NSNumber *)total {
     // Add animation
     CABasicAnimation *pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
     pathAnimation.duration = self.duration;
     pathAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     pathAnimation.fromValue = @([_current floatValue] / [_total floatValue]);
-    pathAnimation.toValue = @([current floatValue] / [_total floatValue]);
-    _circle.strokeEnd   = [current floatValue] / [_total floatValue];
+    pathAnimation.toValue = @([current floatValue] / [total floatValue]);
+    _circle.strokeEnd   = [current floatValue] / [total floatValue];
     
     if (_strokeColorGradientStart) {
         self.gradientMask.strokeEnd = _circle.strokeEnd;
@@ -221,10 +228,11 @@ displayCountingLabel:(BOOL)displayCountingLabel
     [_circle addAnimation:pathAnimation forKey:@"strokeEndAnimation"];
     
     if (_displayCountingLabel) {
-        [self.countingLabel countFrom:fmin([_current floatValue], [_total floatValue]) to:fmin([current floatValue], [_total floatValue]) withDuration:self.duration];
+        [self.countingLabel countFrom:fmin([_current floatValue], [_total floatValue]) to:fmin([current floatValue], [total floatValue]) withDuration:self.duration];
     }
     
     _current = current;
+    _total = total;
 }
 
 @end

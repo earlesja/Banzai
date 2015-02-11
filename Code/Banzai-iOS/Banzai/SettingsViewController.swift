@@ -19,6 +19,8 @@ class SettingsViewController: UIViewController {
     let memSlider = RangeSlider(frame: CGRectZero)
     let diskSlider = RangeSlider(frame: CGRectZero)
     
+    let settings = NSUserDefaults.standardUserDefaults()
+    
     var valueFormat = "01."
     
     @IBOutlet weak var sliderArea: UIView!
@@ -55,6 +57,26 @@ class SettingsViewController: UIViewController {
         diskSlider.addSubview(diskLow)
         diskSlider.addSubview(diskHigh)
         diskSlider.addSubview(diskLabel)
+        
+        loadValues()
+    }
+    
+    func loadValues() {
+        cpuSlider.lowerValue = settings.doubleForKey("cpuLower")
+        cpuSlider.upperValue = settings.doubleForKey("cpuUpper")
+        memSlider.lowerValue = settings.doubleForKey("memLower")
+        memSlider.upperValue = settings.doubleForKey("memUpper")
+        diskSlider.lowerValue = settings.doubleForKey("diskLower")
+        diskSlider.upperValue = settings.doubleForKey("diskUpper")
+    }
+    
+    func defaultSettings() {
+        settings.setDouble(20, forKey: "cpuLower")
+        settings.setDouble(80, forKey: "cpuUpper")
+        settings.setDouble(20, forKey: "memLower")
+        settings.setDouble(80, forKey: "memUpper")
+        settings.setDouble(20, forKey: "diskLower")
+        settings.setDouble(80, forKey: "diskUpper")
     }
     
     override func viewDidLayoutSubviews() {
@@ -113,5 +135,15 @@ class SettingsViewController: UIViewController {
     
     @IBAction func toggleSideMenu(sender: AnyObject) {
         toggleSideMenuView()
+    }
+    
+    @IBAction func saveSettings(sender: AnyObject) {
+        settings.setBool(true, forKey: "changed")
+        settings.setDouble(cpuSlider.lowerValue, forKey: "cpuLower")
+        settings.setDouble(cpuSlider.upperValue, forKey: "cpuUpper")
+        settings.setDouble(memSlider.lowerValue, forKey: "memLower")
+        settings.setDouble(memSlider.upperValue, forKey: "memUpper")
+        settings.setDouble(diskSlider.lowerValue, forKey: "diskLower")
+        settings.setDouble(diskSlider.upperValue, forKey: "diskUpper")
     }
 }
