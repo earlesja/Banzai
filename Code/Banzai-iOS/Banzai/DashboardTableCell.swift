@@ -72,7 +72,7 @@ class DashboardTableCell: UITableViewCell {
         
         cpuDoughnut = PNCircleChart(frame: cpuRect, total: 100, current: 40, clockwise: false)
         memDoughnut = PNCircleChart(frame: memRect, total: 100, current: 60, clockwise: false)
-        diskDoughnut = PNCircleChart(frame: diskRect, total: 100, current: 80, clockwise: false)
+        diskDoughnut = PNCircleChart(frame: diskRect, total: 100, current: 96, clockwise: false)
         
         cpuDoughnut.lineWidth = 15
         memDoughnut.lineWidth = 15
