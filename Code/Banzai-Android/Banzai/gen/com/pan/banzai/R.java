@@ -11,6 +11,8 @@ public final class R {
     public static final class array {
         public static final int nav_drawer_icons=0x7f040001;
         public static final int nav_drawer_items=0x7f040000;
+        public static final int pie_chart_colors=0x7f040002;
+        public static final int pie_chart_text_colors=0x7f040003;
     }
     public static final class attr {
         /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
@@ -177,22 +179,39 @@ containing a value of this type.
         public static final int type=0x7f010011;
     }
     public static final class color {
-        public static final int activityTitle=0x7f050006;
+        /** 
+    <color name="critical">#FF5039</color>
+    <color name="warning">#ffc431</color>
+    <color name="safe">#2BBF52</color>
+    
+         */
         public static final int critical=0x7f050000;
-        public static final int deauthorize_button=0x7f05000f;
-        public static final int deauthorize_button_text=0x7f050010;
-        public static final int horizontalBar=0x7f050005;
-        public static final int logoText=0x7f050009;
-        public static final int navSlider=0x7f05000a;
-        public static final int navSliderDivider=0x7f05000c;
-        public static final int navSliderItemBgNormal=0x7f05000d;
-        public static final int navSliderText=0x7f05000b;
-        public static final int nav_slider_item_bg_pressed=0x7f05000e;
-        public static final int osusage_titles_text=0x7f050012;
+        public static final int deauthorize_button=0x7f05000e;
+        public static final int deauthorize_button_text=0x7f05000f;
+        public static final int horizontal_bar=0x7f050005;
+        public static final int logo_text=0x7f050008;
+        public static final int nav_slider=0x7f050009;
+        public static final int nav_slider_divider=0x7f05000b;
+        public static final int nav_slider_item_bg_normal=0x7f05000c;
+        public static final int nav_slider_item_bg_pressed=0x7f05000d;
+        public static final int nav_slider_text=0x7f05000a;
+        public static final int osusage_titles_text=0x7f050011;
+        public static final int pie_chart_blue=0x7f05001c;
+        public static final int pie_chart_blue_text=0x7f050016;
+        public static final int pie_chart_green=0x7f05001b;
+        public static final int pie_chart_green_text=0x7f050015;
+        public static final int pie_chart_orange=0x7f050019;
+        public static final int pie_chart_orange_text=0x7f050013;
+        public static final int pie_chart_purple=0x7f05001d;
+        public static final int pie_chart_purple_text=0x7f050017;
+        public static final int pie_chart_red=0x7f050018;
+        public static final int pie_chart_red_text=0x7f050012;
+        public static final int pie_chart_yellow=0x7f05001a;
+        public static final int pie_chart_yellow_text=0x7f050014;
         public static final int safe=0x7f050002;
-        public static final int settings_titles_text=0x7f050011;
-        public static final int submitButtonText=0x7f050008;
-        public static final int submit_button=0x7f050007;
+        public static final int settings_titles_text=0x7f050010;
+        public static final int submit_button=0x7f050006;
+        public static final int submit_button_text=0x7f050007;
         public static final int title=0x7f050004;
         public static final int transparent=0x7f050003;
         public static final int warning=0x7f050001;
@@ -228,6 +247,7 @@ containing a value of this type.
     }
     public static final class id {
         public static final int action_settings=0x7f0a001f;
+        public static final int chart1=0x7f0a000d;
         public static final int container=0x7f0a000a;
         public static final int cpu=0x7f0a0002;
         public static final int cpuPieGraph=0x7f0a001a;
@@ -245,7 +265,6 @@ containing a value of this type.
         public static final int nav_list=0x7f0a000b;
         public static final int notificationsSwitch=0x7f0a000f;
         public static final int osusageGraph=0x7f0a000e;
-        public static final int osusagePieChart=0x7f0a000d;
         public static final int queueLengthContainer=0x7f0a001d;
         public static final int ram=0x7f0a0003;
         public static final int ramPieGraph=0x7f0a001b;

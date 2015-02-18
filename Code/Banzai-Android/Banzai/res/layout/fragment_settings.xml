@@ -127,7 +127,7 @@
             android:layout_weight="1"
             android:background="@color/submit_button"
             android:text="@string/save"
-            android:textColor="@color/submitButtonText" />
+            android:textColor="@color/submit_button_text" />
     </LinearLayout>
 
 </RelativeLayout>

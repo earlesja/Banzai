@@ -19,11 +19,23 @@
             android:textColor="@color/osusage_titles_text"
             android:textSize="20sp" />
 
-        <com.pan.banzai.PieGraph
-            android:id="@+id/osusagePieChart"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            custom:pieInnerCircleRatio="0" />
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/chart1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <!-- <com.pan.banzai.PieGraph -->
+        <!-- android:id="@+id/osusagePieChart" -->
+        <!-- android:layout_width="200dp" -->
+        <!-- android:layout_height="200dp" -->
+        <!-- custom:pieInnerCircleRatio="0" /> -->
+
+
+        <!-- <com.pan.banzai.PieGraph -->
+        <!-- android:id="@+id/osusagePieChart2" -->
+        <!-- android:layout_width="200dp" -->
+        <!-- android:layout_height="200dp" -->
+        <!-- custom:pieInnerCircleRatio="0" /> -->
     </LinearLayout>
 
     <LinearLayout

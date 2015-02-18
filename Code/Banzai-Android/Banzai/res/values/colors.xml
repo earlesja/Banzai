@@ -1,24 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="critical">#ffe74c3c</color>
-    <color name="warning">#fff39c12</color>
-    <color name="safe">#ff2ecc71</color>
+    <!--
+    <color name="critical">#FF5039</color>
+    <color name="warning">#ffc431</color>
+    <color name="safe">#2BBF52</color>
+    -->
+    <color name="critical">#FF695D</color>
+    <color name="warning">#FFCC5D</color>
+    <color name="safe">#48C55E</color>
     <color name="transparent">#00ffffff</color>
     <color name="title">#3498db</color>
-    <color name="horizontalBar">#7f8c8d</color>
-    <color name="activityTitle">#33b2e2</color>
-    <color name="submit_button">#33b2e2</color>
-    <color name="submitButtonText">#ffffff</color>
-    <color name="logoText">#808080</color>
-    <color name="navSlider">#404040</color>
-    <color name="navSliderText">#ffffff</color>
-    <color name="navSliderDivider">#000000</color>
-    <color name="navSliderItemBgNormal">#404040</color>
-    <color name="nav_slider_item_bg_pressed">#33b2e2</color>
-    <color name="deauthorize_button">#ffe74c3c</color>
+    <color name="horizontal_bar">#7f8c8d</color>
+    <color name="submit_button">#3498db</color>
+    <color name="submit_button_text">#ffffff</color>
+    <color name="logo_text">#808080</color>
+    <color name="nav_slider">#404040</color>
+    <color name="nav_slider_text">#ffffff</color>
+    <color name="nav_slider_divider">#000000</color>
+    <color name="nav_slider_item_bg_normal">#404040</color>
+    <color name="nav_slider_item_bg_pressed">#3498db</color>
+    <color name="deauthorize_button">#ffc431</color>
     <color name="deauthorize_button_text">#ffffff</color>
     <color name="settings_titles_text">#808080</color>
     <color name="osusage_titles_text">#808080</color>
+    <color name="pie_chart_red_text">#FF695D</color>
+    <color name="pie_chart_orange_text">#FFCC5D</color>
+    <color name="pie_chart_yellow_text">#F7FD5C</color>
+    <color name="pie_chart_green_text">#48C55E</color>
+    <color name="pie_chart_blue_text">#4B63AC</color>
+    <color name="pie_chart_purple_text">#8e44ad</color>
+    <color name="pie_chart_red">#FF8477</color>
+    <color name="pie_chart_orange">#FFD577</color>
+    <color name="pie_chart_yellow">#F6FD76</color>
+    <color name="pie_chart_green">#5ECA76</color>
+    <color name="pie_chart_blue">#6479BE</color>
+    <color name="pie_chart_purple">#9C59B6</color>
 
 </resources>

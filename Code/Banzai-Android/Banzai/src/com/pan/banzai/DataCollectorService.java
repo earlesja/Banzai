@@ -51,6 +51,7 @@ public class DataCollectorService extends Service {
 
 	        //Invoke join to start receiving broadcast messages            
 	        proxy.invoke("join", Arrays.asList("signalRTest"));
+//	        proxy.invoke("join", Arrays.asList("FirefoxUsage__1"));
 	        
 	        proxy.subscribe(new Object() {
 				@SuppressWarnings("unused")
