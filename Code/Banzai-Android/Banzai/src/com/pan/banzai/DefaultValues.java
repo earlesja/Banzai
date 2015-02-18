@@ -19,30 +19,36 @@ public class DefaultValues {
 	public static void storeDefaultInSharedPref() {
 		if (SharedPreferenceHelper.isInit()) {
 			// cpu defaults
-			SharedPreferenceHelper.putIntPreference(sCpuWarningThresholdKey,
+
+			storeValueIfNotSet(sCpuWarningThresholdKey,
 					sDefaultWarningThreshold);
-			SharedPreferenceHelper.putIntPreference(sCpuCriticalThresholdKey,
+			storeValueIfNotSet(sCpuCriticalThresholdKey,
 					sDefaultCriticalThreshold);
 
 			// ram defaults
-			SharedPreferenceHelper.putIntPreference(sRamWarningThresholdKey,
+			storeValueIfNotSet(sRamWarningThresholdKey,
 					sDefaultWarningThreshold);
-			SharedPreferenceHelper.putIntPreference(sRamCriticalThresholdKey,
+			storeValueIfNotSet(sRamCriticalThresholdKey,
 					sDefaultCriticalThreshold);
 
 			// storage defaults
-			SharedPreferenceHelper.putIntPreference(
-					sStorageWarningThresholdKey, sDefaultWarningThreshold);
-			SharedPreferenceHelper.putIntPreference(
-					sStorageCriticalThresholdKey, sDefaultCriticalThreshold);
+			storeValueIfNotSet(sStorageWarningThresholdKey,
+					sDefaultWarningThreshold);
+			storeValueIfNotSet(sStorageCriticalThresholdKey,
+					sDefaultCriticalThreshold);
 
 			// disk wait length defaults
-			SharedPreferenceHelper.putIntPreference(sDiskQueueWaitLengthKey,
+			storeValueIfNotSet(sDiskQueueWaitLengthKey,
 					sDefaultDiskQueueWaitLength);
 
 			// graph defaults
-			SharedPreferenceHelper.putIntPreference(sGraphTimeFrameKey,
-					sDefaultGraphTimeFrame);
+			storeValueIfNotSet(sGraphTimeFrameKey, sDefaultGraphTimeFrame);
+		}
+	}
+
+	private static void storeValueIfNotSet(String key, int value) {
+		if (SharedPreferenceHelper.getIntPreference(key, Integer.MAX_VALUE) == Integer.MAX_VALUE) {
+			SharedPreferenceHelper.putIntPreference(key, value);
 		}
 	}
 

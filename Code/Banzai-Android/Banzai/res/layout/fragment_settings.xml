@@ -1,13 +1,15 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res/com.pan.banzai"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent" 
+        android:orientation="vertical" >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:layout_height="0dp"
+        android:orientation="vertical" 
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -20,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/notifications"
-                android:textColor="@color/settings_titles_text"
+                android:textColor="@color/titles_text"
                 android:textSize="20sp" />
 
             <Switch
@@ -37,7 +39,7 @@
             android:layout_marginTop="5dp"
             android:orientation="vertical"
             custom:descText="@string/cpu_threshold_desc"
-            custom:descTextColor="@color/settings_titles_text"
+            custom:descTextColor="@color/titles_text"
             custom:descTextSize="20" />
 
         <com.pan.banzai.ThresholdView
@@ -48,7 +50,7 @@
             android:layout_marginTop="5dp"
             android:orientation="vertical"
             custom:descText="@string/ram_threshold_desc"
-            custom:descTextColor="@color/settings_titles_text"
+            custom:descTextColor="@color/titles_text"
             custom:descTextSize="20" />
 
         <com.pan.banzai.ThresholdView
@@ -59,7 +61,7 @@
             android:layout_marginTop="5dp"
             android:orientation="vertical"
             custom:descText="@string/storage_threshold_desc"
-            custom:descTextColor="@color/settings_titles_text"
+            custom:descTextColor="@color/titles_text"
             custom:descTextSize="20" />
 
         <LinearLayout
@@ -73,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:labelFor="@+id/diskQueWaitLengthInput"
                 android:text="@string/disk_queue_wait_length"
-                android:textColor="@color/settings_titles_text"
+                android:textColor="@color/titles_text"
                 android:textSize="20sp" />
 
             <EditText
@@ -94,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:labelFor="@+id/graphTimeFrameInput"
                 android:text="@string/graph_time_frame"
-                android:textColor="@color/settings_titles_text"
+                android:textColor="@color/titles_text"
                 android:textSize="20sp" />
 
             <EditText
@@ -105,29 +107,12 @@
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
+    <Button
+        android:id="@+id/saveSettingsButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal" >
+        android:background="@color/submit_button"
+        android:text="@string/save"
+        android:textColor="@color/submit_button_text" />
 
-        <Button
-            android:id="@+id/deauthorizeButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/deauthorize_button"
-            android:text="@string/deauthorize"
-            android:textColor="@color/deauthorize_button_text" />
-
-        <Button
-            android:id="@+id/saveSettingsButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/submit_button"
-            android:text="@string/save"
-            android:textColor="@color/submit_button_text" />
-    </LinearLayout>
-
-</RelativeLayout>
+</LinearLayout>

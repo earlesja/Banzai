@@ -17,6 +17,7 @@ public class MainActivity extends Activity {
 	public static final DashboardFragment sDashboardFragment = new DashboardFragment();
 	public static final SettingsFragment sSettingsFragment = new SettingsFragment();
 	public static final OsUsageFragment sOsUsageFragment = new OsUsageFragment();
+	public static final BrowserUsageFragment sBrowserUsageFragment = new BrowserUsageFragment();
 
 	private DrawerLayout mDrawerLayout;
 	private ActionBarDrawerToggle mDrawerToggle;

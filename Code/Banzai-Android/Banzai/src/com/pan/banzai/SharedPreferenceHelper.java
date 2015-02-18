@@ -14,6 +14,10 @@ public class SharedPreferenceHelper {
 				Context.MODE_PRIVATE);
 	}
 
+	public static SharedPreferences getSharedPrefs() {
+		return mSharedPrefs;
+	}
+
 	public static boolean isInit() {
 		return mSharedPrefs != null;
 	}
@@ -39,7 +43,7 @@ public class SharedPreferenceHelper {
 
 		SharedPreferences.Editor editor = mSharedPrefs.edit();
 		editor.putInt(key, value);
-		editor.commit();
+		editor.apply();
 		return true;
 	}
 

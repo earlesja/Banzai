@@ -22,19 +22,13 @@
     <color name="nav_slider_item_bg_pressed">#3498db</color>
     <color name="deauthorize_button">#ffc431</color>
     <color name="deauthorize_button_text">#ffffff</color>
-    <color name="settings_titles_text">#808080</color>
-    <color name="osusage_titles_text">#808080</color>
-    <color name="pie_chart_red_text">#FF695D</color>
-    <color name="pie_chart_orange_text">#FFCC5D</color>
-    <color name="pie_chart_yellow_text">#F7FD5C</color>
-    <color name="pie_chart_green_text">#48C55E</color>
-    <color name="pie_chart_blue_text">#4B63AC</color>
-    <color name="pie_chart_purple_text">#8e44ad</color>
-    <color name="pie_chart_red">#FF8477</color>
-    <color name="pie_chart_orange">#FFD577</color>
-    <color name="pie_chart_yellow">#F6FD76</color>
-    <color name="pie_chart_green">#5ECA76</color>
-    <color name="pie_chart_blue">#6479BE</color>
-    <color name="pie_chart_purple">#9C59B6</color>
+    <color name="titles_text">#808080</color>
+    <color name="pie_chart_red">#F44336</color>
+    <color name="pie_chart_orange">#FB8C00</color>
+    <color name="pie_chart_green">#4CAF50</color>
+    <color name="pie_chart_blue">#2196F3</color>
+    <color name="pie_chart_purple">#AB47BC</color>
+    <color name="pie_chart_brown">#795548</color>
+    <color name="pie_chart_gray">#757575</color>
 
 </resources>

@@ -20,18 +20,11 @@
     <array name="pie_chart_colors">
         <item>@color/pie_chart_red</item>
         <item>@color/pie_chart_orange</item>
-        <item>@color/pie_chart_yellow</item>
         <item>@color/pie_chart_green</item>
         <item>@color/pie_chart_blue</item>
         <item>@color/pie_chart_purple</item>
-    </array>
-    <array name="pie_chart_text_colors">
-        <item>@color/pie_chart_red_text</item>
-        <item>@color/pie_chart_orange_text</item>
-        <item>@color/pie_chart_yellow_text</item>
-        <item>@color/pie_chart_green_text</item>
-        <item>@color/pie_chart_blue_text</item>
-        <item>@color/pie_chart_purple_text</item>
+        <item>@color/pie_chart_brown</item>
+        <item>@color/pie_chart_gray</item>
     </array>
 
 </resources>

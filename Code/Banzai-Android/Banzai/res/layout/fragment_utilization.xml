@@ -13,15 +13,16 @@
         android:orientation="vertical" >
 
         <TextView
+            android:id="@+id/utilization_aggregate_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/current_distribution"
+            android:text="@string/utilization_aggregate_title"
             android:textColor="@color/titles_text"
             android:textSize="20sp" />
 
-        <com.pan.banzai.UsagePieGraph
-            android:id="@+id/os_current_pie_chart"
-            android:layout_width="wrap_content"
+        <com.pan.banzai.BanzaiLineGraph
+            android:id="@+id/utilization_aggregate_graph"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center" />
     </LinearLayout>
@@ -33,14 +34,15 @@
         android:orientation="vertical" >
 
         <TextView
+            android:id="@+id/utilization_breakdown_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/historic_distribution"
+            android:text="@string/utilization_breakdown_title"
             android:textColor="@color/titles_text"
             android:textSize="20sp" />
 
         <com.pan.banzai.BanzaiLineGraph
-            android:id="@+id/os_historic_line_chart"
+            android:id="@+id/utilization_breakdown_graph"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center" />

@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class OsUsageFragment extends Fragment {
+public class BrowserUsageFragment extends Fragment {
 	private UsagePieGraph mPieChart;
 	private BanzaiLineGraph mLineChart;
 
@@ -25,14 +25,15 @@ public class OsUsageFragment extends Fragment {
 			Bundle savedInstanceState) {
 
 		// inflate the view
-		View view = inflater.inflate(R.layout.fragment_osusage, container,
+		View view = inflater.inflate(R.layout.fragment_browserusage, container,
 				false);
 
-		mPieChart = (UsagePieGraph) view.findViewById(R.id.os_current_pie_chart);
+		mPieChart = (UsagePieGraph) view
+				.findViewById(R.id.browser_current_pie_chart);
 		setCurrentValues();
 
 		mLineChart = (BanzaiLineGraph) view
-				.findViewById(R.id.os_historic_line_chart);
+				.findViewById(R.id.browser_historic_line_chart);
 		setHistoricData();
 
 		return view;
@@ -43,9 +44,9 @@ public class OsUsageFragment extends Fragment {
 		// TODO http request?
 
 		HashMap<String, Float> map = new HashMap<String, Float>();
-		map.put("Windows", 55f);
-		map.put("Mac", 40f);
-		map.put("Linux", 5f);
+		map.put("IE", 5f);
+		map.put("Firefox", 40f);
+		map.put("Chrome", 55f);
 
 		mPieChart.setData(map);
 	}
@@ -55,9 +56,9 @@ public class OsUsageFragment extends Fragment {
 		// TODO http request?
 
 		HashMap<String, Float[]> map = new HashMap<String, Float[]>();
-		map.put("Windows", new Float[] { 60f, 58f, 55f });
-		map.put("Mac", new Float[] { 30f, 32f, 40f });
-		map.put("Linux", new Float[] { 10f, 10f, 5f });
+		map.put("IE", new Float[] { 10f, 10f, 5f });
+		map.put("Firefox", new Float[] { 30f, 32f, 40f });
+		map.put("Chrome", new Float[] { 60f, 58f, 55f });
 
 		Date[] times = new Date[] { new Date(2015, 1, 10, 0, 30, 30),
 				new Date(2015, 1, 10, 0, 35, 30),

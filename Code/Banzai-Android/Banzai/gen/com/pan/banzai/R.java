@@ -12,7 +12,6 @@ public final class R {
         public static final int nav_drawer_icons=0x7f040001;
         public static final int nav_drawer_items=0x7f040000;
         public static final int pie_chart_colors=0x7f040002;
-        public static final int pie_chart_text_colors=0x7f040003;
     }
     public static final class attr {
         /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
@@ -195,24 +194,18 @@ containing a value of this type.
         public static final int nav_slider_item_bg_normal=0x7f05000c;
         public static final int nav_slider_item_bg_pressed=0x7f05000d;
         public static final int nav_slider_text=0x7f05000a;
-        public static final int osusage_titles_text=0x7f050011;
-        public static final int pie_chart_blue=0x7f05001c;
-        public static final int pie_chart_blue_text=0x7f050016;
-        public static final int pie_chart_green=0x7f05001b;
-        public static final int pie_chart_green_text=0x7f050015;
-        public static final int pie_chart_orange=0x7f050019;
-        public static final int pie_chart_orange_text=0x7f050013;
-        public static final int pie_chart_purple=0x7f05001d;
-        public static final int pie_chart_purple_text=0x7f050017;
-        public static final int pie_chart_red=0x7f050018;
-        public static final int pie_chart_red_text=0x7f050012;
-        public static final int pie_chart_yellow=0x7f05001a;
-        public static final int pie_chart_yellow_text=0x7f050014;
+        public static final int pie_chart_blue=0x7f050014;
+        public static final int pie_chart_brown=0x7f050016;
+        public static final int pie_chart_gray=0x7f050017;
+        public static final int pie_chart_green=0x7f050013;
+        public static final int pie_chart_orange=0x7f050012;
+        public static final int pie_chart_purple=0x7f050015;
+        public static final int pie_chart_red=0x7f050011;
         public static final int safe=0x7f050002;
-        public static final int settings_titles_text=0x7f050010;
         public static final int submit_button=0x7f050006;
         public static final int submit_button_text=0x7f050007;
         public static final int title=0x7f050004;
+        public static final int titles_text=0x7f050010;
         public static final int transparent=0x7f050003;
         public static final int warning=0x7f050001;
     }
@@ -238,57 +231,70 @@ containing a value of this type.
         public static final int ic_action_settings=0x7f020001;
         public static final int ic_drawer=0x7f020002;
         public static final int ic_launcher=0x7f020003;
-        public static final int nav_item_bg_normal=0x7f020004;
-        public static final int nav_item_bg_pressed=0x7f020005;
-        public static final int nav_item_selector=0x7f020006;
-        public static final int popup_black=0x7f020007;
-        public static final int seek_thumb_normal=0x7f020008;
-        public static final int seek_thumb_pressed=0x7f020009;
+        public static final int marker=0x7f020004;
+        public static final int nav_item_bg_normal=0x7f020005;
+        public static final int nav_item_bg_pressed=0x7f020006;
+        public static final int nav_item_selector=0x7f020007;
+        public static final int popup_black=0x7f020008;
+        public static final int seek_thumb_normal=0x7f020009;
+        public static final int seek_thumb_pressed=0x7f02000a;
     }
     public static final class id {
-        public static final int action_settings=0x7f0a001f;
-        public static final int chart1=0x7f0a000d;
+        public static final int action_settings=0x7f0a0028;
+        public static final int browser_current_pie_chart=0x7f0a000c;
+        public static final int browser_historic_line_chart=0x7f0a000d;
         public static final int container=0x7f0a000a;
         public static final int cpu=0x7f0a0002;
-        public static final int cpuPieGraph=0x7f0a001a;
-        public static final int cpuThreshold=0x7f0a0010;
-        public static final int deauthorizeButton=0x7f0a0015;
-        public static final int diskQueWaitLengthInput=0x7f0a0013;
-        public static final int donutContainer=0x7f0a0019;
+        public static final int cpuContainer=0x7f0a0020;
+        public static final int cpuPieGraph=0x7f0a0021;
+        public static final int cpuThreshold=0x7f0a0012;
+        public static final int diskQueWaitLengthInput=0x7f0a0015;
+        public static final int donutContainer=0x7f0a001f;
         public static final int drawer_layout=0x7f0a0009;
-        public static final int expandableListView=0x7f0a000c;
-        public static final int graphTimeFrameInput=0x7f0a0014;
+        public static final int expandableListView=0x7f0a000e;
+        public static final int graphTimeFrameInput=0x7f0a0016;
         public static final int horizontal=0x7f0a0000;
-        public static final int listGroupStatusContainer=0x7f0a0018;
-        public static final int listGroupTextView=0x7f0a0017;
-        public static final int navItemTitle=0x7f0a001e;
+        public static final int listGroupStatusContainer=0x7f0a001e;
+        public static final int listGroupTextView=0x7f0a001d;
+        public static final int marker_text=0x7f0a001c;
+        public static final int navItemTitle=0x7f0a0027;
         public static final int nav_list=0x7f0a000b;
-        public static final int notificationsSwitch=0x7f0a000f;
-        public static final int osusageGraph=0x7f0a000e;
-        public static final int queueLengthContainer=0x7f0a001d;
+        public static final int notificationsSwitch=0x7f0a0011;
+        public static final int os_current_pie_chart=0x7f0a000f;
+        public static final int os_historic_line_chart=0x7f0a0010;
+        public static final int queueLengthContainer=0x7f0a0026;
         public static final int ram=0x7f0a0003;
-        public static final int ramPieGraph=0x7f0a001b;
-        public static final int ramThreshold=0x7f0a0011;
-        public static final int saveSettingsButton=0x7f0a0016;
+        public static final int ramContainer=0x7f0a0022;
+        public static final int ramPieGraph=0x7f0a0023;
+        public static final int ramThreshold=0x7f0a0013;
+        public static final int saveSettingsButton=0x7f0a0017;
         public static final int signinEmail=0x7f0a0005;
         public static final int signinPassword=0x7f0a0006;
         public static final int signinSubmitButton=0x7f0a0007;
         public static final int storage=0x7f0a0004;
-        public static final int storagePieGraph=0x7f0a001c;
-        public static final int storageThreshold=0x7f0a0012;
+        public static final int storageContainer=0x7f0a0024;
+        public static final int storagePieGraph=0x7f0a0025;
+        public static final int storageThreshold=0x7f0a0014;
         public static final int textView2=0x7f0a0008;
+        public static final int utilization_aggregate_graph=0x7f0a0019;
+        public static final int utilization_aggregate_title=0x7f0a0018;
+        public static final int utilization_breakdown_graph=0x7f0a001b;
+        public static final int utilization_breakdown_title=0x7f0a001a;
         public static final int vertical=0x7f0a0001;
     }
     public static final class layout {
         public static final int activity_login=0x7f030000;
         public static final int activity_main=0x7f030001;
-        public static final int fragment_dashboard=0x7f030002;
-        public static final int fragment_osusage=0x7f030003;
-        public static final int fragment_settings=0x7f030004;
-        public static final int list_group_server_status=0x7f030005;
-        public static final int list_item_server_status=0x7f030006;
-        public static final int nav_row_layout=0x7f030007;
-        public static final int threshold_desc_layout=0x7f030008;
+        public static final int fragment_browserusage=0x7f030002;
+        public static final int fragment_dashboard=0x7f030003;
+        public static final int fragment_osusage=0x7f030004;
+        public static final int fragment_settings=0x7f030005;
+        public static final int fragment_utilization=0x7f030006;
+        public static final int line_chart_marker=0x7f030007;
+        public static final int list_group_server_status=0x7f030008;
+        public static final int list_item_server_status=0x7f030009;
+        public static final int nav_row_layout=0x7f03000a;
+        public static final int threshold_desc_layout=0x7f03000b;
     }
     public static final class menu {
         public static final int dashboard=0x7f090000;
@@ -301,18 +307,19 @@ containing a value of this type.
         public static final int average_disk_queue_length=0x7f070013;
         public static final int cpu_text=0x7f070010;
         public static final int cpu_threshold_desc=0x7f070017;
+        public static final int current_distribution=0x7f070020;
         public static final int dashboard_title=0x7f070004;
         public static final int deauthorize=0x7f07001d;
         public static final int disk_queue_wait_length=0x7f07001b;
         public static final int email_text=0x7f07000f;
         public static final int graph_time_frame=0x7f07001c;
+        public static final int historic_distribution=0x7f070021;
         public static final int nav_drawer_close=0x7f070015;
         public static final int nav_drawer_open=0x7f070014;
         public static final int navigation_drawer_close=0x7f07000a;
         public static final int navigation_drawer_open=0x7f070009;
         public static final int notifications=0x7f07001a;
-        public static final int osusage_current=0x7f070020;
-        public static final int osusage_historic=0x7f070021;
+        public static final int operating_systems=0x7f070022;
         public static final int password_text=0x7f07000d;
         public static final int preference_file_key=0x7f070001;
         public static final int ram_text=0x7f070011;
@@ -329,6 +336,8 @@ containing a value of this type.
         public static final int title_section2=0x7f070006;
         public static final int title_section3=0x7f070007;
         public static final int title_section4=0x7f070008;
+        public static final int utilization_aggregate_title=0x7f070023;
+        public static final int utilization_breakdown_title=0x7f070024;
     }
     public static final class style {
         /** 

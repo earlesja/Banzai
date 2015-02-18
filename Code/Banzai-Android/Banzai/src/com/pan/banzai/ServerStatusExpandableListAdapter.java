@@ -2,10 +2,15 @@ package com.pan.banzai;
 
 import java.util.ArrayList;
 
+import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.LinearLayout;
@@ -14,7 +19,6 @@ import android.widget.TextView;
 public class ServerStatusExpandableListAdapter extends
 		BaseExpandableListAdapter {
 	public static final int sNumChildren = 1;
-	// TODO replace these with saved values
 	public static final int sDonutInnerCircleRatio = 175;
 
 	private ArrayList<ServerTierStatus> mTierStatuses;
@@ -99,11 +103,17 @@ public class ServerStatusExpandableListAdapter extends
 
 		// setup the donut graphs
 		setUpDonut((DonutGraph) itemView.findViewById(R.id.cpuPieGraph),
-				tierStatus.getCpuStatusPercent());
+				tierStatus.getCpuStatusPercent(), "CPU");
+		setContainerListener(itemView.findViewById(R.id.cpuContainer), "CPU");
+
 		setUpDonut((DonutGraph) itemView.findViewById(R.id.ramPieGraph),
-				tierStatus.getRamStatusPercent());
+				tierStatus.getRamStatusPercent(), "RAM");
+		setContainerListener(itemView.findViewById(R.id.ramContainer), "ram");
+
 		setUpDonut((DonutGraph) itemView.findViewById(R.id.storagePieGraph),
-				tierStatus.getStorageStatusPercent());
+				tierStatus.getStorageStatusPercent(), "Storage");
+		setContainerListener(itemView.findViewById(R.id.storageContainer),
+				"Storage");
 
 		addAverageQueueLengths(tierStatus.getAverageDiskQueueLengths(),
 				(LinearLayout) itemView.findViewById(R.id.queueLengthContainer));
@@ -119,9 +129,22 @@ public class ServerStatusExpandableListAdapter extends
 	 * @param value
 	 *            Percentage out of 100 to show on graph
 	 */
-	private void setUpDonut(DonutGraph donut, float value) {
+	private void setUpDonut(DonutGraph donut, float value, final String title) {
 		// remove any existing slices
 		donut.setPercentage(value);
+	}
+
+	private void setContainerListener(View container, final String title) {
+		container.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				FragmentManager fm = ((Activity) mContext).getFragmentManager();
+				UtlizationFragment uFrag = new UtlizationFragment(title);
+				fm.beginTransaction().replace(R.id.container, uFrag)
+						.addToBackStack("frag").commit();
+			}
+		});
 	}
 
 	private void addAverageQueueLengths(ArrayList<Integer> lengths,

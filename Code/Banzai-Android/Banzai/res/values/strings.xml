@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Banzai</string>
-    <string name="preference_file_key">banzai_preferences</string>
+    <string name="preference_file_key">com.pan.banzai</string>
     <string name="title_activity_login">Banzai</string>
     <string name="action_settings">Sign out</string>
     <string name="dashboard_title">Dashboard</string>
@@ -33,7 +33,10 @@
     <string name="deauthorize">Deauthorize</string>
     <string name="save">Save</string>
     <string name="settings_saved">Settings saved</string>
-    <string name="osusage_current">Current Distribution</string>
-    <string name="osusage_historic">Historic Distribution</string>
+    <string name="current_distribution">Current Distribution</string>
+    <string name="historic_distribution">Historic Distribution</string>
+    <string name="operating_systems">Oerating Systems</string>
+    <string name="utilization_aggregate_title">Aggregate %1$s Utilization</string>
+    <string name="utilization_breakdown_title">%1$s Utilization Breakdown</string>
 
 </resources>

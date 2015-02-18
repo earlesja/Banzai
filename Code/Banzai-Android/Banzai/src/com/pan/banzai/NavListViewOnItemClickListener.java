@@ -32,6 +32,7 @@ public class NavListViewOnItemClickListener implements OnItemClickListener {
 	private void selectItem(int position) {
 
 		if (position == selectedNavItem) {
+			mDrawerLayout.closeDrawer(mDrawerList);
 			return;
 		}
 
@@ -48,7 +49,7 @@ public class NavListViewOnItemClickListener implements OnItemClickListener {
 			frag = MainActivity.sOsUsageFragment;
 			break;
 		case 2:
-			// browser usage
+			frag = MainActivity.sBrowserUsageFragment;
 			break;
 		case 3:
 			// system errors
