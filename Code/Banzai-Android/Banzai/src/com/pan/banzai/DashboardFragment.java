@@ -1,6 +1,7 @@
 package com.pan.banzai;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -56,10 +57,25 @@ public class DashboardFragment extends Fragment {
 		values3.add(11);
 		values3.add(111);
 		values3.add(1111);
-		statuses.add(new ServerTierStatus("App Tier", 95, 80, 50, values));
-		statuses.add(new ServerTierStatus("Web Tier", 50, 80, 95, values2));
-		statuses.add(new ServerTierStatus("Data Tier", 50, 50, 50, values3));
+		
+		Random r = new Random();
+		
+		statuses.add(new ServerTierStatus("App Tier", showRandomInteger(90, 100, r), showRandomInteger(70, 80, r), showRandomInteger(40, 60, r), values));
+		statuses.add(new ServerTierStatus("Web Tier", showRandomInteger(80, 90, r), showRandomInteger(60, 75, r), showRandomInteger(90, 100, r), values2));
+		statuses.add(new ServerTierStatus("Data Tier", showRandomInteger(30, 40, r), showRandomInteger(40, 50, r), showRandomInteger(40, 50, r), values3));
 
 		return statuses;
 	}
+	
+	private static int showRandomInteger(int aStart, int aEnd, Random aRandom){
+	    if (aStart > aEnd) {
+	      throw new IllegalArgumentException("Start cannot exceed End.");
+	    }
+	    //get the range, casting to long to avoid overflow problems
+	    long range = (long)aEnd - (long)aStart + 1;
+	    // compute a fraction of the range, 0 <= frac < range
+	    long fraction = (long)(range * aRandom.nextDouble());
+	    int randomNumber =  (int)(fraction + aStart);    
+	    return randomNumber;
+	  }
 }

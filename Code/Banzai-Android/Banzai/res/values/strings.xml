@@ -35,7 +35,7 @@
     <string name="settings_saved">Settings saved</string>
     <string name="current_distribution">Current Distribution</string>
     <string name="historic_distribution">Historic Distribution</string>
-    <string name="operating_systems">Oerating Systems</string>
+    <string name="operating_systems">Operating Systems</string>
     <string name="utilization_aggregate_title">Aggregate %1$s Utilization</string>
     <string name="utilization_breakdown_title">%1$s Utilization Breakdown</string>
 

@@ -1,9 +1,14 @@
 package com.pan.banzai;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -11,6 +16,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
@@ -21,6 +27,8 @@ public class MainActivity extends Activity {
 
 	private DrawerLayout mDrawerLayout;
 	private ActionBarDrawerToggle mDrawerToggle;
+	
+	MyReceiver myReceiver;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -106,5 +114,80 @@ public class MainActivity extends Activity {
 	public void setTitle(CharSequence title) {
 		getActionBar().setTitle(title);
 	}
+	
+public void onResume(){
+		
+		myReceiver = new MyReceiver();
+	    IntentFilter intentFilter = new IntentFilter();
+	    intentFilter.addAction(DataCollectorService.MY_ACTION);
+	    registerReceiver(myReceiver, intentFilter);
+	    
+	    super.onResume();
+	}
+	
+	public void onPause(){
+		unregisterReceiver(myReceiver);
+		super.onPause();
+		
+	}
+	
+	private class MyReceiver extends BroadcastReceiver{
+		 
+		 @Override
+		 public void onReceive(Context arg0, Intent arg1) {
+		  // TODO Auto-generated method stub
+			 Bundle extra = arg1.getExtras();
+		
+		  String datapassed = extra.getString("DATAPASSED");
+		  String time = extra.getString("Time");
+		  
+		  
+//		  Toast.makeText(MainActivity.this,
+//		    "Triggered by Service!\n"
+//		    + "Data passed: " + String.valueOf(datapassed),
+//		    Toast.LENGTH_LONG).show();
+		  
+//		  OsUsageFragment myFragment = (OsUsageFragment)getFragmentManager().findFragmentById(R.id.container);
+//		  if(myFragment != null && myFragment.isVisible()){
+//			  Toast.makeText(MainActivity.this,
+//					    "OsUsageFragment shown",
+//					    Toast.LENGTH_LONG).show();
+//			  
+//		  }
+		  
+		  if(MainActivity.sOsUsageFragment.isVisible()){
+//			  Toast.makeText(MainActivity.this,
+//				    "OsUsageFragment shown",
+//				    Toast.LENGTH_LONG).show();
+			  
+			  ArrayList<String> dataList = new ArrayList<String>();
+			  dataList.add(extra.getString("Data0"));
+			  dataList.add(extra.getString("Data1"));
+			  dataList.add(extra.getString("Data2"));
+			  dataList.add(extra.getString("Data3"));
+			  //dataList.add(time);
+			  
+			  MainActivity.sOsUsageFragment.updateContent(dataList);
+		  }
+		  
+		  if(MainActivity.sBrowserUsageFragment.isVisible()){
+//			  Toast.makeText(MainActivity.this,
+//				    "OsUsageFragment shown",
+//				    Toast.LENGTH_LONG).show();
+			  
+			  ArrayList<String> dataList = new ArrayList<String>();
+			  dataList.add(extra.getString("Data0"));
+			  dataList.add(extra.getString("Data1"));
+			  dataList.add(extra.getString("Data2"));
+			  dataList.add(extra.getString("Data3"));
+			  //dataList.add(time);
+			  
+			 // MainActivity.sBrowserUsageFragment.updateContent(dataList);
+		  }
+		  
+		 }
+		 
+		}
+
 
 }
