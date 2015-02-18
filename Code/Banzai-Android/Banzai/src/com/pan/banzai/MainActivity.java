@@ -16,7 +16,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
@@ -182,7 +181,7 @@ public void onResume(){
 			  dataList.add(extra.getString("Data3"));
 			  //dataList.add(time);
 			  
-			 // MainActivity.sBrowserUsageFragment.updateContent(dataList);
+			  MainActivity.sBrowserUsageFragment.updateContent(dataList);
 		  }
 		  
 		 }

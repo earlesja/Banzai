@@ -51,13 +51,13 @@ public class NavListViewOnItemClickListener implements OnItemClickListener {
 		case 2:
 			frag = MainActivity.sBrowserUsageFragment;
 			break;
-		case 3:
+		/*case 3:
 			// system errors
 			break;
 		case 4:
 			// users logged in
-			break;
-		case 5:
+			break;*/
+		case 3:
 			// settings
 			frag = MainActivity.sSettingsFragment;
 			break;

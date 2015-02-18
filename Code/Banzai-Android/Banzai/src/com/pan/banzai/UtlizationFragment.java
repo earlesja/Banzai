@@ -8,13 +8,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.utils.LimitLine;
+
 public class UtlizationFragment extends Fragment {
 	private BanzaiLineGraph mAgregateChart;
 	private BanzaiLineGraph mBreakdownChart;
 	private String mTitle;
+	private int mType;
 
-	public UtlizationFragment(String title) {
+	public UtlizationFragment(String title, int type) {
 		mTitle = title;
+		mType = type;
 	}
 
 	@Override
@@ -43,5 +47,35 @@ public class UtlizationFragment extends Fragment {
 				.findViewById(R.id.utilization_breakdown_graph);
 
 		return view;
+	}
+
+	private void setThresholdLines(BanzaiLineGraph chart) {
+		LimitLine critical = null;
+		LimitLine warning = null;
+		switch (mType) {
+		case 0:
+			critical = new LimitLine(DefaultValues.getCpuCriticalThreshold());
+			warning = new LimitLine(DefaultValues.getCpuWarningThreshold());
+			break;
+		case 1:
+			critical = new LimitLine(DefaultValues.getRamCriticalThreshold());
+			warning = new LimitLine(DefaultValues.getRamWarningThreshold());
+			break;
+		case 2:
+			critical = new LimitLine(
+					DefaultValues.getStorageCriticalThreshold());
+			warning = new LimitLine(DefaultValues.getStorageWarningThreshold());
+			break;
+		default:
+			critical = new LimitLine(DefaultValues.getCpuCriticalThreshold());
+			warning = new LimitLine(DefaultValues.getCpuWarningThreshold());
+			break;
+
+		}
+		critical.setLineColor(getResources().getColor(R.color.critical));
+		warning.setLineColor(getResources().getColor(R.color.warning));
+
+		chart.getData().addLimitLine(critical);
+		chart.getData().addLimitLine(warning);
 	}
 }

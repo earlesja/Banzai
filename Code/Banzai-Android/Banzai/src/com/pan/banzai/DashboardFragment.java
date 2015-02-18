@@ -42,32 +42,19 @@ public class DashboardFragment extends Fragment {
 	private ArrayList<ServerTierStatus> getData() {
 		ArrayList<ServerTierStatus> statuses = new ArrayList<ServerTierStatus>();
 
-		ArrayList<Integer> values = new ArrayList<Integer>();
-		values.add(420);
-		values.add(3384);
-		values.add(21);
-		values.add(35896);
-		ArrayList<Integer> values2 = new ArrayList<Integer>();
-		values2.add(9);
-		values2.add(99);
-		values2.add(999);
-		values2.add(9999);
-		ArrayList<Integer> values3 = new ArrayList<Integer>();
-		values3.add(1);
-		values3.add(11);
-		values3.add(111);
-		values3.add(1111);
+		
+		ArrayList<Integer> empty = new ArrayList<Integer>();
 		
 		Random r = new Random();
 		
-		statuses.add(new ServerTierStatus("App Tier", showRandomInteger(90, 100, r), showRandomInteger(70, 80, r), showRandomInteger(40, 60, r), values));
-		statuses.add(new ServerTierStatus("Web Tier", showRandomInteger(80, 90, r), showRandomInteger(60, 75, r), showRandomInteger(90, 100, r), values2));
-		statuses.add(new ServerTierStatus("Data Tier", showRandomInteger(30, 40, r), showRandomInteger(40, 50, r), showRandomInteger(40, 50, r), values3));
+		statuses.add(new ServerTierStatus("App Tier", showRandomInteger(90, 100, r), showRandomInteger(70, 80, r), showRandomInteger(40, 60, r), empty));
+		statuses.add(new ServerTierStatus("Web Tier", showRandomInteger(80, 90, r), showRandomInteger(60, 75, r), showRandomInteger(90, 100, r), empty));
+		statuses.add(new ServerTierStatus("Data Tier", showRandomInteger(30, 40, r), showRandomInteger(40, 50, r), showRandomInteger(40, 50, r), empty));
 
 		return statuses;
 	}
 	
-	private static int showRandomInteger(int aStart, int aEnd, Random aRandom){
+	public static int showRandomInteger(int aStart, int aEnd, Random aRandom){
 	    if (aStart > aEnd) {
 	      throw new IllegalArgumentException("Start cannot exceed End.");
 	    }

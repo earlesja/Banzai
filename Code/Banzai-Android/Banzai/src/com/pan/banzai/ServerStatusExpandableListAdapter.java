@@ -6,8 +6,6 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.graphics.Color;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -104,16 +102,16 @@ public class ServerStatusExpandableListAdapter extends
 		// setup the donut graphs
 		setUpDonut((DonutGraph) itemView.findViewById(R.id.cpuPieGraph),
 				tierStatus.getCpuStatusPercent(), "CPU");
-		setContainerListener(itemView.findViewById(R.id.cpuContainer), "CPU");
+		setContainerListener(itemView.findViewById(R.id.cpuContainer), "CPU", 0);
 
 		setUpDonut((DonutGraph) itemView.findViewById(R.id.ramPieGraph),
 				tierStatus.getRamStatusPercent(), "RAM");
-		setContainerListener(itemView.findViewById(R.id.ramContainer), "ram");
+		setContainerListener(itemView.findViewById(R.id.ramContainer), "RAM", 1);
 
 		setUpDonut((DonutGraph) itemView.findViewById(R.id.storagePieGraph),
 				tierStatus.getStorageStatusPercent(), "Storage");
 		setContainerListener(itemView.findViewById(R.id.storageContainer),
-				"Storage");
+				"Storage", 2);
 
 		addAverageQueueLengths(tierStatus.getAverageDiskQueueLengths(),
 				(LinearLayout) itemView.findViewById(R.id.queueLengthContainer));
@@ -134,13 +132,14 @@ public class ServerStatusExpandableListAdapter extends
 		donut.setPercentage(value);
 	}
 
-	private void setContainerListener(View container, final String title) {
+	private void setContainerListener(View container, final String title,
+			final int type) {
 		container.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				FragmentManager fm = ((Activity) mContext).getFragmentManager();
-				UtlizationFragment uFrag = new UtlizationFragment(title);
+				UtlizationFragment uFrag = new UtlizationFragment(title, type);
 				fm.beginTransaction().replace(R.id.container, uFrag)
 						.addToBackStack("frag").commit();
 			}

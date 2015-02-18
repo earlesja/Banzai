@@ -14,8 +14,6 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.utils.LimitLine;
-import com.github.mikephil.charting.utils.MarkerView;
 import com.github.mikephil.charting.utils.Legend.LegendPosition;
 
 public class BanzaiLineGraph extends LineChart {
@@ -65,6 +63,26 @@ public class BanzaiLineGraph extends LineChart {
 	@Override
 	protected void drawDescription() {
 		// do nothing
+	}
+
+	public void addToData(HashMap<String, Float> data, Date time) {
+		ArrayList<String> titles = new ArrayList<String>();
+		titles.addAll(data.keySet());
+
+		ArrayList<String> xAxis = getData().getXVals();
+		xAxis.add(formatter.format(time));
+
+		LineData lData = getData();
+		int datasetSize = lData.getXValCount();
+
+		for (int i = 0; i < titles.size(); i++) {
+			Entry newPoint = new Entry(data.get(titles.get(i)), datasetSize);
+			lData.addEntry(newPoint, i);
+		}
+
+		setData(new LineData(xAxis, lData.getDataSets()));
+
+		invalidate();
 	}
 
 	// assumes the float[] and date[] are the same size

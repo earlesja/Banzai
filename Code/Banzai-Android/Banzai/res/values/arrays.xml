@@ -5,8 +5,6 @@
         <item>Dashboard</item>
         <item>OS Usage</item>
         <item>Browser Usage</item>
-        <item>Sytem Errors</item>
-        <item>Users Logged In</item>
         <item>Settings</item>
     </string-array>
 
@@ -18,13 +16,13 @@
         <item></item>
     </array>
     <array name="pie_chart_colors">
-        <item>@color/pie_chart_red</item>
-        <item>@color/pie_chart_orange</item>
-        <item>@color/pie_chart_green</item>
-        <item>@color/pie_chart_blue</item>
         <item>@color/pie_chart_purple</item>
         <item>@color/pie_chart_brown</item>
+        <item>@color/pie_chart_blue</item>
+        <item>@color/pie_chart_green</item>
+        <item>@color/pie_chart_orange</item>
         <item>@color/pie_chart_gray</item>
+        <item>@color/pie_chart_red</item>
     </array>
 
 </resources>

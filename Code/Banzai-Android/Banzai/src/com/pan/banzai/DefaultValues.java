@@ -14,7 +14,7 @@ public class DefaultValues {
 	public static final int sDefaultWarningThreshold = 75;
 	public static final int sDefaultCriticalThreshold = 90;
 	public static final int sDefaultDiskQueueWaitLength = 1000;
-	public static final int sDefaultGraphTimeFrame = 24;
+	public static final int sDefaultGraphTimeFrame = 2;
 
 	public static void storeDefaultInSharedPref() {
 		if (SharedPreferenceHelper.isInit()) {
