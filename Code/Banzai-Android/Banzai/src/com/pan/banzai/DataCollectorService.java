@@ -25,8 +25,8 @@ import microsoft.aspnet.signalr.client.hubs.*;
 
 public class DataCollectorService extends Service {
 	
-	final static String MY_ACTION = "MY_ACTION";
-	static int lastRandom = new Random().nextInt(100);
+	final static String DATA_RECEIVED = "DATA_RECEIVED";
+	
 	
 	 @Override
 	    public void onCreate() {
@@ -56,34 +56,29 @@ public class DataCollectorService extends Service {
 	            }          
 
 	        //Invoke join to start receiving broadcast messages            
-	        proxy.invoke("join", Arrays.asList("signalRTest"));
+//	        proxy.invoke("join", Arrays.asList("signalRTest"));
+	        proxy.invoke("join", Arrays.asList("IE 10 usage__25", "Firefox usage__17", "Chrome usage__18"));
 //	        proxy.invoke("join", Arrays.asList("Firefox usage__7"));
-//	        proxy.invoke("join", Arrays.asList("Chrome usage__8"));
+//	        proxy.invoke("join", Arrays.asList("Chrome usage__8", "Chrome usage__18", "Chrome usage__38"));
+//	        proxy.invoke("join", Arrays.asList("IE usage__6", "IE 8 usage__23", "IE 9 usage__24", "IE 10 usage__25", "IE 11 usage__26"));
+	        proxy.invoke("join", Arrays.asList("Windows 7 usage__54", "Mac OSX usage__66", "Linux usage__69", "Other OS usage__78"));    
 	        
-	        proxy.subscribe(new Object() {
-				@SuppressWarnings("unused")
-				public void messageReceived(String message) {
-					Log.d("TEST", message);
-				}
-			});
 	        
 	        connection.received(new MessageReceivedHandler() {
 
 				@Override
 				public void onMessageReceived(JsonElement json) {
 //					Log.d("TEST", "RAW received message: " + json.toString());
-//					
-//					Intent intent = new Intent();
-//				       intent.setAction(MY_ACTION);
-//				      
-//				       intent.putExtra("DATAPASSED", json.toString());
-//				      
-//				       sendBroadcast(intent);
+					
+					Intent intent = new Intent();
+				       intent.setAction(DATA_RECEIVED);
+				      
+				       intent.putExtra("dataJson", json.toString());
+				      
+				       sendBroadcast(intent);
 				}
 			});
-	        
-	        MyThread myThread = new MyThread();
-	        myThread.start();
+
 	    }
 	    @Override
 	    public void onDestroy() {
@@ -96,79 +91,4 @@ public class DataCollectorService extends Service {
 			return null;
 		} 
 		
-		public class MyThread extends Thread{
-			 
-			 @Override
-			 public void run() {
-			  // TODO Auto-generated method stub
-			  for(int i=0; i<1000; i++){
-			   try {
-			    Thread.sleep(5000);
-			    Intent intent = new Intent();
-			       intent.setAction(MY_ACTION);
-			       
-			       int[] data = generateRandomData();
-			       
-			       for(int j=0; j< data.length; j++){
-			    	   intent.putExtra("Data"+j, data[j]+"");
-			       }
-			       
-			       //intent.putExtra("DATAPASSED", i+"");
-			       
-			       //Calendar c = Calendar.getInstance();
-			       //intent.putExtra("Time", c.get(c.HOUR)+":"+c.get(c.MINUTE)+":"+c.get(c.SECOND));
-			      
-			       sendBroadcast(intent);
-			   } catch (InterruptedException e) {
-			    // TODO Auto-generated catch block
-			    e.printStackTrace();
-			   }
-			  }
-			  stopSelf();
-			 }
-
-			private int[] generateRandomData() {
-				
-				Random random = new Random();
-				int[] returnData = {0,0,0};
-				int start;
-				int end;
-				int randomNumber = lastRandom;
-				long range;
-				long fraction;
-				int latestSum = 100;
-				
-		        for(int i=0; i<3; i++){
-		        	
-		        	if(i==0){
-		        		start = lastRandom - 5;
-				        end = lastRandom + 5;
-		        	}else{
-		        		start = latestSum - randomNumber - 10;
-		        		end = latestSum - randomNumber;
-		        	}
-			        start = start < 0 ? 0 : start;
-			        end = end > 100 ? 100 : end;
-			        end = end < 0 ? 0 : end;
-			        
-			        //get the range, casting to long to avoid overflow problems
-			        range = (long)end - (long)start + 1;
-			        // compute a fraction of the range, 0 <= frac < range
-			        fraction = (long)(range * random.nextDouble());
-			        randomNumber =  (int)(fraction + start);
-			        latestSum = latestSum - randomNumber;
-			        latestSum = latestSum < 0? 0: latestSum;
-			        returnData[i] = randomNumber;
-			        
-			        if(i==0){
-			        	lastRandom = randomNumber;	
-			        }
-		        }
-		        
-		        
-		        
-				return returnData;
-			}
-			 
-			}
 }

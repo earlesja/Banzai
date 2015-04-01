@@ -13,10 +13,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 public class OsUsageFragment extends Fragment {
 	private UsagePieGraph mPieChart;
 	private BanzaiLineGraph mLineChart;
+	private static float LINUX_USAGE=10f;
+	private static float MAC_USAGE=30f;
+	private static float WINDOWS_USAGE=55f;
+	private static float OTHER_OS_USAGE=5f;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -49,8 +54,8 @@ public class OsUsageFragment extends Fragment {
 
 		HashMap<String, Float> map = new HashMap<String, Float>();
 		map.put("Windows", 55f);
-		map.put("Mac", 35f);
-		map.put("Linux", 5f);
+		map.put("Mac", 30f);
+		map.put("Linux", 10f);
 		map.put("Other", 5f);
 
 		mPieChart.setData(map);
@@ -109,98 +114,39 @@ public class OsUsageFragment extends Fragment {
 	}
 
 	public void updateContent(ArrayList<String> data) {
-		// int datapoint = Integer.parseInt(data.get(0)) * 10;
-		// int index = mLineChart.getDataSetByIndex(2).getEntryCount();
-		// Entry newEntry = new Entry(datapoint, index);
-		// //mLineChart.getData().addEntry(newEntry, index);
-		// mLineChart.getData().getDataSetByIndex(2).addEntry(newEntry);
-		// LineData chartData = mLineChart.getData();
-		// ArrayList<String> xvals = chartData.getXVals();
-		// int lastIndex = xvals.size() - 1;
-		// int lastVal = Integer.parseInt(xvals.get(lastIndex).substring(3));
-		// int newVal = lastVal + 5;
-		// mLineChart.getData().getXVals().add("00:" + newVal);
-		// mLineChart.postInvalidate();
-		// String toastMessage = "Test: ";
-		//
-		// for(int i=0; i<mLineChart.getDataSetByIndex(2).getEntryCount(); i++){
-		// toastMessage = toastMessage +
-		// mLineChart.getData().getDataSetByIndex(2).getEntryForXIndex(i).getVal()
-		// + "\n";
-		//
-		// }
-		//
-		//
-		// Toast.makeText(this.getActivity(),
-		// toastMessage + "XVALUES: " + mLineChart.getData().getXVals(),
-		// Toast.LENGTH_LONG).show();
-
-		// -----------------------------
-
-		// int GRAPH_WIDTH = 10;
-		//
-		// LineData lineData = mLineChart.getData();
-		// LineDataSet lineDataSet = lineData.getDataSetByIndex(0);
-		// int count = lineDataSet.getEntryCount();
-		//
-		// // Make rolling window
-		// if (lineData.getXValCount() <= count) {
-		// // Remove/Add XVal
-		// lineData.getXVals().add("" + count);
-		// lineData.getXVals().remove(0);
-		//
-		// // Move all entries 1 to the left..
-		// for (int i=0; i < count; i++) {
-		// Entry e = lineDataSet.getEntryForXIndex(i);
-		// if (e==null) continue;
-		//
-		// e.setXIndex(e.getXIndex() - 1);
-		// }
-		//
-		// // Set correct index to add value
-		// count = GRAPH_WIDTH;
-		// }
-		//
-		// // Add new value
-		// lineData.addEntry(new Entry(datapoint, count), 0);
-		//
-		// // Make sure to draw
-		// mLineChart.notifyDataSetChanged();
-		// mLineChart.invalidate();
-
-		// -------------------------------------
-		Float[] array = new Float[4];
-
-		array[0] = Float.parseFloat(data.get(0));
-		array[1] = Float.parseFloat(data.get(1));
-		array[2] = Float.parseFloat(data.get(2));
-		array[3] = 100 - array[0] - array[1] - array[2];
-		array[3] = array[3] < 0 ? 0 : array[3];
-		boolean sumCorrectly = array[0] + array[1] + array[2] + array[3] == 100 ? true
-				: false;
-
-		Arrays.sort(array);
-
-		for (int i = 0; i < array.length; i++) {
-			if (array[i] == 0) {
-				array[3] = array[3] - 5;
-				array[i] = array[i] + 5;
-			}
+		
+//		 Toast.makeText(this.getActivity(),
+//		 mPieChart.getData().getDataSet().getEntryForXIndex(0).getVal() +"\n"+
+//		 mPieChart.getData().getDataSet().getEntryForXIndex(1).getVal() +"\n"+
+//		 mPieChart.getData().getDataSet().getEntryForXIndex(2).getVal() +"\n"+
+//		 mPieChart.getData().getDataSet().getEntryForXIndex(3).getVal() +"\n",
+//		 Toast.LENGTH_LONG).show();
+		
+		
+		int metricId = Integer.parseInt(data.get(0)); 
+		float value = Float.parseFloat(data.get(1));
+		
+		if(metricId == 54){
+			//windows
+			this.WINDOWS_USAGE = value;
+		}else if(metricId == 66){
+			//mac
+			this.MAC_USAGE = value;
+		}else if(metricId == 69){
+			//linux
+			this.LINUX_USAGE = value;
+		}else if(metricId == 78){
+			//other
+			this.LINUX_USAGE = value;
 		}
+		
+		float total = this.WINDOWS_USAGE + this.MAC_USAGE + this.LINUX_USAGE + this.OTHER_OS_USAGE;
 
-		// Toast.makeText(this.getActivity(),
-		// sumCorrectly +"\n"+
-		// data0 +"\n"+
-		// data1 +"\n"+
-		// data2 +"\n"+
-		// data3 +"\n",
-		// Toast.LENGTH_LONG).show();
-
-		mPieChart.getData().getDataSet().getEntryForXIndex(0).setVal(array[0]);
-		mPieChart.getData().getDataSet().getEntryForXIndex(1).setVal(array[1]);
-		mPieChart.getData().getDataSet().getEntryForXIndex(2).setVal(array[2]);
-		mPieChart.getData().getDataSet().getEntryForXIndex(3).setVal(array[3]);
-
+		mPieChart.getData().getDataSet().getEntryForXIndex(0).setVal((this.OTHER_OS_USAGE/total)*100);
+		mPieChart.getData().getDataSet().getEntryForXIndex(1).setVal((this.LINUX_USAGE/total)*100);
+		mPieChart.getData().getDataSet().getEntryForXIndex(2).setVal((this.MAC_USAGE/total)*100);
+		mPieChart.getData().getDataSet().getEntryForXIndex(3).setVal((this.WINDOWS_USAGE/total)*100);
+		
 		mPieChart.notifyDataSetChanged();
 		mPieChart.invalidate();
 	}

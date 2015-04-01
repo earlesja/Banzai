@@ -13,10 +13,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 public class BrowserUsageFragment extends Fragment {
 	private UsagePieGraph mPieChart;
 	private BanzaiLineGraph mLineChart;
+	private static float FIREFOX_USAGE=15f;
+	private static float CHROME_USAGE=30f;
+	private static float IE_USAGE=55f;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -106,35 +110,35 @@ public class BrowserUsageFragment extends Fragment {
 	}
 
 	public void updateContent(ArrayList<String> data) {
-		int[] array = new int[3];
-
-		array[0] = Integer.parseInt(data.get(0));
-		array[1] = Integer.parseInt(data.get(1));
-		array[2] = Integer.parseInt(data.get(2));
-		// array[3] = 100 - array[0] - array[1] - array[2];
-		// array[3] = array[3] < 0? 0: array[3];
-		// boolean sumCorrectly = array[0]+array[1]+array[2]+array[3] == 100 ?
-		// true: false;
-
-		Arrays.sort(array);
-
-		for (int i = 0; i < array.length; i++) {
-			if (array[i] == 0) {
-				array[2] = array[2] - 5;
-				array[i] = array[i] + 5;
-			}
+		
+//		Toast.makeText(this.getActivity(),
+//			 mPieChart.getData().getDataSet().getEntryForXIndex(0).getVal() +"\n"+
+//			 mPieChart.getData().getDataSet().getEntryForXIndex(1).getVal() +"\n"+
+//			 mPieChart.getData().getDataSet().getEntryForXIndex(2).getVal() +"\n",
+//			 Toast.LENGTH_LONG).show();
+//		
+		
+		int metricId = Integer.parseInt(data.get(0)); 
+		float value = Float.parseFloat(data.get(1));
+		
+		if(metricId == 25){
+			//IE
+			this.IE_USAGE = value;
+		}else if(metricId == 17){
+			//firefox
+			this.FIREFOX_USAGE = value;
+		}else if(metricId == 18){
+			//chrome
+			this.CHROME_USAGE = value;
 		}
+		
+		
+		float total = this.IE_USAGE + this.FIREFOX_USAGE + this.CHROME_USAGE;
 
-		// Toast.makeText(this.getActivity(),
-		// mPieChart.getData().getDataSet().getEntryCount()+"",
-		// Toast.LENGTH_LONG).show();
-
-		mPieChart.getData().getDataSet().getEntryForXIndex(0).setVal(array[0]);
-		mPieChart.getData().getDataSet().getEntryForXIndex(1).setVal(array[1]);
-		mPieChart.getData().getDataSet().getEntryForXIndex(2)
-				.setVal(100 - array[0] - array[1]);
-		// mPieChart.getData().getDataSet().getEntryForXIndex(3).setVal(array[3]);
-
+		mPieChart.getData().getDataSet().getEntryForXIndex(0).setVal((this.CHROME_USAGE/total)*100);
+		mPieChart.getData().getDataSet().getEntryForXIndex(1).setVal((this.IE_USAGE/total)*100);
+		mPieChart.getData().getDataSet().getEntryForXIndex(2).setVal((this.FIREFOX_USAGE/total)*100);
+		
 		mPieChart.notifyDataSetChanged();
 		mPieChart.invalidate();
 	}

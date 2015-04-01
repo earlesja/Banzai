@@ -2,6 +2,10 @@ package com.pan.banzai;
 
 import java.util.ArrayList;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -16,6 +20,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
@@ -27,7 +32,7 @@ public class MainActivity extends Activity {
 	private DrawerLayout mDrawerLayout;
 	private ActionBarDrawerToggle mDrawerToggle;
 	
-	MyReceiver myReceiver;
+	DataReceiver dataReceiver;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -116,73 +121,68 @@ public class MainActivity extends Activity {
 	
 public void onResume(){
 		
-		myReceiver = new MyReceiver();
+		dataReceiver = new DataReceiver();
 	    IntentFilter intentFilter = new IntentFilter();
-	    intentFilter.addAction(DataCollectorService.MY_ACTION);
-	    registerReceiver(myReceiver, intentFilter);
+	    intentFilter.addAction(DataCollectorService.DATA_RECEIVED);
+	    registerReceiver(dataReceiver, intentFilter);
 	    
 	    super.onResume();
 	}
 	
 	public void onPause(){
-		unregisterReceiver(myReceiver);
+		unregisterReceiver(dataReceiver);
 		super.onPause();
 		
 	}
 	
-	private class MyReceiver extends BroadcastReceiver{
+	private class DataReceiver extends BroadcastReceiver{
 		 
 		 @Override
-		 public void onReceive(Context arg0, Intent arg1) {
-		  // TODO Auto-generated method stub
-			 Bundle extra = arg1.getExtras();
+		 public void onReceive(Context context, Intent intent) {
+
+		  Bundle extra = intent.getExtras();
 		
-		  String datapassed = extra.getString("DATAPASSED");
+		  String datapassed = extra.getString("dataJson");
 		  String time = extra.getString("Time");
 		  
+		  try {
+			JSONObject obj = new JSONObject(datapassed);
+			JSONObject data = (JSONObject) obj.getJSONArray("A").get(0);
 		  
-//		  Toast.makeText(MainActivity.this,
-//		    "Triggered by Service!\n"
-//		    + "Data passed: " + String.valueOf(datapassed),
-//		    Toast.LENGTH_LONG).show();
 		  
-//		  OsUsageFragment myFragment = (OsUsageFragment)getFragmentManager().findFragmentById(R.id.container);
-//		  if(myFragment != null && myFragment.isVisible()){
 //			  Toast.makeText(MainActivity.this,
+//			    "Triggered by Service!\n"
+//			    + "Data passed: " + String.valueOf(datapassed),
+//			    Toast.LENGTH_LONG).show();
+			  
+			  if(MainActivity.sOsUsageFragment.isVisible()){
+//				  Toast.makeText(MainActivity.this,
 //					    "OsUsageFragment shown",
 //					    Toast.LENGTH_LONG).show();
-//			  
-//		  }
+				  
+				  ArrayList<String> dataList = new ArrayList<String>();
+				  dataList.add(data.get("MetricId").toString());
+				  dataList.add(data.get("Value").toString());
+				  
+				  MainActivity.sOsUsageFragment.updateContent(dataList);
+			  }
+			  
+			  if(MainActivity.sBrowserUsageFragment.isVisible()){
+//				  Toast.makeText(MainActivity.this,
+//					    "OsUsageFragment shown",
+//					    Toast.LENGTH_LONG).show();
+				  
+				  ArrayList<String> dataList = new ArrayList<String>();
+				  dataList.add(data.get("MetricId").toString());
+				  dataList.add(data.get("Value").toString());
+				  
+				  MainActivity.sBrowserUsageFragment.updateContent(dataList);
+			  }
 		  
-		  if(MainActivity.sOsUsageFragment.isVisible()){
-//			  Toast.makeText(MainActivity.this,
-//				    "OsUsageFragment shown",
-//				    Toast.LENGTH_LONG).show();
-			  
-			  ArrayList<String> dataList = new ArrayList<String>();
-			  dataList.add(extra.getString("Data0"));
-			  dataList.add(extra.getString("Data1"));
-			  dataList.add(extra.getString("Data2"));
-			  dataList.add(extra.getString("Data3"));
-			  //dataList.add(time);
-			  
-			  MainActivity.sOsUsageFragment.updateContent(dataList);
-		  }
-		  
-		  if(MainActivity.sBrowserUsageFragment.isVisible()){
-//			  Toast.makeText(MainActivity.this,
-//				    "OsUsageFragment shown",
-//				    Toast.LENGTH_LONG).show();
-			  
-			  ArrayList<String> dataList = new ArrayList<String>();
-			  dataList.add(extra.getString("Data0"));
-			  dataList.add(extra.getString("Data1"));
-			  dataList.add(extra.getString("Data2"));
-			  dataList.add(extra.getString("Data3"));
-			  //dataList.add(time);
-			  
-			  MainActivity.sBrowserUsageFragment.updateContent(dataList);
-		  }
+		  } catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			  }
 		  
 		 }
 		 
