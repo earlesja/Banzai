@@ -4,11 +4,15 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Formatter;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
@@ -55,8 +59,8 @@ public class BanzaiLineGraph extends LineChart {
 		setHighlightEnabled(false);
 		setUnit("%");
 		setDrawUnitsInChart(true);
-		setMarkerView(new LineChartMarker(getContext(),
-				R.layout.line_chart_marker, getUnit()));
+		setMarkerView(new BanzaiLineChartMarker(getContext(),
+				R.layout.line_chart_marker));
 
 	}
 
@@ -85,8 +89,7 @@ public class BanzaiLineGraph extends LineChart {
 		invalidate();
 	}
 
-	// assumes the float[] and date[] are the same size
-	public void setData(HashMap<String, Float[]> data, Date[] times) {
+	public void setData(HashMap<String, ArrayList<Float>> data, Date[] times) {
 		ArrayList<String> titles = new ArrayList<String>();
 		titles.addAll(data.keySet());
 
@@ -99,11 +102,11 @@ public class BanzaiLineGraph extends LineChart {
 
 		int pos = 0;
 		for (String key : titles) {
-			Float[] rawPoints = data.get(key);
+			List<Float> rawPoints = data.get(key);
 			ArrayList<Entry> values = new ArrayList<Entry>();
 
-			for (int i = 0; i < rawPoints.length; i++) {
-				values.add(new Entry(rawPoints[i], i));
+			for (int i = 0; i < rawPoints.size(); i++) {
+				values.add(new Entry(rawPoints.get(i), i));
 			}
 
 			LineDataSet d = new LineDataSet(values, key);
@@ -126,5 +129,25 @@ public class BanzaiLineGraph extends LineChart {
 		invalidate();
 
 		getLegend().setPosition(LegendPosition.BELOW_CHART_CENTER);
+	}
+
+	public class BanzaiLineChartMarker extends LineChartMarker {
+
+		private TextView mTextView;
+
+		public BanzaiLineChartMarker(Context context, int layoutResource) {
+			super(context, layoutResource);
+			mTextView = (TextView) findViewById(R.id.marker_text);
+		}
+
+		@Override
+		public void refreshContent(Entry e, int dataSetIndex) {
+			StringBuilder toDisplay = new StringBuilder();
+			Formatter formatter = new Formatter(toDisplay, Locale.US);
+			formatter.format("%1$.2f%%", e.getVal());
+			formatter.close();
+			mTextView.setText(toDisplay.toString());
+		}
+
 	}
 }

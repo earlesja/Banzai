@@ -1,7 +1,5 @@
 package com.pan.banzai;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -34,8 +32,8 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		Intent dataService = new Intent(this, DataCollectorService.class);
-		startService(dataService);
+//		Intent dataService = new Intent(this, DataCollectorService.class);
+//		startService(dataService);
 		// nav stuff
 		String[] navOptions = getResources().getStringArray(
 				R.array.nav_drawer_items);
@@ -154,35 +152,35 @@ public void onResume(){
 //			  
 //		  }
 		  
-		  if(MainActivity.sOsUsageFragment.isVisible()){
-//			  Toast.makeText(MainActivity.this,
-//				    "OsUsageFragment shown",
-//				    Toast.LENGTH_LONG).show();
-			  
-			  ArrayList<String> dataList = new ArrayList<String>();
-			  dataList.add(extra.getString("Data0"));
-			  dataList.add(extra.getString("Data1"));
-			  dataList.add(extra.getString("Data2"));
-			  dataList.add(extra.getString("Data3"));
-			  //dataList.add(time);
-			  
-			  MainActivity.sOsUsageFragment.updateContent(dataList);
-		  }
+//		  if(MainActivity.sOsUsageFragment.isVisible()){
+////			  Toast.makeText(MainActivity.this,
+////				    "OsUsageFragment shown",
+////				    Toast.LENGTH_LONG).show();
+//			  
+//			  ArrayList<String> dataList = new ArrayList<String>();
+//			  dataList.add(extra.getString("Data0"));
+//			  dataList.add(extra.getString("Data1"));
+//			  dataList.add(extra.getString("Data2"));
+//			  dataList.add(extra.getString("Data3"));
+//			  //dataList.add(time);
+//			  
+//			  MainActivity.sOsUsageFragment.updateContent(dataList);
+//		  }
 		  
-		  if(MainActivity.sBrowserUsageFragment.isVisible()){
-//			  Toast.makeText(MainActivity.this,
-//				    "OsUsageFragment shown",
-//				    Toast.LENGTH_LONG).show();
-			  
-			  ArrayList<String> dataList = new ArrayList<String>();
-			  dataList.add(extra.getString("Data0"));
-			  dataList.add(extra.getString("Data1"));
-			  dataList.add(extra.getString("Data2"));
-			  dataList.add(extra.getString("Data3"));
-			  //dataList.add(time);
-			  
-			  MainActivity.sBrowserUsageFragment.updateContent(dataList);
-		  }
+//		  if(MainActivity.sBrowserUsageFragment.isVisible()){
+////			  Toast.makeText(MainActivity.this,
+////				    "OsUsageFragment shown",
+////				    Toast.LENGTH_LONG).show();
+//			  
+//			  ArrayList<String> dataList = new ArrayList<String>();
+//			  dataList.add(extra.getString("Data0"));
+//			  dataList.add(extra.getString("Data1"));
+//			  dataList.add(extra.getString("Data2"));
+//			  dataList.add(extra.getString("Data3"));
+//			  //dataList.add(time);
+//			  
+//			  MainActivity.sBrowserUsageFragment.updateContent(dataList);
+//		  }
 		  
 		 }
 		 

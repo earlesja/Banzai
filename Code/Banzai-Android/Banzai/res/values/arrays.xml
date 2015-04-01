@@ -23,6 +23,11 @@
         <item>@color/pie_chart_orange</item>
         <item>@color/pie_chart_gray</item>
         <item>@color/pie_chart_red</item>
+        <item>@color/pie_chart_purple_dark</item>
+        <item>@color/pie_chart_blue_dark</item>
+        <item>@color/pie_chart_green_dark</item>
+        <item>@color/pie_chart_orange_dark</item>
+        <item>@color/pie_chart_red_dark</item>
     </array>
 
 </resources>

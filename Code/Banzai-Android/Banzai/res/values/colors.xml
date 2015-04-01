@@ -23,6 +23,7 @@
     <color name="deauthorize_button">#ffc431</color>
     <color name="deauthorize_button_text">#ffffff</color>
     <color name="titles_text">#808080</color>
+    
     <color name="pie_chart_red">#F44336</color>
     <color name="pie_chart_orange">#FB8C00</color>
     <color name="pie_chart_green">#4CAF50</color>
@@ -30,5 +31,10 @@
     <color name="pie_chart_purple">#AB47BC</color>
     <color name="pie_chart_brown">#795548</color>
     <color name="pie_chart_gray">#757575</color>
+    <color name="pie_chart_red_dark">#D32F2F</color>
+    <color name="pie_chart_orange_dark">#E64A19</color>
+    <color name="pie_chart_green_dark">#1B5E20</color>
+    <color name="pie_chart_blue_dark">#303F9F</color>
+    <color name="pie_chart_purple_dark">#7E57C2</color>
 
 </resources>

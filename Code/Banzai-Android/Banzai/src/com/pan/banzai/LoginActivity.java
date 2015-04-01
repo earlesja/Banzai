@@ -29,6 +29,7 @@ public class LoginActivity extends Activity {
 		button.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+
 				Intent intent = new Intent(context, MainActivity.class);
 				startActivity(intent);
 			}
