@@ -1,27 +1,20 @@
 package com.pan.banzai;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
-import com.google.gson.JsonElement;
-
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
+import microsoft.aspnet.signalr.client.MessageReceivedHandler;
+import microsoft.aspnet.signalr.client.SignalRFuture;
+import microsoft.aspnet.signalr.client.hubs.HubConnection;
+import microsoft.aspnet.signalr.client.hubs.HubProxy;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
-import microsoft.aspnet.signalr.client.*;
-import microsoft.aspnet.signalr.client.hubs.*;
 
-
+import com.google.gson.JsonElement;
 
 public class DataCollectorService extends Service {
 	
@@ -68,7 +61,7 @@ public class DataCollectorService extends Service {
 
 				@Override
 				public void onMessageReceived(JsonElement json) {
-//					Log.d("TEST", "RAW received message: " + json.toString());
+					Log.d("TEST", "RAW received message: " + json.toString());
 					
 					Intent intent = new Intent();
 				       intent.setAction(DATA_RECEIVED);
@@ -89,6 +82,6 @@ public class DataCollectorService extends Service {
 		public IBinder onBind(Intent intent) {
 			// TODO Auto-generated method stub
 			return null;
-		} 
-		
+		}
+
 }

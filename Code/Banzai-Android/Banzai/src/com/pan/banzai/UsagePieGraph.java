@@ -15,6 +15,7 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.utils.Legend;
 import com.github.mikephil.charting.utils.Legend.LegendPosition;
 
 public class UsagePieGraph extends PieChart {
@@ -42,12 +43,12 @@ public class UsagePieGraph extends PieChart {
 		// set default values setDrawHoleEnabled(false);
 		setDrawCenterText(false);
 		setDrawYValues(true);
-		setRotationEnabled(false);
+		setRotationEnabled(true);
 		setUsePercentValues(true);
 		setDrawCenterText(false);
 		setRotationAngle(0);
+		setDrawXValues(false);
 		setOnTouchListener(new OnTouchListener() {
-
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				return false;
@@ -76,14 +77,14 @@ public class UsagePieGraph extends PieChart {
 
 			values.add(new Entry(data.get(title), pos));
 			titles.add(title);
-			Log.d("HHH", title + "\t" + data.get(title));
 
 			pos++;
 		}
+		Log.d("HHH", titles.toString());
 
 		PieDataSet dataValues = new PieDataSet(values, getContext().getString(
 				R.string.operating_systems));
-		dataValues.setSliceSpace(3f);
+		dataValues.setSliceSpace(2f);
 		dataValues.setColors(mColors);
 
 		PieData newData = new PieData(titles, dataValues);
@@ -94,7 +95,8 @@ public class UsagePieGraph extends PieChart {
 		invalidate();
 
 		// set legend (must be called after data is set)
-		getLegend().setPosition(LegendPosition.NONE);
+		Legend legend = getLegend();
+		legend.setPosition(LegendPosition.RIGHT_OF_CHART);
 	}
 
 }

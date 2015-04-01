@@ -2,6 +2,8 @@ package com.pan.banzai;
 
 import java.util.ArrayList;
 
+import com.pan.banzai.UtlizationFragment.UtilizationType;
+
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;
@@ -11,7 +13,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class ServerStatusExpandableListAdapter extends
@@ -19,11 +20,11 @@ public class ServerStatusExpandableListAdapter extends
 	public static final int sNumChildren = 1;
 	public static final int sDonutInnerCircleRatio = 175;
 
-	private ArrayList<ServerTierStatus> mTierStatuses;
+	private ArrayList<ServerTier> mTierStatuses;
 	private Context mContext;
 
 	public ServerStatusExpandableListAdapter(Context context,
-			ArrayList<ServerTierStatus> tierStatuses) {
+			ArrayList<ServerTier> tierStatuses) {
 		mTierStatuses = tierStatuses;
 		mContext = context;
 	}
@@ -79,7 +80,7 @@ public class ServerStatusExpandableListAdapter extends
 					R.layout.list_group_server_status, parent, false);
 		}
 		// get the tier status
-		ServerTierStatus tierStatus = (ServerTierStatus) getGroup(groupPosition);
+		ServerTier tierStatus = (ServerTier) getGroup(groupPosition);
 		// set the header text to the tier name
 		((TextView) convertView.findViewById(R.id.listGroupTextView))
 				.setText(tierStatus.getTierName());
@@ -96,25 +97,23 @@ public class ServerStatusExpandableListAdapter extends
 				R.layout.list_item_server_status, parent, false);
 
 		// get the tier status
-		ServerTierStatus tierStatus = (ServerTierStatus) getChild(
-				groupPosition, childPosition);
+		ServerTier tier = (ServerTier) getChild(groupPosition, childPosition);
 
 		// setup the donut graphs
 		setUpDonut((DonutGraph) itemView.findViewById(R.id.cpuPieGraph),
-				tierStatus.getCpuStatusPercent(), "CPU");
-		setContainerListener(itemView.findViewById(R.id.cpuContainer), "CPU", 0);
+				tier.getCpuStatusPercent(), "CPU");
+		setContainerListener(itemView.findViewById(R.id.cpuContainer), tier,
+				UtilizationType.CPU);
 
 		setUpDonut((DonutGraph) itemView.findViewById(R.id.ramPieGraph),
-				tierStatus.getRamStatusPercent(), "RAM");
-		setContainerListener(itemView.findViewById(R.id.ramContainer), "RAM", 1);
+				tier.getRamStatusPercent(), "Memory");
+		setContainerListener(itemView.findViewById(R.id.ramContainer), tier,
+				UtilizationType.RAM);
 
 		setUpDonut((DonutGraph) itemView.findViewById(R.id.storagePieGraph),
-				tierStatus.getStorageStatusPercent(), "Storage");
+				tier.getStorageStatusPercent(), "Disk");
 		setContainerListener(itemView.findViewById(R.id.storageContainer),
-				"Storage", 2);
-
-		addAverageQueueLengths(tierStatus.getAverageDiskQueueLengths(),
-				(LinearLayout) itemView.findViewById(R.id.queueLengthContainer));
+				tier, UtilizationType.DISK);
 
 		return itemView;
 	}
@@ -132,43 +131,18 @@ public class ServerStatusExpandableListAdapter extends
 		donut.setPercentage(value);
 	}
 
-	private void setContainerListener(View container, final String title,
-			final int type) {
+	private void setContainerListener(View container, final ServerTier tier,
+			final UtilizationType type) {
 		container.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				FragmentManager fm = ((Activity) mContext).getFragmentManager();
-				UtlizationFragment uFrag = new UtlizationFragment(title, type);
+				UtlizationFragment uFrag = new UtlizationFragment(tier, type);
 				fm.beginTransaction().replace(R.id.container, uFrag)
 						.addToBackStack("frag").commit();
 			}
 		});
 	}
 
-	private void addAverageQueueLengths(ArrayList<Integer> lengths,
-			ViewGroup container) {
-		container.removeAllViews();
-		// TODO replace i with actual disk number/ name
-		for (int i = 0; i < lengths.size(); i++) {
-			// TODO replace with custom view
-			String message = container.getContext().getString(
-					R.string.average_disk_queue_length, i, lengths.get(i));
-			TextView lengthTextView = new TextView(container.getContext());
-			lengthTextView.setText(message);
-			lengthTextView.setTextColor(determineQueueLengthColor(lengths
-					.get(i)));
-			lengthTextView.setTextSize(14);
-			container.addView(lengthTextView);
-		}
-	}
-
-	private int determineQueueLengthColor(int value) {
-		if (value >= DefaultValues.getQueueWaitLength()) {
-			return mContext.getResources().getColor(R.color.critical);
-
-		} else {
-			return Color.BLACK;
-		}
-	}
 }

@@ -5,47 +5,29 @@
     android:layout_gravity="center"
     android:orientation="vertical" >
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/utilization_breakdown_title"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="10dp"
-        android:layout_weight="1"
-        android:orientation="vertical" >
+        android:layout_height="wrap_content"
+        android:text="@string/utilization_breakdown_title"
+        android:textColor="@color/titles_text"
+        android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/utilization_aggregate_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/utilization_aggregate_title"
-            android:textColor="@color/titles_text"
-            android:textSize="20sp" />
-
-        <com.pan.banzai.BanzaiLineGraph
-            android:id="@+id/utilization_aggregate_graph"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
-    </LinearLayout>
-
-    <LinearLayout
+    <com.pan.banzai.BanzaiLineGraph
+        android:id="@+id/utilization_breakdown_graph"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+    <ProgressBar
+        android:id="@+id/utilization_line_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="8dp"
         android:layout_weight="1"
-        android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/utilization_breakdown_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/utilization_breakdown_title"
-            android:textColor="@color/titles_text"
-            android:textSize="20sp" />
-
-        <com.pan.banzai.BanzaiLineGraph
-            android:id="@+id/utilization_breakdown_graph"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
-    </LinearLayout>
+        android:indeterminate="false" />
 
 </LinearLayout>

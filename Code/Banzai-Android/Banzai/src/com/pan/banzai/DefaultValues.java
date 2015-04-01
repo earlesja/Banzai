@@ -8,13 +8,11 @@ public class DefaultValues {
 	public static final String sRamCriticalThresholdKey = "RAM_CRIT";
 	public static final String sStorageWarningThresholdKey = "STOR_WARN";
 	public static final String sStorageCriticalThresholdKey = "STOR_CRIT";
-	public static final String sDiskQueueWaitLengthKey = "DISK_QUEUE";
 	public static final String sGraphTimeFrameKey = "TIME_FRAME";
 
 	public static final int sDefaultWarningThreshold = 75;
 	public static final int sDefaultCriticalThreshold = 90;
-	public static final int sDefaultDiskQueueWaitLength = 1000;
-	public static final int sDefaultGraphTimeFrame = 2;
+	public static final int sDefaultGraphTimeFrame = 2 * 3600;
 
 	public static void storeDefaultInSharedPref() {
 		if (SharedPreferenceHelper.isInit()) {
@@ -36,11 +34,6 @@ public class DefaultValues {
 					sDefaultWarningThreshold);
 			storeValueIfNotSet(sStorageCriticalThresholdKey,
 					sDefaultCriticalThreshold);
-
-			// disk wait length defaults
-			storeValueIfNotSet(sDiskQueueWaitLengthKey,
-					sDefaultDiskQueueWaitLength);
-
 			// graph defaults
 			storeValueIfNotSet(sGraphTimeFrameKey, sDefaultGraphTimeFrame);
 		}
@@ -114,16 +107,6 @@ public class DefaultValues {
 	public static int getStorageCriticalThreshold() {
 		return SharedPreferenceHelper.getIntPreference(
 				sStorageCriticalThresholdKey, sDefaultCriticalThreshold);
-	}
-
-	// Queue wait length
-	public static void putQueueWaitLength(int value) {
-		SharedPreferenceHelper.putIntPreference(sDiskQueueWaitLengthKey, value);
-	}
-
-	public static int getQueueWaitLength() {
-		return SharedPreferenceHelper.getIntPreference(sDiskQueueWaitLengthKey,
-				sDefaultDiskQueueWaitLength);
 	}
 
 	// graph time frame

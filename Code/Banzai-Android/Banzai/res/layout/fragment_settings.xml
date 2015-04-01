@@ -73,27 +73,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:labelFor="@+id/diskQueWaitLengthInput"
-                android:text="@string/disk_queue_wait_length"
-                android:textColor="@color/titles_text"
-                android:textSize="20sp" />
-
-            <EditText
-                android:id="@+id/diskQueWaitLengthInput"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:inputType="number" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:orientation="vertical" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:labelFor="@+id/graphTimeFrameInput"
                 android:text="@string/graph_time_frame"
                 android:textColor="@color/titles_text"

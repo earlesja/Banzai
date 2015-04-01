@@ -1,7 +1,6 @@
 package com.pan.banzai;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -11,6 +10,23 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 
 public class DashboardFragment extends Fragment {
+	private static int[] APP_CPU_METRICIDS = new int[] { 79, 80, 81 };
+	private static int[] APP_RAM_METRICIDS = new int[] { 85, 86, 87 };
+	private static int[] APP_DISK_METRICIDS = new int[] { 93, 94, 95 };
+	private static int[] APP_SERVERIDS = new int[] { 23, 24, 25 };
+	private static String[] APP_SERVER_NAMES = new String[] { "Prod1App1",
+			"Prod1App2", "Prod1App3" };
+	private static int[] WEB_CPU_METRICIDS = new int[] { 82, 83, 84 };
+	private static int[] WEB_RAM_METRICIDS = new int[] { 88, 89, 90 };
+	private static int[] WEB_DISK_METRICIDS = new int[] { 96, 97, 98 };
+	private static int[] WEB_SERVERIDS = new int[] { 26, 27, 28 };
+	private static String[] WEB_SERVER_NAMES = new String[] { "Prod1Web1",
+			"Prod1Web2", "Prod1Web3" };
+	private static int[] DB_CPU_METRICIDS = new int[] { 91 };
+	private static int[] DB_RAM_METRICIDS = new int[] { 92 };
+	private static int[] DB_DISK_METRICIDS = new int[] { 99 };
+	private static int[] DB_SERVERIDS = new int[] { 37 };
+	private static String[] DB_SERVER_NAMES = new String[] { "ProdDB1" };
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -39,30 +55,19 @@ public class DashboardFragment extends Fragment {
 		super.onPause();
 	}
 
-	private ArrayList<ServerTierStatus> getData() {
-		ArrayList<ServerTierStatus> statuses = new ArrayList<ServerTierStatus>();
+	private ArrayList<ServerTier> getData() {
+		ArrayList<ServerTier> statuses = new ArrayList<ServerTier>();
 
-		
-		ArrayList<Integer> empty = new ArrayList<Integer>();
-		
-		Random r = new Random();
-		
-		statuses.add(new ServerTierStatus("App Tier", showRandomInteger(90, 100, r), showRandomInteger(70, 80, r), showRandomInteger(40, 60, r), empty));
-		statuses.add(new ServerTierStatus("Web Tier", showRandomInteger(80, 90, r), showRandomInteger(60, 75, r), showRandomInteger(90, 100, r), empty));
-		statuses.add(new ServerTierStatus("Data Tier", showRandomInteger(30, 40, r), showRandomInteger(40, 50, r), showRandomInteger(40, 50, r), empty));
+		statuses.add(new ServerTier("App", APP_CPU_METRICIDS,
+				APP_RAM_METRICIDS, APP_DISK_METRICIDS, APP_SERVERIDS,
+				APP_SERVER_NAMES));
 
+		statuses.add(new ServerTier("Web", WEB_CPU_METRICIDS,
+				WEB_RAM_METRICIDS, WEB_DISK_METRICIDS, WEB_SERVERIDS,
+				WEB_SERVER_NAMES));
+
+		statuses.add(new ServerTier("DB", DB_CPU_METRICIDS, DB_RAM_METRICIDS,
+				DB_DISK_METRICIDS, DB_SERVERIDS, DB_SERVER_NAMES));
 		return statuses;
 	}
-	
-	public static int showRandomInteger(int aStart, int aEnd, Random aRandom){
-	    if (aStart > aEnd) {
-	      throw new IllegalArgumentException("Start cannot exceed End.");
-	    }
-	    //get the range, casting to long to avoid overflow problems
-	    long range = (long)aEnd - (long)aStart + 1;
-	    // compute a fraction of the range, 0 <= frac < range
-	    long fraction = (long)(range * aRandom.nextDouble());
-	    int randomNumber =  (int)(fraction + aStart);    
-	    return randomNumber;
-	  }
 }

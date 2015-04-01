@@ -15,7 +15,6 @@ public class SettingsFragment extends Fragment {
 	private ThresholdView mCpuThresholdView;
 	private ThresholdView mRamThresholdView;
 	private ThresholdView mStorageThresholdView;
-	private EditText mQueueLengthInput;
 	private EditText mGraphTimeFrameInput;
 
 	@Override
@@ -51,11 +50,7 @@ public class SettingsFragment extends Fragment {
 		// set inputs
 		mGraphTimeFrameInput = (EditText) view
 				.findViewById(R.id.graphTimeFrameInput);
-		mGraphTimeFrameInput.setText(DefaultValues.sDefaultGraphTimeFrame + "");
-
-		mQueueLengthInput = (EditText) view
-				.findViewById(R.id.diskQueWaitLengthInput);
-		mQueueLengthInput.setText(DefaultValues.sDefaultDiskQueueWaitLength
+		mGraphTimeFrameInput.setText((DefaultValues.getGraphTimeFrame() / 3600)
 				+ "");
 
 		// attach listeners to buttons
@@ -94,10 +89,8 @@ public class SettingsFragment extends Fragment {
 		DefaultValues.putStorageCriticalThreshold(mStorageThresholdView
 				.getCriticalThreshold());
 
-		DefaultValues.putQueueWaitLength(Integer.parseInt(mQueueLengthInput
-				.getText().toString()));
-
-		DefaultValues.putGraphTimeFrame(Integer.parseInt(mGraphTimeFrameInput
-				.getText().toString()));
+		int timeframeSecs = Integer.parseInt(mGraphTimeFrameInput.getText()
+				.toString()) * 3600;
+		DefaultValues.putGraphTimeFrame(timeframeSecs);
 	}
 }

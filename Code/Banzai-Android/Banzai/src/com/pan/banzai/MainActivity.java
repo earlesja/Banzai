@@ -1,11 +1,11 @@
 package com.pan.banzai;
 
+
 import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -39,8 +39,11 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		Intent dataService = new Intent(this, DataCollectorService.class);
-		startService(dataService);
+		//signalr service
+//		Intent dataService = new Intent(this, DataCollectorService.class);
+//		startService(dataService);
+		
+		
 		// nav stuff
 		String[] navOptions = getResources().getStringArray(
 				R.array.nav_drawer_items);
@@ -143,7 +146,6 @@ public void onResume(){
 		  Bundle extra = intent.getExtras();
 		
 		  String datapassed = extra.getString("dataJson");
-		  String time = extra.getString("Time");
 		  
 		  try {
 			JSONObject obj = new JSONObject(datapassed);
@@ -183,7 +185,6 @@ public void onResume(){
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			  }
-		  
 		 }
 		 
 		}
