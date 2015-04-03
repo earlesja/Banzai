@@ -17,7 +17,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.Toast;
 import android.widget.ProgressBar;
 
@@ -26,12 +25,12 @@ import com.pan.banzai.apirequests.IGetTaskCallback;
 
 
 public class BrowserUsageFragment extends Fragment {
-	private static final List<Integer> IE_METRIC_IDS = Arrays
-			.asList(new Integer[] { 6, 16, 36 });
+//	private static final List<Integer> IE_METRIC_IDS = Arrays
+//			.asList(new Integer[] { 6, 16});
 	private static final List<Integer> FIREFOX_METRIC_IDS = Arrays
 			.asList(new Integer[] { 7, 17, 37 });
 	private static final List<Integer> CHROME_METRIC_IDS = Arrays
-			.asList(new Integer[] { 8, 18, 37 });
+			.asList(new Integer[] { 8, 18, 38 });
 	private static final List<Integer> MOBILE_CHROME_METRIC_IDS = Arrays
 			.asList(new Integer[] { 29, 36, 45 });
 	private static final List<Integer> SAFARI_METRIC_IDS = Arrays
@@ -53,9 +52,8 @@ public class BrowserUsageFragment extends Fragment {
 	private ProgressBar mPieProgress;
 	private BanzaiLineGraph mLineChart;
 
-	private static float FIREFOX_USAGE=15f;
-	private static float CHROME_USAGE=30f;
-	private static float IE_USAGE=55f;
+	private HashMap<String, List<Integer>> metricIds = new HashMap<String, List<Integer>>();
+	private HashMap<Integer, Float> currentMetricValues = new HashMap<Integer, Float>();
 
 	private ProgressBar mLineProgress;
 
@@ -69,6 +67,23 @@ public class BrowserUsageFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		
+		int[] allMetrics = getAllMetricIds();
+		for(int i=0; i<allMetrics.length; i++){
+			this.currentMetricValues.put(allMetrics[i], 0f);
+		}
+		
+		metricIds.put("Firefox", this.FIREFOX_METRIC_IDS);
+		metricIds.put("Chrome", this.CHROME_METRIC_IDS);
+		metricIds.put("Mobile Chrome", this.MOBILE_CHROME_METRIC_IDS);
+		metricIds.put("Safari", this.SAFARI_METRIC_IDS);
+		metricIds.put("Mobile Safari", this.MOBILE_SAFARI_METRIC_IDS);
+		metricIds.put("Other Browser", this.OTHER_BROWSER_METRIC_IDS);
+		metricIds.put("IE 8", this.IE_IIX_METRIC_IDS);
+		metricIds.put("IE 9", this.IE_IX_METRIC_IDS);
+		metricIds.put("IE 10", this.IE_X_METRIC_IDS);
+		metricIds.put("IE 11", this.IE_XI_METRIC_IDS);
+		
 
 		// inflate the view
 		View view = inflater.inflate(R.layout.fragment_browserusage, container,
@@ -113,8 +128,8 @@ public class BrowserUsageFragment extends Fragment {
 							dataSetTitle = "Mobile Chrome";
 						} else if (FIREFOX_METRIC_IDS.contains(metricId)) {
 							dataSetTitle = "Firefox";
-						} else if (IE_METRIC_IDS.contains(metricId)) {
-							dataSetTitle = "IE";
+//						} else if (IE_METRIC_IDS.contains(metricId)) {
+//							dataSetTitle = "IE";
 						} else if (IE_IIX_METRIC_IDS.contains(metricId)) {
 							dataSetTitle = "IE 8";
 						} else if (IE_IX_METRIC_IDS.contains(metricId)) {
@@ -188,7 +203,7 @@ public class BrowserUsageFragment extends Fragment {
 		ArrayList<Integer> tmp = new ArrayList<Integer>();
 		tmp.addAll(CHROME_METRIC_IDS);
 		tmp.addAll(FIREFOX_METRIC_IDS);
-		tmp.addAll(IE_METRIC_IDS);
+//		tmp.addAll(IE_METRIC_IDS);
 		tmp.addAll(IE_IIX_METRIC_IDS);
 		tmp.addAll(IE_X_METRIC_IDS);
 		tmp.addAll(IE_IX_METRIC_IDS);
@@ -212,33 +227,68 @@ public class BrowserUsageFragment extends Fragment {
 
 	public void updateContent(ArrayList<String> data) {
 		
-//		Toast.makeText(this.getActivity(),
-//			 mPieChart.getData().getDataSet().getEntryForXIndex(0).getVal() +"\n"+
-//			 mPieChart.getData().getDataSet().getEntryForXIndex(1).getVal() +"\n"+
-//			 mPieChart.getData().getDataSet().getEntryForXIndex(2).getVal() +"\n",
-//			 Toast.LENGTH_LONG).show();
-//		
+//		 Toast.makeText(this.getActivity(),
+//		 mPieChart.getData().getDataSet().getEntryForXIndex(0).getVal() +"\n"
+//		 +mPieChart.getData().getDataSet().getEntryForXIndex(1).getVal() +"\n"
+//		 +mPieChart.getData().getDataSet().getEntryForXIndex(2).getVal() +"\n"
+//		 +mPieChart.getData().getDataSet().getEntryForXIndex(3).getVal() +"\n"
+//		 +mPieChart.getData().getDataSet().getEntryForXIndex(4).getVal() +"\n"
+//		 +mPieChart.getData().getDataSet().getEntryForXIndex(5).getVal() +"\n"
+//		 +mPieChart.getData().getDataSet().getEntryForXIndex(6).getVal() +"\n"
+//		 +mPieChart.getData().getDataSet().getEntryForXIndex(7).getVal() +"\n"
+//		 +mPieChart.getData().getDataSet().getEntryForXIndex(8).getVal() +"\n"
+//		 +mPieChart.getData().getDataSet().getEntryForXIndex(9).getVal() +"\n"
+//		 ,Toast.LENGTH_LONG).show();
+		
 		
 		int metricId = Integer.parseInt(data.get(0)); 
 		float value = Float.parseFloat(data.get(1));
 		
-		if(metricId == 25){
-			//IE
-			this.IE_USAGE = value;
-		}else if(metricId == 17){
-			//firefox
-			this.FIREFOX_USAGE = value;
-		}else if(metricId == 18){
-			//chrome
-			this.CHROME_USAGE = value;
+		if(!this.currentMetricValues.containsKey(metricId)){
+			return;
 		}
 		
+		this.currentMetricValues.put(metricId, value);
 		
-		float total = this.IE_USAGE + this.FIREFOX_USAGE + this.CHROME_USAGE;
-
-		mPieChart.getData().getDataSet().getEntryForXIndex(0).setVal((this.CHROME_USAGE/total)*100);
-		mPieChart.getData().getDataSet().getEntryForXIndex(1).setVal((this.IE_USAGE/total)*100);
-		mPieChart.getData().getDataSet().getEntryForXIndex(2).setVal((this.FIREFOX_USAGE/total)*100);
+		HashMap<String, Float> metricAverages = new HashMap<String, Float>();
+		Float total = 0f;
+		
+		for(String group : this.metricIds.keySet()){
+			Float average = 0f;
+			List<Integer> currentGroup = this.metricIds.get(group);
+			for(Integer id: currentGroup){
+				average += this.currentMetricValues.get(id);
+			}
+			average /= currentGroup.size();
+			total += average;
+			metricAverages.put(group, average);
+		}
+		
+		/* TODO: Make setting values generic instead of being done manually.
+		 * For some reason these are the indexes used by the graph
+		 * 
+		 * index 0 = mobile chrome
+		 * index 1 = firefox
+		 * index 2 = mobile safari
+		 * index 3 = other browser
+		 * index 4 = ie 10
+		 * index 5 = ie 8
+		 * index 6 = safari
+		 * index 7 = chrome
+		 * index 8 = ie 9
+		 * index 9 = ie 11
+		 */
+		
+		this.mPieChart.getData().getDataSet().getEntryForXIndex(0).setVal(metricAverages.get("Mobile Chrome")/total*100);
+		this.mPieChart.getData().getDataSet().getEntryForXIndex(1).setVal(metricAverages.get("Firefox")/total*100);
+		this.mPieChart.getData().getDataSet().getEntryForXIndex(2).setVal(metricAverages.get("Mobile Safari")/total*100);
+		this.mPieChart.getData().getDataSet().getEntryForXIndex(3).setVal(metricAverages.get("Other Browser")/total*100);
+		this.mPieChart.getData().getDataSet().getEntryForXIndex(4).setVal(metricAverages.get("IE 10")/total*100);
+		this.mPieChart.getData().getDataSet().getEntryForXIndex(5).setVal(metricAverages.get("IE 8")/total*100);
+		this.mPieChart.getData().getDataSet().getEntryForXIndex(6).setVal(metricAverages.get("Safari")/total*100);
+		this.mPieChart.getData().getDataSet().getEntryForXIndex(7).setVal(metricAverages.get("Chrome")/total*100);
+		this.mPieChart.getData().getDataSet().getEntryForXIndex(8).setVal(metricAverages.get("IE 9")/total*100);
+		this.mPieChart.getData().getDataSet().getEntryForXIndex(9).setVal(metricAverages.get("IE 11")/total*100);
 		
 		mPieChart.notifyDataSetChanged();
 		mPieChart.invalidate();

@@ -27,7 +27,7 @@ public class ServerTier {
 	}
 
 	public String getTierName() {
-		return tierName + " Teir";
+		return tierName + " Tier";
 	}
 
 	public float getCpuStatusPercent() {

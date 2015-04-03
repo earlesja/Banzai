@@ -40,8 +40,8 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		
 		//signalr service
-//		Intent dataService = new Intent(this, DataCollectorService.class);
-//		startService(dataService);
+		Intent dataService = new Intent(this, DataCollectorService.class);
+		startService(dataService);
 		
 		
 		// nav stuff
@@ -156,15 +156,15 @@ public void onResume(){
 //			    "Triggered by Service!\n"
 //			    + "Data passed: " + String.valueOf(datapassed),
 //			    Toast.LENGTH_LONG).show();
+			
+			  ArrayList<String> dataList = new ArrayList<String>();
+			  dataList.add(data.get("MetricId").toString());
+			  dataList.add(data.get("Value").toString());
 			  
 			  if(MainActivity.sOsUsageFragment.isVisible()){
 //				  Toast.makeText(MainActivity.this,
 //					    "OsUsageFragment shown",
 //					    Toast.LENGTH_LONG).show();
-				  
-				  ArrayList<String> dataList = new ArrayList<String>();
-				  dataList.add(data.get("MetricId").toString());
-				  dataList.add(data.get("Value").toString());
 				  
 				  MainActivity.sOsUsageFragment.updateContent(dataList);
 			  }
@@ -173,10 +173,6 @@ public void onResume(){
 //				  Toast.makeText(MainActivity.this,
 //					    "OsUsageFragment shown",
 //					    Toast.LENGTH_LONG).show();
-				  
-				  ArrayList<String> dataList = new ArrayList<String>();
-				  dataList.add(data.get("MetricId").toString());
-				  dataList.add(data.get("Value").toString());
 				  
 				  MainActivity.sBrowserUsageFragment.updateContent(dataList);
 			  }

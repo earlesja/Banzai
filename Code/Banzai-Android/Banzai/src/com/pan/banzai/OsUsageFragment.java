@@ -19,7 +19,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import android.widget.ProgressBar;
 
 import com.pan.banzai.apirequests.HistoricalDataTask;
@@ -51,11 +50,9 @@ public class OsUsageFragment extends Fragment {
 	private UsagePieGraph mPieChart;
 	private ProgressBar mPieProgress;
 	private BanzaiLineGraph mLineChart;
-
-	private static float LINUX_USAGE=10f;
-	private static float MAC_USAGE=30f;
-	private static float WINDOWS_USAGE=55f;
-	private static float OTHER_OS_USAGE=5f;
+	
+	private HashMap<String, List<Integer>> metricIds = new HashMap<String, List<Integer>>();
+	private HashMap<Integer, Float> currentMetricValues = new HashMap<Integer, Float>();
 
 	private ProgressBar mLineProgress;
 
@@ -63,6 +60,22 @@ public class OsUsageFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		int[] allMetrics = OsUsageFragment.getAllMetricIds();
+		for(int i=0; i<allMetrics.length; i++){
+			this.currentMetricValues.put(allMetrics[i], 0f);
+		}
+		
+		metricIds.put("Windows Vista", this.WINDOWS_VISTA_METRIC_IDS);
+		metricIds.put("Windows 7", this.WINDOWS_VII_METRIC_IDS);
+		metricIds.put("Windows 8", this.WINDOWS_IIX_METRIC_IDS);
+		metricIds.put("Windows 8.1", this.WINDOWS_IIX_I_METRIC_IDS);
+		metricIds.put("Windows 10", this.WINDOWS_X_METRIC_IDS);
+		metricIds.put("OSX", this.OSX_METRIC_IDS);
+		metricIds.put("Linux", this.LINUX_METRIC_IDS);
+		metricIds.put("iOS", this.IOS_METRIC_IDS);
+		metricIds.put("Android", this.ANDROID_METRIC_IDS);
+		metricIds.put("Other OS", this.OTHER_OS_METRIC_IDS);
 	}
 
 	@SuppressLint("ClickableViewAccessibility")
@@ -207,40 +220,79 @@ public class OsUsageFragment extends Fragment {
 
 	public void updateContent(ArrayList<String> data) {
 		
-		 Toast.makeText(this.getActivity(),
-		 mPieChart.getData().getDataSet().getEntryForXIndex(0).getVal() +"\n"+
-		 mPieChart.getData().getDataSet().getEntryForXIndex(1).getVal() +"\n"+
-		 mPieChart.getData().getDataSet().getEntryForXIndex(2).getVal() +"\n"+
-		 mPieChart.getData().getDataSet().getEntryForXIndex(3).getVal() +"\n",
-		 Toast.LENGTH_LONG).show();
+//		 Toast.makeText(this.getActivity(),
+//		 mPieChart.getData().getDataSet().getEntryForXIndex(0).getVal() +"\n"
+//		 +mPieChart.getData().getDataSet().getEntryForXIndex(1).getVal() +"\n"
+//		 +mPieChart.getData().getDataSet().getEntryForXIndex(2).getVal() +"\n"
+//		 +mPieChart.getData().getDataSet().getEntryForXIndex(3).getVal() +"\n"
+//		 +mPieChart.getData().getDataSet().getEntryForXIndex(4).getVal() +"\n"
+//		 +mPieChart.getData().getDataSet().getEntryForXIndex(5).getVal() +"\n"
+//		 +mPieChart.getData().getDataSet().getEntryForXIndex(6).getVal() +"\n"
+//		 +mPieChart.getData().getDataSet().getEntryForXIndex(7).getVal() +"\n"
+//		 +mPieChart.getData().getDataSet().getEntryForXIndex(8).getVal() +"\n"
+//		 +mPieChart.getData().getDataSet().getEntryForXIndex(9).getVal() +"\n"
+//		 ,Toast.LENGTH_LONG).show();
+		
+
 		
 		
 		int metricId = Integer.parseInt(data.get(0)); 
 		float value = Float.parseFloat(data.get(1));
 		
-		if(metricId == 54){
-			//windows
-			this.WINDOWS_USAGE = value;
-		}else if(metricId == 66){
-			//mac
-			this.MAC_USAGE = value;
-		}else if(metricId == 69){
-			//linux
-			this.LINUX_USAGE = value;
-		}else if(metricId == 78){
-			//other
-			this.LINUX_USAGE = value;
+		if(!this.currentMetricValues.containsKey(metricId)){
+			return;
 		}
 		
-		float total = this.WINDOWS_USAGE + this.MAC_USAGE + this.LINUX_USAGE + this.OTHER_OS_USAGE;
-
-		mPieChart.getData().getDataSet().getEntryForXIndex(0).setVal((this.OTHER_OS_USAGE/total)*100);
-		mPieChart.getData().getDataSet().getEntryForXIndex(1).setVal((this.LINUX_USAGE/total)*100);
-		mPieChart.getData().getDataSet().getEntryForXIndex(2).setVal((this.MAC_USAGE/total)*100);
-		mPieChart.getData().getDataSet().getEntryForXIndex(3).setVal((this.WINDOWS_USAGE/total)*100);
+		this.currentMetricValues.put(metricId, value);
 		
-		mPieChart.notifyDataSetChanged();
-		mPieChart.invalidate();
+		HashMap<String, Float> metricAverages = new HashMap<String, Float>();
+		Float total = 0f;
+		
+		for(String group : this.metricIds.keySet()){
+			Float average = 0f;
+			List<Integer> currentGroup = this.metricIds.get(group);
+			for(Integer id: currentGroup){
+				average += this.currentMetricValues.get(id);
+			}
+			average /= currentGroup.size();
+			total += average;
+			metricAverages.put(group, average);
+		}
+		
+		
+//		for(String group : metricAverages.keySet()){
+//			this.mPieChart.getDataSetByLabel(group).getEntryForXIndex(0).setVal(metricAverages.get(group)/total);
+//		}
+		
+		/* TODO: Make setting values generic instead of being done manually.
+		 * For some reason these are the indexes used by the graph
+		 * 
+		 * index 0 = linux
+		 * index 1 = windows 10
+		 * index 2 = android
+		 * index 3 = windows vista
+		 * index 4 = other os
+		 * index 5 = windows 8
+		 * index 6 = osx
+		 * index 7 = windows 7
+		 * index 8 = ios
+		 * index 9 = windows 8.1
+		 */
+
+		this.mPieChart.getData().getDataSet().getEntryForXIndex(0).setVal(metricAverages.get("Linux")/total*100);
+		this.mPieChart.getData().getDataSet().getEntryForXIndex(1).setVal(metricAverages.get("Windows 10")/total*100);
+		this.mPieChart.getData().getDataSet().getEntryForXIndex(2).setVal(metricAverages.get("Android")/total*100);
+		this.mPieChart.getData().getDataSet().getEntryForXIndex(3).setVal(metricAverages.get("Windows Vista")/total*100);
+		this.mPieChart.getData().getDataSet().getEntryForXIndex(4).setVal(metricAverages.get("Other OS")/total*100);
+		this.mPieChart.getData().getDataSet().getEntryForXIndex(5).setVal(metricAverages.get("Windows 8")/total*100);
+		this.mPieChart.getData().getDataSet().getEntryForXIndex(6).setVal(metricAverages.get("OSX")/total*100);
+		this.mPieChart.getData().getDataSet().getEntryForXIndex(7).setVal(metricAverages.get("Windows 7")/total*100);
+		this.mPieChart.getData().getDataSet().getEntryForXIndex(8).setVal(metricAverages.get("iOS")/total*100);
+		this.mPieChart.getData().getDataSet().getEntryForXIndex(9).setVal(metricAverages.get("Windows 8.1")/total*100);
+
+		
+		this.mPieChart.notifyDataSetChanged();
+		this.mPieChart.invalidate();
 	}
 
 }
