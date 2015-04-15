@@ -61,7 +61,7 @@ class DashboardTableCell: UITableViewCell {
     }
     
     func initDoughnuts(){
-        var spacing : CGFloat = 20.0
+        var spacing : CGFloat = 30.0
         var posAdjust : CGFloat = 10.0
         var widthh = (cpuArea.bounds.width-spacing)
         var height = (cpuArea.bounds.height-spacing)
@@ -71,7 +71,7 @@ class DashboardTableCell: UITableViewCell {
         diskRect = CGRect(x: diskArea.bounds.minX + posAdjust, y: diskArea.bounds.minY + posAdjust, width:widthh, height: height)
         
         cpuDoughnut = PNCircleChart(frame: cpuRect, total: 100, current: 40, clockwise: false)
-        memDoughnut = PNCircleChart(frame: memRect, total: 100, current: 60, clockwise: false)
+        memDoughnut = PNCircleChart(frame: memRect, total: 100, current: 80, clockwise: false)
         diskDoughnut = PNCircleChart(frame: diskRect, total: 100, current: 96, clockwise: false)
         
         cpuDoughnut.lineWidth = 15

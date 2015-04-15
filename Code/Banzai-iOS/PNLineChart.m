@@ -20,6 +20,7 @@
 @property (nonatomic) NSMutableArray *chartPath;       // Array of line path, one for each line.
 @property (nonatomic) NSMutableArray *pointPath;       // Array of point path, one for each line
 @property (nonatomic) NSMutableArray *endPointsOfPath;      // Array of start and end points of each line path, one for each line
+
 @end
 
 @implementation PNLineChart
@@ -48,13 +49,13 @@
     return self;
 }
 
+
 #pragma mark instance methods
 
-- (void)setYLabels:(NSArray *)yLabels
+- (void)setYLabels
 {
     CGFloat yStep = (_yValueMax - _yValueMin) / _yLabelNum;
     CGFloat yStepHeight = _chartCavanHeight / _yLabelNum;
-    NSString *yLabelFormat = self.yLabelFormat ? : @"%1.f";
 
     if (_yChartLabels) {
         for (PNChartLabel * label in _yChartLabels) {
@@ -66,19 +67,19 @@
 
     if (yStep == 0.0) {
         PNChartLabel *minLabel = [[PNChartLabel alloc] initWithFrame:CGRectMake(0.0, (NSInteger)_chartCavanHeight, (NSInteger)_chartMargin, (NSInteger)_yLabelHeight)];
-        minLabel.text = [NSString stringWithFormat:yLabelFormat, 0.0];
+        minLabel.text = [self formatYLabel:0.0];
         [self setCustomStyleForYLabel:minLabel];
         [self addSubview:minLabel];
         [_yChartLabels addObject:minLabel];
 
         PNChartLabel *midLabel = [[PNChartLabel alloc] initWithFrame:CGRectMake(0.0, (NSInteger)(_chartCavanHeight / 2), (NSInteger)_chartMargin, (NSInteger)_yLabelHeight)];
-        midLabel.text = [NSString stringWithFormat:yLabelFormat, _yValueMax];
+        midLabel.text = [self formatYLabel:_yValueMax];
         [self setCustomStyleForYLabel:midLabel];
         [self addSubview:midLabel];
         [_yChartLabels addObject:midLabel];
 
         PNChartLabel *maxLabel = [[PNChartLabel alloc] initWithFrame:CGRectMake(0.0, 0.0, (NSInteger)_chartMargin, (NSInteger)_yLabelHeight)];
-        maxLabel.text = [NSString stringWithFormat:yLabelFormat, _yValueMax * 2];
+        maxLabel.text = [self formatYLabel:_yValueMax * 2];
         [self setCustomStyleForYLabel:maxLabel];
         [self addSubview:maxLabel];
         [_yChartLabels addObject:maxLabel];
@@ -91,7 +92,7 @@
         {
             PNChartLabel *label = [[PNChartLabel alloc] initWithFrame:CGRectMake(0.0, (NSInteger)(_chartCavanHeight - index * yStepHeight), (NSInteger)_chartMargin, (NSInteger)_yLabelHeight)];
             [label setTextAlignment:NSTextAlignmentRight];
-            label.text = [NSString stringWithFormat:yLabelFormat, _yValueMin + (yStep * index)];
+            label.text = [self formatYLabel:_yValueMin + (yStep * index)];
             [self setCustomStyleForYLabel:label];
             [self addSubview:label];
             [_yChartLabels addObject:label];
@@ -100,6 +101,67 @@
         }
     }
 }
+
+- (void)setYLabels:(NSArray *)yLabels
+{
+    _showGenYLabels = NO;
+    _yLabelNum = yLabels.count - 1;
+    
+    CGFloat yLabelHeight;
+    if (_showLabel) {
+        yLabelHeight = _chartCavanHeight / [yLabels count];
+    } else {
+        yLabelHeight = (self.frame.size.height) / [yLabels count];
+    }
+    
+    return [self setYLabels:yLabels withHeight:yLabelHeight];
+}
+
+- (void)setYLabels:(NSArray *)yLabels withHeight:(CGFloat)height
+{
+    _yLabels = yLabels;
+    _yLabelHeight = height;
+    if (_yChartLabels) {
+        for (PNChartLabel * label in _yChartLabels) {
+            [label removeFromSuperview];
+        }
+    }else{
+        _yChartLabels = [NSMutableArray new];
+    }
+    
+    NSString *labelText;
+    
+    if (_showLabel) {
+        CGFloat yStepHeight = _chartCavanHeight / _yLabelNum;
+        
+        for (int index = 0; index < yLabels.count; index++) {
+            labelText = yLabels[index];
+            
+            NSInteger y = (NSInteger)(_chartCavanHeight - index * yStepHeight);
+            
+            PNChartLabel *label = [[PNChartLabel alloc] initWithFrame:CGRectMake(0.0, y, (NSInteger)_chartMargin, (NSInteger)_yLabelHeight)];
+            [label setTextAlignment:NSTextAlignmentRight];
+            label.text = labelText;
+            [self setCustomStyleForYLabel:label];
+            [self addSubview:label];
+            [_yChartLabels addObject:label];
+        }
+    }
+}
+
+- (CGFloat)computeEqualWidthForXLabels:(NSArray *)xLabels
+{
+    CGFloat xLabelWidth;
+
+    if (_showLabel) {
+        xLabelWidth = _chartCavanWidth / [xLabels count];
+    } else {
+        xLabelWidth = (self.frame.size.width) / [xLabels count];
+    }
+
+    return xLabelWidth;
+}
+
 
 - (void)setXLabels:(NSArray *)xLabels
 {
@@ -196,7 +258,7 @@
             CGPoint p2 = [linePointsArray[i + 1] CGPointValue];
 
             // Closest distance from point to line
-            float distance = fabsf(((p2.x - p1.x) * (touchPoint.y - p1.y)) - ((p1.x - touchPoint.x) * (p1.y - p2.y)));
+            float distance = fabs(((p2.x - p1.x) * (touchPoint.y - p1.y)) - ((p1.x - touchPoint.x) * (p1.y - p2.y)));
             distance /= hypot(p2.x - p1.x, p1.y - p2.y);
 
             if (distance <= 5.0) {
@@ -228,7 +290,7 @@
             CGPoint p1 = [linePointsArray[i] CGPointValue];
             CGPoint p2 = [linePointsArray[i + 1] CGPointValue];
 
-            float distanceToP1 = fabsf(hypot(touchPoint.x - p1.x, touchPoint.y - p1.y));
+            float distanceToP1 = fabs(hypot(touchPoint.x - p1.x, touchPoint.y - p1.y));
             float distanceToP2 = hypot(touchPoint.x - p2.x, touchPoint.y - p2.y);
 
             float distance = MIN(distanceToP1, distanceToP2);
@@ -336,7 +398,7 @@
             }
             
             CGFloat offSetX = (_chartCavanWidth) / (chartData.itemCount);
-            
+
             int x = 2 * _chartMargin +  (i * offSetX);
             int y = _chartCavanHeight - (innerGrade * _chartCavanHeight) + (_yLabelHeight / 2);
             
@@ -526,11 +588,11 @@
         yMin = 0.0f;
     }
     
-    _yValueMin = _yFixedValueMin ? _yFixedValueMin : yMin ;
-    _yValueMax = _yFixedValueMax ? _yFixedValueMax : yMax + yMax / 10.0;
+    _yValueMin = (_yFixedValueMin > -FLT_MAX) ? _yFixedValueMin : yMin ;
+    _yValueMax = (_yFixedValueMax > -FLT_MAX) ? _yFixedValueMax : yMax + yMax / 10.0;
     
-    if (_showLabel) {
-        [self setYLabels:yLabelsArray];
+    if (_showGenYLabels) {
+        [self setYLabels];
     }
     
 }
@@ -585,7 +647,6 @@
 - (void)drawRect:(CGRect)rect
 {
     if (self.isShowCoordinateAxis) {
-
         CGFloat yAxisOffset = 10.f;
 
         CGContextRef ctx = UIGraphicsGetCurrentContext();
@@ -639,14 +700,14 @@
 
         // draw y unit
         if ([self.yUnit length]) {
-            CGFloat height = [PNLineChart heightOfString:self.yUnit withWidth:30.f font:font];
+            CGFloat height = [PNLineChart sizeOfString:self.yUnit withWidth:30.f font:font].height;
             CGRect drawRect = CGRectMake(_chartMargin + 10 + 5, 0, 30.f, height);
             [self drawTextInContext:ctx text:self.yUnit inRect:drawRect font:font];
         }
 
         // draw x unit
         if ([self.xUnit length]) {
-            CGFloat height = [PNLineChart heightOfString:self.xUnit withWidth:30.f font:font];
+            CGFloat height = [PNLineChart sizeOfString:self.xUnit withWidth:30.f font:font].height;
             CGRect drawRect = CGRectMake(CGRectGetWidth(rect) - _chartMargin + 5, _chartMargin + _chartCavanHeight - height / 2, 25.f, height);
             [self drawTextInContext:ctx text:self.xUnit inRect:drawRect font:font];
         }
@@ -659,15 +720,19 @@
 
 - (void)setupDefaultValues
 {
+    [super setupDefaultValues];
     // Initialization code
     self.backgroundColor = [UIColor whiteColor];
     self.clipsToBounds   = YES;
     self.chartLineArray  = [NSMutableArray new];
-    _showLabel           = YES;
+    _showLabel            = YES;
+    _showGenYLabels        = YES;
     _pathPoints          = [[NSMutableArray alloc] init];
     _endPointsOfPath     = [[NSMutableArray alloc] init];
     self.userInteractionEnabled = YES;
 
+    _yFixedValueMin = -FLT_MAX;
+    _yFixedValueMax = -FLT_MAX;
     _yLabelNum = 5.0;
     _yLabelHeight = [[[[PNChartLabel alloc] init] font] pointSize];
 
@@ -684,7 +749,7 @@
 
 #pragma mark - tools
 
-+ (float)heightOfString:(NSString *)text withWidth:(float)width font:(UIFont *)font
++ (CGSize)sizeOfString:(NSString *)text withWidth:(float)width font:(UIFont *)font
 {
     NSInteger ch;
     CGSize size = CGSizeMake(width, MAXFLOAT);
@@ -703,7 +768,7 @@
     }
     ch = size.height;
 
-    return ch;
+    return size;
 }
 
 - (void)drawTextInContext:(CGContextRef )ctx text:(NSString *)text inRect:(CGRect)rect font:(UIFont *)font
@@ -724,6 +789,178 @@
                alignment:NSTextAlignmentLeft];
 #pragma clang diagnostic pop
     }
+}
+
+
+- (NSString*) formatYLabel:(double)value{
+    if (!self.thousandsSeparator) {
+        NSString *format = self.yLabelFormat ? : @"%1.f";
+        return [NSString stringWithFormat:format,value];
+    }
+    
+    NSNumberFormatter* numberFormatter = [[NSNumberFormatter alloc] init];
+    [numberFormatter setFormatterBehavior: NSNumberFormatterBehavior10_4];
+    [numberFormatter setNumberStyle: NSNumberFormatterDecimalStyle];
+    return [numberFormatter stringFromNumber: [NSNumber numberWithDouble:value]];
+}
+
+
+- (UIView*) getLegendWithMaxWidth:(CGFloat)mWidth{
+    if ([self.chartData count] < 1) {
+        return nil;
+    }
+    
+    /* This is a short line that refers to the chart data */
+    CGFloat legendLineWidth = 40;
+    
+    /* x and y are the coordinates of the starting point of each legend item */
+    CGFloat x = 0;
+    CGFloat y = 0;
+    
+    /* accumulated height */
+    CGFloat totalHeight = 0;
+    CGFloat totalWidth = 0;
+    
+    NSMutableArray *legendViews = [[NSMutableArray alloc] init];
+
+    /* Determine the max width of each legend item */
+    CGFloat maxLabelWidth;
+    if (self.legendStyle == PNLegendItemStyleStacked) {
+        maxLabelWidth = mWidth - legendLineWidth;
+    }else{
+        maxLabelWidth = MAXFLOAT;
+    }
+    
+    /* this is used when labels wrap text and the line 
+     * should be in the middle of the first row */
+    CGFloat singleRowHeight = [PNLineChart sizeOfString:@"Test"
+                                              withWidth:MAXFLOAT
+                                                   font:self.legendFont ? self.legendFont : [UIFont systemFontOfSize:12.0f]].height;
+
+    NSUInteger counter = 0;
+    NSUInteger rowWidth = 0;
+    NSUInteger rowMaxHeight = 0;
+    
+    for (PNLineChartData *pdata in self.chartData) {
+        /* Expected label size*/
+        CGSize labelsize = [PNLineChart sizeOfString:pdata.dataTitle
+                                           withWidth:maxLabelWidth
+                                                font:self.legendFont ? self.legendFont : [UIFont systemFontOfSize:12.0f]];
+        
+        /* draw lines */
+        if ((rowWidth + labelsize.width + legendLineWidth > mWidth)&&(self.legendStyle == PNLegendItemStyleSerial)) {
+            rowWidth = 0;
+            x = 0;
+            y += rowMaxHeight;
+            rowMaxHeight = 0;
+        }
+        rowWidth += labelsize.width + legendLineWidth;
+        totalWidth = self.legendStyle == PNLegendItemStyleSerial ? fmaxf(rowWidth, totalWidth) : fmaxf(totalWidth, labelsize.width + legendLineWidth);
+        
+        /* If there is inflection decorator, the line is composed of two lines 
+         * and this is the space that separates two lines in order to put inflection
+         * decorator */
+        
+        CGFloat inflexionWidthSpacer = pdata.inflexionPointStyle == PNLineChartPointStyleTriangle ? pdata.inflexionPointWidth / 2 : pdata.inflexionPointWidth;
+        
+        CGFloat halfLineLength;
+        
+        if (pdata.inflexionPointStyle != PNLineChartPointStyleNone) {
+            halfLineLength = (legendLineWidth * 0.8 - inflexionWidthSpacer)/2;
+        }else{
+            halfLineLength = legendLineWidth * 0.8;
+        }
+        
+        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(x + legendLineWidth * 0.1, y + (singleRowHeight - pdata.lineWidth) / 2, halfLineLength, pdata.lineWidth)];
+        
+        line.backgroundColor = pdata.color;
+        line.alpha = pdata.alpha;
+        [legendViews addObject:line];
+        
+        if (pdata.inflexionPointStyle != PNLineChartPointStyleNone) {
+            line = [[UIView alloc] initWithFrame:CGRectMake(x + legendLineWidth * 0.1 + halfLineLength + inflexionWidthSpacer, y + (singleRowHeight - pdata.lineWidth) / 2, halfLineLength, pdata.lineWidth)];
+            line.backgroundColor = pdata.color;
+            line.alpha = pdata.alpha;
+            [legendViews addObject:line];
+        }
+
+        // Add inflexion type
+        [legendViews addObject:[self drawInflexion:pdata.inflexionPointWidth
+                                                center:CGPointMake(x + legendLineWidth / 2, y + singleRowHeight / 2)
+                                           strokeWidth:pdata.lineWidth
+                                        inflexionStyle:pdata.inflexionPointStyle
+                                              andColor:pdata.color
+                                              andAlpha:pdata.alpha]];
+
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(x + legendLineWidth, y, labelsize.width, labelsize.height)];
+        label.text = pdata.dataTitle;
+        label.textColor = self.legendFontColor ? self.legendFontColor : [UIColor blackColor];
+        label.font = self.legendFont ? self.legendFont : [UIFont systemFontOfSize:12.0f];
+        label.lineBreakMode = NSLineBreakByWordWrapping;
+        label.numberOfLines = 0;
+
+        rowMaxHeight = fmaxf(rowMaxHeight, labelsize.height);
+        x += self.legendStyle == PNLegendItemStyleStacked ? 0 : labelsize.width + legendLineWidth;
+        y += self.legendStyle == PNLegendItemStyleStacked ? labelsize.height : 0;
+        
+        
+        totalHeight = self.legendStyle == PNLegendItemStyleSerial ? fmaxf(totalHeight, rowMaxHeight + y) : totalHeight + labelsize.height;
+        
+        [legendViews addObject:label];
+        counter++;
+    }
+    
+    UIView *legend = [[UIView alloc] initWithFrame:CGRectMake(0, 0, mWidth, totalHeight)];
+
+    for (UIView* v in legendViews) {
+        [legend addSubview:v];
+    }
+    return legend;
+}
+
+
+- (UIImageView*)drawInflexion:(CGFloat)size center:(CGPoint)center strokeWidth: (CGFloat)sw inflexionStyle:(PNLineChartPointStyle)type andColor:(UIColor*)color andAlpha:(CGFloat) alfa
+{
+    //Make the size a little bigger so it includes also border stroke
+    CGSize aSize = CGSizeMake(size + sw, size + sw);
+    
+
+    UIGraphicsBeginImageContextWithOptions(aSize, NO, 0.0);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+
+    if (type == PNLineChartPointStyleCircle) {
+        CGContextAddArc(context, (size + sw)/2, (size + sw) / 2, size/2, 0, M_PI*2, YES);
+    }else if (type == PNLineChartPointStyleSquare){
+        CGContextAddRect(context, CGRectMake(sw/2, sw/2, size, size));
+    }else if (type == PNLineChartPointStyleTriangle){
+        CGContextMoveToPoint(context, sw/2, size + sw/2);
+        CGContextAddLineToPoint(context, size + sw/2, size + sw/2);
+        CGContextAddLineToPoint(context, size/2 + sw/2, sw/2);
+        CGContextAddLineToPoint(context, sw/2, size + sw/2);
+        CGContextClosePath(context);
+    }
+    
+    //Set some stroke properties
+    CGContextSetLineWidth(context, sw);
+    CGContextSetAlpha(context, alfa);
+    CGContextSetStrokeColorWithColor(context, color.CGColor);
+    
+    //Finally draw
+    CGContextDrawPath(context, kCGPathStroke);
+
+    //now get the image from the context
+    UIImage *squareImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    //// Translate origin
+    CGFloat originX = center.x - (size + sw) / 2.0;
+    CGFloat originY = center.y - (size + sw) / 2.0;
+    
+    UIImageView *squareImageView = [[UIImageView alloc]initWithImage:squareImage];
+    [squareImageView setFrame:CGRectMake(originX, originY, size + sw, size + sw)];
+    return squareImageView;
 }
 
 @end

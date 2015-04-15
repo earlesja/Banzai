@@ -38,6 +38,11 @@ class DashboardViewController: UIViewController, UITableViewDataSource, UITableV
         // and display bar button items in the navigation bar
     }
     
+//    override func viewWillAppear(animated: Bool) {
+//        super.viewWillAppear(animated)
+//        self.updateData()
+//    }
+    
     func defaultSettings() {
         settings.setBool(true, forKey: "changed")
         settings.setDouble(0.2, forKey: "cpuLower")
@@ -97,10 +102,6 @@ class DashboardViewController: UIViewController, UITableViewDataSource, UITableV
             return 250.0
         }
         return 37.0
-    }
-    
-    func updateData(){
-        
     }
 
     @IBAction func toggleSideMenu(sender: AnyObject) {

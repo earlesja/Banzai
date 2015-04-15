@@ -6,7 +6,7 @@
 //  Copyright (c) 2013年 kevinzhow. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 @protocol PNChartDelegate <NSObject>
 @optional
@@ -27,4 +27,7 @@
  */
 - (void)userClickedOnBarAtIndex:(NSInteger)barIndex;
 
+
+- (void)userClickedOnPieIndexItem:(NSInteger)pieIndex;
+- (void)didUnselectPieItem;
 @end

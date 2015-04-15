@@ -62,7 +62,7 @@ public extension UIViewController {
     }
     
     internal func topMostController () -> ENSideMenuProtocol? {
-        var topController : UIViewController? = UIApplication.sharedApplication().keyWindow?.rootViewController
+        var topController : UIViewController? = UIApplication.sharedApplication().keyWindow.rootViewController
         while (topController?.presentedViewController is ENSideMenuProtocol) {
             topController = topController?.presentedViewController;
         }
@@ -97,23 +97,23 @@ public class ENSideMenu : NSObject {
     
         animator = UIDynamicAnimator(referenceView:sourceView)
         
-        // Add right swipe gesture recognizer
-        let rightSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "handleGesture:")
-        rightSwipeGestureRecognizer.direction =  UISwipeGestureRecognizerDirection.Right
-        sourceView.addGestureRecognizer(rightSwipeGestureRecognizer)
-        
-        // Add left swipe gesture recognizer
-        let leftSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "handleGesture:")
-        leftSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirection.Left
-        
-        if (menuPosition == .Left) {
-            sourceView.addGestureRecognizer(rightSwipeGestureRecognizer)
-            sideMenuContainerView.addGestureRecognizer(leftSwipeGestureRecognizer)
-        }
-        else {
-            sideMenuContainerView.addGestureRecognizer(rightSwipeGestureRecognizer)
-            sourceView.addGestureRecognizer(leftSwipeGestureRecognizer)
-        }
+//        // Add right swipe gesture recognizer
+//        let rightSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "handleGesture:")
+//        rightSwipeGestureRecognizer.direction =  UISwipeGestureRecognizerDirection.Right
+//        sourceView.addGestureRecognizer(rightSwipeGestureRecognizer)
+//        
+//        // Add left swipe gesture recognizer
+//        let leftSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "handleGesture:")
+//        leftSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirection.Left
+//        
+//        if (menuPosition == .Left) {
+//            sourceView.addGestureRecognizer(rightSwipeGestureRecognizer)
+//            sideMenuContainerView.addGestureRecognizer(leftSwipeGestureRecognizer)
+//        }
+//        else {
+//            sideMenuContainerView.addGestureRecognizer(rightSwipeGestureRecognizer)
+//            sourceView.addGestureRecognizer(leftSwipeGestureRecognizer)
+//        }
         
     }
 
