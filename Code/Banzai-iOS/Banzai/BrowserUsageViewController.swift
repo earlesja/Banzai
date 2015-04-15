@@ -107,6 +107,7 @@ class BrowserUsageViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        JHProgressHUD.sharedHUD.showInView(self.view, withHeader: "Fetching Data", andFooter: "")
         getServerData()
     }
     
@@ -192,6 +193,7 @@ class BrowserUsageViewController: UIViewController {
     
     @IBAction func refreshData(sender: AnyObject) {
         println("Referesh the Browser Usage page")
+        JHProgressHUD.sharedHUD.showInView(self.view, withHeader: "Fetching Data", andFooter: "")
         getServerData()
     }
     
@@ -237,6 +239,7 @@ class BrowserUsageViewController: UIViewController {
                 }
 
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                JHProgressHUD.sharedHUD.hide()
                 self.updateGraphs()
             }
         }

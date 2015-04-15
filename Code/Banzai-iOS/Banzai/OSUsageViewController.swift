@@ -113,6 +113,7 @@ class OSUsageViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        JHProgressHUD.sharedHUD.showInView(self.view, withHeader: "Fetching Data", andFooter: "")
         getServerData()
     }
     
@@ -204,6 +205,7 @@ class OSUsageViewController: UIViewController {
     
     @IBAction func refreshData(sender: AnyObject) {
         println("Referesh the OS Usage page")
+        JHProgressHUD.sharedHUD.showInView(self.view, withHeader: "Fetching Data", andFooter: "")
         getServerData()
     }
     
@@ -250,6 +252,7 @@ class OSUsageViewController: UIViewController {
                 }
                 
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                JHProgressHUD.sharedHUD.hide()
                 self.updateGraphs()
             }
         }
