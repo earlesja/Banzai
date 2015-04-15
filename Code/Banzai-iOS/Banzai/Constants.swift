@@ -67,7 +67,7 @@ class Constants {
         static let WindowsVista_1 = 49, WindowsVista_2 = 50, WindowsVista_3 = 51
         static let Windows7_1 = 52, Windows7_2 = 53, Windows7_3 = 54
         static let Windows8_1 = 55, Windows8_2 = 56, Windows8_3 = 57
-        static let Windows8_1_1 = 58, Windows8_1_2 = 59, Windows8_1_3 = 60
+        static let Windows8One_1 = 58, Windows8One_2 = 59, Windows8One_3 = 60
         static let Mac_1 = 64, Mac_2 = 65, Mac_3 = 66
         static let iOS_1 = 70, iOS_2 = 71, iOS_3 = 72
         static let Linux_1 = 67, Linux_2 = 68, Linux_3 = 69

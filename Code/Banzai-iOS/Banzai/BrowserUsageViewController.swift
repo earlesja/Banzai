@@ -17,7 +17,6 @@ class BrowserUsageViewController: UIViewController {
     var browserCounts = ["Firefox":0, "Chrome":0, "Safari":0, "IE8":0, "IE9":0, "IE10":0, "IE11":0]
     var timeFrame = 518400 // 518400 = 7 days
     var lineGraphDates : [String] = []
-    var browserData : Array<AnyObject>!
     var pieChart : PNPieChart!
     var lineChart : PNLineChart!
     var ie8Data = PNLineChartData(), ie9Data = PNLineChartData(), ie10Data = PNLineChartData(), ie11Data = PNLineChartData()
@@ -244,7 +243,6 @@ class BrowserUsageViewController: UIViewController {
     }
     
     func parseData(data : AnyObject) {
-        println("Here")
         var metricID = 0
         var date = ""
         var value = 0.0
