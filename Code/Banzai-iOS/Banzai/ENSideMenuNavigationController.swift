@@ -53,5 +53,17 @@ class ENSideMenuNavigationController: UINavigationController, ENSideMenuProtocol
         }
         
     }
+    
+    func setContentViewControllerFromLogin(contentViewController: UIViewController) {
+        switch sideMenuAnimationType {
+        case .None:
+            self.viewControllers = [contentViewController]
+            break
+        default:
+            contentViewController.navigationItem.hidesBackButton = true
+            self.setViewControllers([contentViewController], animated: true)
+            break
+        }
+    }
 
 }

@@ -3,5 +3,3 @@
 //
 
 #import "PNChart.h"
-#import "CorePlot-CocoaTouch.h"
-#import "CPTMutablePlotRange+SwiftCompat.h"

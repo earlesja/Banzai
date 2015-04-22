@@ -74,6 +74,7 @@ class Constants {
         static let Android_1 = 73, Android_2 = 74, Android_3 = 75
     }
     
+    // Color Constants
     struct UIColors {
         static let purple = UIColor(red: 142/255, green: 36/255, blue: 170/255, alpha: 1.0)
         static let deepPurple = UIColor(red: 94/255, green: 53/255, blue: 177/255, alpha: 1.0)

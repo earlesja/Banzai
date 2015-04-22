@@ -12,10 +12,12 @@ class BrowserUsageViewController: UIViewController {
     
     @IBOutlet weak var pieGraphView: UIView!
     @IBOutlet weak var lineGraphView: UIView!
+    let settings = NSUserDefaults.standardUserDefaults()
+    let LEGEND_WIDTH : CGFloat = 65
     var browserNames = ["Firefox", "Chrome", "Safari", "IE 8", "IE 9", "IE 10", "IE 11"]
     var browserPercentages = ["Firefox":0.0, "Chrome":0.0, "Safari":0.0, "IE8":0.0, "IE9":0.0, "IE10":0.0, "IE11":0.0]
     var browserCounts = ["Firefox":0, "Chrome":0, "Safari":0, "IE8":0, "IE9":0, "IE10":0, "IE11":0]
-    var timeFrame = 518400 // 518400 = 7 days
+    var timeFrame = 604800 // 604800 = 7 days
     var lineGraphDates : [String] = []
     var pieChart : PNPieChart!
     var lineChart : PNLineChart!
@@ -26,48 +28,33 @@ class BrowserUsageViewController: UIViewController {
     var firefoxVals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], chromeVals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], safariVals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
     
     
-    // For server calls; TODO: Move to Constants file
+    // For server calls
     let ie8_1 = NSDictionary(objects: [Constants.BrowserIDs.IE8_1, 1], forKeys: ["MetricId", "ApplicationID"])
     let ie8_2 = NSDictionary(objects: [Constants.BrowserIDs.IE8_2, 1], forKeys: ["MetricId", "ApplicationID"])
     let ie8_3 = NSDictionary(objects: [Constants.BrowserIDs.IE8_3, 1], forKeys: ["MetricId", "ApplicationID"])
-    var ie9_1 = NSDictionary(objects: [Constants.BrowserIDs.IE9_1, 1], forKeys: ["MetricId", "ApplicationID"])
-    var ie9_2 = NSDictionary(objects: [Constants.BrowserIDs.IE9_2, 1], forKeys: ["MetricId", "ApplicationID"])
-    var ie9_3 = NSDictionary(objects: [Constants.BrowserIDs.IE9_3, 1], forKeys: ["MetricId", "ApplicationID"])
-    var ie10_1 = NSDictionary(objects: [Constants.BrowserIDs.IE10_1, 1], forKeys: ["MetricId", "ApplicationID"])
-    var ie10_2 = NSDictionary(objects: [Constants.BrowserIDs.IE10_2, 1], forKeys: ["MetricId", "ApplicationID"])
-    var ie10_3 = NSDictionary(objects: [Constants.BrowserIDs.IE10_3, 1], forKeys: ["MetricId", "ApplicationID"])
-    var ie11_1 = NSDictionary(objects: [Constants.BrowserIDs.IE11_1, 1], forKeys: ["MetricId", "ApplicationID"])
-    var ie11_2 = NSDictionary(objects: [Constants.BrowserIDs.IE11_2, 1], forKeys: ["MetricId", "ApplicationID"])
-    var ie11_3 = NSDictionary(objects: [Constants.BrowserIDs.IE11_3, 1], forKeys: ["MetricId", "ApplicationID"])
-    var firefox_1 = NSDictionary(objects: [Constants.BrowserIDs.Firefox_1, 1], forKeys: ["MetricId", "ApplicationID"])
-    var firefox_2 = NSDictionary(objects: [Constants.BrowserIDs.Firefox_2, 1], forKeys: ["MetricId", "ApplicationID"])
-    var firefox_3 = NSDictionary(objects: [Constants.BrowserIDs.Firefox_3, 1], forKeys: ["MetricId", "ApplicationID"])
-    var chrome_1 = NSDictionary(objects: [Constants.BrowserIDs.Chrome_1, 1], forKeys: ["MetricId", "ApplicationID"])
-    var chrome_2 = NSDictionary(objects: [Constants.BrowserIDs.Chrome_2, 1], forKeys: ["MetricId", "ApplicationID"])
-    var chrome_3 = NSDictionary(objects: [Constants.BrowserIDs.Chrome_3, 1], forKeys: ["MetricId", "ApplicationID"])
-    var safari_1 = NSDictionary(objects: [Constants.BrowserIDs.Safari_1, 1], forKeys: ["MetricId", "ApplicationID"])
-    var safari_2 = NSDictionary(objects: [Constants.BrowserIDs.Safari_2, 1], forKeys: ["MetricId", "ApplicationID"])
-    var safari_3 = NSDictionary(objects: [Constants.BrowserIDs.Safari_3, 1], forKeys: ["MetricId", "ApplicationID"])
+    let ie9_1 = NSDictionary(objects: [Constants.BrowserIDs.IE9_1, 1], forKeys: ["MetricId", "ApplicationID"])
+    let ie9_2 = NSDictionary(objects: [Constants.BrowserIDs.IE9_2, 1], forKeys: ["MetricId", "ApplicationID"])
+    let ie9_3 = NSDictionary(objects: [Constants.BrowserIDs.IE9_3, 1], forKeys: ["MetricId", "ApplicationID"])
+    let ie10_1 = NSDictionary(objects: [Constants.BrowserIDs.IE10_1, 1], forKeys: ["MetricId", "ApplicationID"])
+    let ie10_2 = NSDictionary(objects: [Constants.BrowserIDs.IE10_2, 1], forKeys: ["MetricId", "ApplicationID"])
+    let ie10_3 = NSDictionary(objects: [Constants.BrowserIDs.IE10_3, 1], forKeys: ["MetricId", "ApplicationID"])
+    let ie11_1 = NSDictionary(objects: [Constants.BrowserIDs.IE11_1, 1], forKeys: ["MetricId", "ApplicationID"])
+    let ie11_2 = NSDictionary(objects: [Constants.BrowserIDs.IE11_2, 1], forKeys: ["MetricId", "ApplicationID"])
+    let ie11_3 = NSDictionary(objects: [Constants.BrowserIDs.IE11_3, 1], forKeys: ["MetricId", "ApplicationID"])
+    let firefox_1 = NSDictionary(objects: [Constants.BrowserIDs.Firefox_1, 1], forKeys: ["MetricId", "ApplicationID"])
+    let firefox_2 = NSDictionary(objects: [Constants.BrowserIDs.Firefox_2, 1], forKeys: ["MetricId", "ApplicationID"])
+    let firefox_3 = NSDictionary(objects: [Constants.BrowserIDs.Firefox_3, 1], forKeys: ["MetricId", "ApplicationID"])
+    let chrome_1 = NSDictionary(objects: [Constants.BrowserIDs.Chrome_1, 1], forKeys: ["MetricId", "ApplicationID"])
+    let chrome_2 = NSDictionary(objects: [Constants.BrowserIDs.Chrome_2, 1], forKeys: ["MetricId", "ApplicationID"])
+    let chrome_3 = NSDictionary(objects: [Constants.BrowserIDs.Chrome_3, 1], forKeys: ["MetricId", "ApplicationID"])
+    let safari_1 = NSDictionary(objects: [Constants.BrowserIDs.Safari_1, 1], forKeys: ["MetricId", "ApplicationID"])
+    let safari_2 = NSDictionary(objects: [Constants.BrowserIDs.Safari_2, 1], forKeys: ["MetricId", "ApplicationID"])
+    let safari_3 = NSDictionary(objects: [Constants.BrowserIDs.Safari_3, 1], forKeys: ["MetricId", "ApplicationID"])
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        
-        println("Width is \(pieGraphView.bounds.width)")
-        println("Height is \(pieGraphView.bounds.height)")
-        // PIE GRAPH
-        
+
         // LINE GRAPH
-        var lineRect = CGRect(x: lineGraphView.bounds.minX - 10, y: lineGraphView.bounds.minY, width: lineGraphView.bounds.width, height: lineGraphView.bounds.height - 20)
-        self.lineChart = PNLineChart(frame: lineRect) as PNLineChart
-        lineChart.backgroundColor = UIColor.clearColor()
-        lineChart.showCoordinateAxis = true
-        
-        //lineChart.yFixedValueMax = 100
-        //lineChart.yFixedValueMin = 5
-        lineChart.yValueMax = 100
-        lineChart.yValueMin = 0
-        
         ie8Data.dataTitle = "IE 8"
         ie8Data.color = Constants.UIColors.purple
         ie8Data.inflexionPointStyle = PNLineChartPointStyle.Circle
@@ -127,15 +114,36 @@ class BrowserUsageViewController: UIViewController {
         items.append(PNPieChartDataItem(value: CGFloat(percentages[4]), color: Constants.UIColors.teal, description: "Firefox"))
         items.append(PNPieChartDataItem(value: CGFloat(percentages[5]), color: Constants.UIColors.green, description: "Chrome"))
         items.append(PNPieChartDataItem(value: CGFloat(percentages[6]), color: Constants.UIColors.gray, description: "Safari"))
-        self.pieChart = PNPieChart(frame: CGRectMake(pieGraphView.bounds.minX, pieGraphView.bounds.minY, pieGraphView.bounds.width - 75, pieGraphView.bounds.height), items: items)
+        var graphSquareDimension : CGFloat
+        var graphStartX : CGFloat
+        var graphStartY : CGFloat
+        if pieGraphView.bounds.height < pieGraphView.bounds.width - LEGEND_WIDTH {
+            graphSquareDimension = pieGraphView.bounds.height
+            graphStartX = pieGraphView.bounds.minX + ((pieGraphView.bounds.width - LEGEND_WIDTH - pieGraphView.bounds.height) / 2)
+            graphStartY = pieGraphView.bounds.minY
+        } else {
+            graphSquareDimension = pieGraphView.bounds.width - LEGEND_WIDTH
+            graphStartX = pieGraphView.bounds.minX
+            graphStartY = pieGraphView.bounds.minY + ((pieGraphView.bounds.height - pieGraphView.bounds.width - LEGEND_WIDTH) / 2)
+        }
+        
+        self.pieChart = PNPieChart(frame: CGRectMake(graphStartX, graphStartY, graphSquareDimension, graphSquareDimension), items: items)
         pieChart.descriptionTextFont = UIFont(name: "Avenir-Medium", size: 13.0)
         pieChart.showOnlyValues = true
         pieChart.strokeChart()
 
-        var legend = pieChart.getLegendWithMaxWidth(65) as UIView
-        legend.frame = CGRectMake(pieGraphView.bounds.width - 65, pieGraphView.bounds.minY + pieGraphView.bounds.height / 4, 65, pieGraphView.bounds.height/2)
+        var legend = pieChart.getLegendWithMaxWidth(LEGEND_WIDTH) as UIView
+        legend.frame = CGRectMake(pieGraphView.bounds.width - LEGEND_WIDTH, pieGraphView.bounds.minY + pieGraphView.bounds.height / 4, LEGEND_WIDTH, pieGraphView.bounds.height/2)
         pieGraphView.addSubview(legend)
         
+        var lineRect = CGRect(x: lineGraphView.bounds.minX, y: lineGraphView.bounds.minY, width: lineGraphView.bounds.width, height: lineGraphView.bounds.height)
+        self.lineChart = PNLineChart(frame: lineRect) as PNLineChart
+        lineChart.backgroundColor = UIColor.clearColor()
+        lineChart.showCoordinateAxis = true
+        //lineChart.yFixedValueMax = 100
+        //lineChart.yFixedValueMin = 5
+        lineChart.yValueMax = 100
+        lineChart.yValueMin = 0
         
         // LINE GRAPH
         for (var i = 0; i < lineGraphDates.count; i++) {
@@ -143,7 +151,8 @@ class BrowserUsageViewController: UIViewController {
                 lineGraphDates[i] = ""
             }
         }
-        lineChart.setXLabels(lineGraphDates, withWidth: 30)
+
+        lineChart.setXLabels(lineGraphDates, withWidth: ((lineGraphView.bounds.width - 80) / CGFloat(lineGraphDates.count)))
         ie8Data.getData = ({ (index: UInt) -> PNLineChartDataItem in
             var yValue : CGFloat = CGFloat(self.ie8Vals[Int(index) as Int])
             var item = PNLineChartDataItem(y: yValue)
@@ -214,7 +223,8 @@ class BrowserUsageViewController: UIViewController {
         var request = NSMutableURLRequest(URL: url)
         request.HTTPMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue("Basic dXNlck5hbWU6cGFzc3dvcmQ=", forHTTPHeaderField: "Authorization")
+        var credentialString = "Basic " + (settings.valueForKey("credentials") as NSString)
+        request.addValue(credentialString, forHTTPHeaderField: "Authorization")
         
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
@@ -336,7 +346,12 @@ class BrowserUsageViewController: UIViewController {
             }
             })
         println(self.lineGraphDates)
-        
+        var numDates = lineGraphDates.count
+        while(numDates > 7) {
+            lineGraphDates.removeAtIndex(0)
+            numDates = lineGraphDates.count
+        }
+        println(self.lineGraphDates)
         // Parse data for line graph
         var index = 0
         for json in data as Array<AnyObject>{
@@ -347,22 +362,24 @@ class BrowserUsageViewController: UIViewController {
             array = array[0].componentsSeparatedByString("-")
             date = "\(array[1])-\(array[2])"
             index = getIndexOfDate(date)
-            if metricID == Constants.BrowserIDs.IE8_1 || metricID == Constants.BrowserIDs.IE8_2 || metricID == Constants.BrowserIDs.IE8_3 {
-                ie8Vals[index] += value/3
-            } else if metricID == Constants.BrowserIDs.IE9_1 || metricID == Constants.BrowserIDs.IE9_2 || metricID == Constants.BrowserIDs.IE9_3 {
-                ie9Vals[index] += value/3
-            } else if metricID == Constants.BrowserIDs.IE10_1 || metricID == Constants.BrowserIDs.IE10_2 || metricID == Constants.BrowserIDs.IE10_3 {
-                ie10Vals[index] += value/3
-            } else if metricID == Constants.BrowserIDs.IE11_1 || metricID == Constants.BrowserIDs.IE11_2 || metricID == Constants.BrowserIDs.IE11_3 {
-                ie11Vals[index] += value/3
-            } else if metricID == Constants.BrowserIDs.Firefox_1 || metricID == Constants.BrowserIDs.Firefox_2 || metricID == Constants.BrowserIDs.Firefox_3 {
-                firefoxVals[index] += value/3
-            } else if metricID == Constants.BrowserIDs.Chrome_1 || metricID == Constants.BrowserIDs.Chrome_2 || metricID == Constants.BrowserIDs.Chrome_3 {
-                chromeVals[index] += value/3
-            } else if metricID == Constants.BrowserIDs.Safari_1 || metricID == Constants.BrowserIDs.Safari_2 || metricID == Constants.BrowserIDs.Safari_3 {
-                safariVals[index] += value/3
-            } else {
-                println("Something went wrong in getting the line graph data.")
+            if index != -1 {
+                if metricID == Constants.BrowserIDs.IE8_1 || metricID == Constants.BrowserIDs.IE8_2 || metricID == Constants.BrowserIDs.IE8_3 {
+                    ie8Vals[index] += value/3
+                } else if metricID == Constants.BrowserIDs.IE9_1 || metricID == Constants.BrowserIDs.IE9_2 || metricID == Constants.BrowserIDs.IE9_3 {
+                    ie9Vals[index] += value/3
+                } else if metricID == Constants.BrowserIDs.IE10_1 || metricID == Constants.BrowserIDs.IE10_2 || metricID == Constants.BrowserIDs.IE10_3 {
+                    ie10Vals[index] += value/3
+                } else if metricID == Constants.BrowserIDs.IE11_1 || metricID == Constants.BrowserIDs.IE11_2 || metricID == Constants.BrowserIDs.IE11_3 {
+                    ie11Vals[index] += value/3
+                } else if metricID == Constants.BrowserIDs.Firefox_1 || metricID == Constants.BrowserIDs.Firefox_2 || metricID == Constants.BrowserIDs.Firefox_3 {
+                    firefoxVals[index] += value/3
+                } else if metricID == Constants.BrowserIDs.Chrome_1 || metricID == Constants.BrowserIDs.Chrome_2 || metricID == Constants.BrowserIDs.Chrome_3 {
+                    chromeVals[index] += value/3
+                } else if metricID == Constants.BrowserIDs.Safari_1 || metricID == Constants.BrowserIDs.Safari_2 || metricID == Constants.BrowserIDs.Safari_3 {
+                    safariVals[index] += value/3
+                } else {
+                    println("Something went wrong in getting the line graph data.")
+                }
             }
         }
     }

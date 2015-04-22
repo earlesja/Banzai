@@ -12,13 +12,14 @@ class OSUsageViewController: UIViewController {
     
     @IBOutlet weak var lineGraphView: UIView!
     @IBOutlet weak var pieGraphView: UIView!
+    let settings = NSUserDefaults.standardUserDefaults()
+    let LEGEND_WIDTH : CGFloat = 65
     var osNames = ["W Vista", "W 7", "W 8", "W 8.1", "Mac", "iOS", "Linux", "Android"]
     var osPercentages = ["WVista":0.0, "W7":0.0, "W8":0.0, "W8One":0.0, "Mac":0.0, "iOS":0.0, "Android":0.0, "Linux":0.0]
     var osCounts = ["WVista":0, "W7":0, "W8":0, "W8One":0, "Mac":0, "iOS":0, "Android":0, "Linux":0]
-    var timeFrame = 518400 // 518400 = 7 days
+    var timeFrame = 604800 // 604800 = 7 days
     var lineGraphDates : [String] = []
-    var pieChart : PNPieChart!
-    var lineChart : PNLineChart!
+    var pieChart : PNPieChart!, lineChart : PNLineChart!
     var wVistaData = PNLineChartData(), w7Data = PNLineChartData(), w8Data = PNLineChartData(), w8OneData = PNLineChartData()
     var macData = PNLineChartData(), iOSData = PNLineChartData(), androidData = PNLineChartData(), linuxData = PNLineChartData()
     
@@ -26,48 +27,37 @@ class OSUsageViewController: UIViewController {
     var macVals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], iOSVals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], androidVals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], linuxVals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
     
     
-    // For server calls; TODO: Move to Constants file
+    // For server calls
     let wVista_1 = NSDictionary(objects: [Constants.OSIDs.WindowsVista_1, 1], forKeys: ["MetricId", "ApplicationID"])
     let wVista_2 = NSDictionary(objects: [Constants.OSIDs.WindowsVista_2, 1], forKeys: ["MetricId", "ApplicationID"])
     let wVista_3 = NSDictionary(objects: [Constants.OSIDs.WindowsVista_3, 1], forKeys: ["MetricId", "ApplicationID"])
-    var w7_1 = NSDictionary(objects: [Constants.OSIDs.Windows7_1, 1], forKeys: ["MetricId", "ApplicationID"])
-    var w7_2 = NSDictionary(objects: [Constants.OSIDs.Windows7_2, 1], forKeys: ["MetricId", "ApplicationID"])
-    var w7_3 = NSDictionary(objects: [Constants.OSIDs.Windows7_3, 1], forKeys: ["MetricId", "ApplicationID"])
-    var w8_1 = NSDictionary(objects: [Constants.OSIDs.Windows8_1, 1], forKeys: ["MetricId", "ApplicationID"])
-    var w8_2 = NSDictionary(objects: [Constants.OSIDs.Windows8_2, 1], forKeys: ["MetricId", "ApplicationID"])
-    var w8_3 = NSDictionary(objects: [Constants.OSIDs.Windows8_3, 1], forKeys: ["MetricId", "ApplicationID"])
-    var w8One_1 = NSDictionary(objects: [Constants.OSIDs.Windows8One_1, 1], forKeys: ["MetricId", "ApplicationID"])
-    var w8One_2 = NSDictionary(objects: [Constants.OSIDs.Windows8One_2, 1], forKeys: ["MetricId", "ApplicationID"])
-    var w8One_3 = NSDictionary(objects: [Constants.OSIDs.Windows8One_3, 1], forKeys: ["MetricId", "ApplicationID"])
-    var mac_1 = NSDictionary(objects: [Constants.OSIDs.Mac_1, 1], forKeys: ["MetricId", "ApplicationID"])
-    var mac_2 = NSDictionary(objects: [Constants.OSIDs.Mac_2, 1], forKeys: ["MetricId", "ApplicationID"])
-    var mac_3 = NSDictionary(objects: [Constants.OSIDs.Mac_3, 1], forKeys: ["MetricId", "ApplicationID"])
-    var iOS_1 = NSDictionary(objects: [Constants.OSIDs.iOS_1, 1], forKeys: ["MetricId", "ApplicationID"])
-    var iOS_2 = NSDictionary(objects: [Constants.OSIDs.iOS_2, 1], forKeys: ["MetricId", "ApplicationID"])
-    var iOS_3 = NSDictionary(objects: [Constants.OSIDs.iOS_3, 1], forKeys: ["MetricId", "ApplicationID"])
-    var android_1 = NSDictionary(objects: [Constants.OSIDs.Android_1, 1], forKeys: ["MetricId", "ApplicationID"])
-    var android_2 = NSDictionary(objects: [Constants.OSIDs.Android_2, 1], forKeys: ["MetricId", "ApplicationID"])
-    var android_3 = NSDictionary(objects: [Constants.OSIDs.Android_3, 1], forKeys: ["MetricId", "ApplicationID"])
-    var linux_1 = NSDictionary(objects: [Constants.OSIDs.Linux_1, 1], forKeys: ["MetricId", "ApplicationID"])
-    var linux_2 = NSDictionary(objects: [Constants.OSIDs.Linux_2, 1], forKeys: ["MetricId", "ApplicationID"])
-    var linux_3 = NSDictionary(objects: [Constants.OSIDs.Linux_3, 1], forKeys: ["MetricId", "ApplicationID"])
+    let w7_1 = NSDictionary(objects: [Constants.OSIDs.Windows7_1, 1], forKeys: ["MetricId", "ApplicationID"])
+    let w7_2 = NSDictionary(objects: [Constants.OSIDs.Windows7_2, 1], forKeys: ["MetricId", "ApplicationID"])
+    let w7_3 = NSDictionary(objects: [Constants.OSIDs.Windows7_3, 1], forKeys: ["MetricId", "ApplicationID"])
+    let w8_1 = NSDictionary(objects: [Constants.OSIDs.Windows8_1, 1], forKeys: ["MetricId", "ApplicationID"])
+    let w8_2 = NSDictionary(objects: [Constants.OSIDs.Windows8_2, 1], forKeys: ["MetricId", "ApplicationID"])
+    let w8_3 = NSDictionary(objects: [Constants.OSIDs.Windows8_3, 1], forKeys: ["MetricId", "ApplicationID"])
+    let w8One_1 = NSDictionary(objects: [Constants.OSIDs.Windows8One_1, 1], forKeys: ["MetricId", "ApplicationID"])
+    let w8One_2 = NSDictionary(objects: [Constants.OSIDs.Windows8One_2, 1], forKeys: ["MetricId", "ApplicationID"])
+    let w8One_3 = NSDictionary(objects: [Constants.OSIDs.Windows8One_3, 1], forKeys: ["MetricId", "ApplicationID"])
+    let mac_1 = NSDictionary(objects: [Constants.OSIDs.Mac_1, 1], forKeys: ["MetricId", "ApplicationID"])
+    let mac_2 = NSDictionary(objects: [Constants.OSIDs.Mac_2, 1], forKeys: ["MetricId", "ApplicationID"])
+    let mac_3 = NSDictionary(objects: [Constants.OSIDs.Mac_3, 1], forKeys: ["MetricId", "ApplicationID"])
+    let iOS_1 = NSDictionary(objects: [Constants.OSIDs.iOS_1, 1], forKeys: ["MetricId", "ApplicationID"])
+    let iOS_2 = NSDictionary(objects: [Constants.OSIDs.iOS_2, 1], forKeys: ["MetricId", "ApplicationID"])
+    let iOS_3 = NSDictionary(objects: [Constants.OSIDs.iOS_3, 1], forKeys: ["MetricId", "ApplicationID"])
+    let android_1 = NSDictionary(objects: [Constants.OSIDs.Android_1, 1], forKeys: ["MetricId", "ApplicationID"])
+    let android_2 = NSDictionary(objects: [Constants.OSIDs.Android_2, 1], forKeys: ["MetricId", "ApplicationID"])
+    let android_3 = NSDictionary(objects: [Constants.OSIDs.Android_3, 1], forKeys: ["MetricId", "ApplicationID"])
+    let linux_1 = NSDictionary(objects: [Constants.OSIDs.Linux_1, 1], forKeys: ["MetricId", "ApplicationID"])
+    let linux_2 = NSDictionary(objects: [Constants.OSIDs.Linux_2, 1], forKeys: ["MetricId", "ApplicationID"])
+    let linux_3 = NSDictionary(objects: [Constants.OSIDs.Linux_3, 1], forKeys: ["MetricId", "ApplicationID"])
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
 
-        // PIE GRAPH
-        
         // LINE GRAPH
-        var lineRect = CGRect(x: lineGraphView.bounds.minX - 10, y: lineGraphView.bounds.minY, width: lineGraphView.bounds.width, height: lineGraphView.bounds.height - 20)
-        self.lineChart = PNLineChart(frame: lineRect) as PNLineChart
-        lineChart.backgroundColor = UIColor.clearColor()
-        lineChart.showCoordinateAxis = true
-        
-        //lineChart.yFixedValueMax = 100
-        //lineChart.yFixedValueMin = 5
-        lineChart.yValueMax = 100
-        lineChart.yValueMin = 0
         
         wVistaData.dataTitle = "W Vista"
         wVistaData.color = Constants.UIColors.purple
@@ -113,6 +103,8 @@ class OSUsageViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        println("Height: \(pieGraphView.bounds.height) Width: \(pieGraphView.bounds.width)")
+        println("Height: \(lineGraphView.bounds.height) Width: \(lineGraphView.bounds.width)")
         JHProgressHUD.sharedHUD.showInView(self.view, withHeader: "Fetching Data", andFooter: "")
         getServerData()
     }
@@ -134,23 +126,47 @@ class OSUsageViewController: UIViewController {
         items.append(PNPieChartDataItem(value: CGFloat(percentages[5]), color: Constants.UIColors.green, description: "iOS"))
         items.append(PNPieChartDataItem(value: CGFloat(percentages[6]), color: Constants.UIColors.gray, description: "Android"))
         items.append(PNPieChartDataItem(value: CGFloat(percentages[7]), color: Constants.UIColors.brown, description: "Linux"))
-        self.pieChart = PNPieChart(frame: CGRectMake(pieGraphView.bounds.minX, pieGraphView.bounds.minY, pieGraphView.bounds.width - 75, pieGraphView.bounds.height), items: items)
+        var graphSquareDimension : CGFloat
+        var graphStartX : CGFloat
+        var graphStartY : CGFloat
+        if pieGraphView.bounds.height < pieGraphView.bounds.width - LEGEND_WIDTH {
+            graphSquareDimension = pieGraphView.bounds.height
+            graphStartX = pieGraphView.bounds.minX + ((pieGraphView.bounds.width - LEGEND_WIDTH - pieGraphView.bounds.height) / 2)
+            graphStartY = pieGraphView.bounds.minY
+        } else {
+            graphSquareDimension = pieGraphView.bounds.width - LEGEND_WIDTH
+            graphStartX = pieGraphView.bounds.minX
+            graphStartY = pieGraphView.bounds.minY + ((pieGraphView.bounds.height - pieGraphView.bounds.width - LEGEND_WIDTH) / 2)
+        }
+        
+        self.pieChart = PNPieChart(frame: CGRectMake(graphStartX, graphStartY, graphSquareDimension, graphSquareDimension), items: items)
         pieChart.descriptionTextFont = UIFont(name: "Avenir-Medium", size: 13.0)
         pieChart.showOnlyValues = true
         pieChart.strokeChart()
         
-        var legend = pieChart.getLegendWithMaxWidth(65) as UIView
-        legend.frame = CGRectMake(pieGraphView.bounds.width - 65, pieGraphView.bounds.minY + pieGraphView.bounds.height / 4, 65, pieGraphView.bounds.height/2)
+        var legend = pieChart.getLegendWithMaxWidth(LEGEND_WIDTH) as UIView
+        legend.frame = CGRectMake(pieGraphView.bounds.width - LEGEND_WIDTH, pieGraphView.bounds.minY + pieGraphView.bounds.height / 4, LEGEND_WIDTH, pieGraphView.bounds.height/2)
         pieGraphView.addSubview(legend)
         
         
         // LINE GRAPH
+        self.lineChart = PNLineChart(frame: CGRect(x: lineGraphView.bounds.minX, y: lineGraphView.bounds.minY, width: lineGraphView.bounds.width, height: lineGraphView.bounds.height))
+        lineChart.backgroundColor = UIColor.clearColor()
+        lineChart.showCoordinateAxis = true
+        
+        //lineChart.yFixedValueMax = 100
+        //lineChart.yFixedValueMin = 5
+        lineChart.yValueMax = 100
+        lineChart.yValueMin = 0
+        
+        
         for (var i = 0; i < lineGraphDates.count; i++) {
             if i % 2 != 0 {
                 lineGraphDates[i] = ""
             }
         }
-        lineChart.setXLabels(lineGraphDates, withWidth: 30)
+
+        lineChart.setXLabels(lineGraphDates, withWidth: ((lineGraphView.bounds.width - 80) / CGFloat(lineGraphDates.count)))
         wVistaData.getData = ({ (index: UInt) -> PNLineChartDataItem in
             var yValue : CGFloat = CGFloat(self.wVistaVals[Int(index) as Int])
             var item = PNLineChartDataItem(y: yValue)
@@ -227,7 +243,8 @@ class OSUsageViewController: UIViewController {
         var request = NSMutableURLRequest(URL: url)
         request.HTTPMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue("Basic dXNlck5hbWU6cGFzc3dvcmQ=", forHTTPHeaderField: "Authorization")
+        var credentialString = "Basic " + (settings.valueForKey("credentials") as NSString)
+        request.addValue(credentialString, forHTTPHeaderField: "Authorization")
         
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
@@ -358,7 +375,11 @@ class OSUsageViewController: UIViewController {
             }
         })
         println(self.lineGraphDates)
-        
+        var numDates = lineGraphDates.count
+        while(numDates > 7) {
+            lineGraphDates.removeAtIndex(0)
+            numDates = lineGraphDates.count
+        }
         // Parse data for line graph
         var index = 0
         for json in data as Array<AnyObject>{
@@ -369,24 +390,26 @@ class OSUsageViewController: UIViewController {
             array = array[0].componentsSeparatedByString("-")
             date = "\(array[1])-\(array[2])"
             index = getIndexOfDate(date)
-            if metricID == Constants.OSIDs.WindowsVista_1 || metricID == Constants.OSIDs.WindowsVista_2 || metricID == Constants.OSIDs.WindowsVista_3 {
-                wVistaVals[index] += value/3
-            } else if metricID == Constants.OSIDs.Windows7_1 || metricID == Constants.OSIDs.Windows7_2 || metricID == Constants.OSIDs.Windows7_3 {
-                w7Vals[index] += value/3
-            } else if metricID == Constants.OSIDs.Windows8_1 || metricID == Constants.OSIDs.Windows8_2 || metricID == Constants.OSIDs.Windows8_3 {
-                w8Vals[index] += value/3
-            } else if metricID == Constants.OSIDs.Windows8One_1 || metricID == Constants.OSIDs.Windows8One_2 || metricID == Constants.OSIDs.Windows8One_3 {
-                w8OneVals[index] += value/3
-            } else if metricID == Constants.OSIDs.Mac_1 || metricID == Constants.OSIDs.Mac_2 || metricID == Constants.OSIDs.Mac_3 {
-                macVals[index] += value/3
-            } else if metricID == Constants.OSIDs.iOS_1 || metricID == Constants.OSIDs.iOS_2 || metricID == Constants.OSIDs.iOS_3 {
-                iOSVals[index] += value/3
-            } else if metricID == Constants.OSIDs.Android_1 || metricID == Constants.OSIDs.Android_2 || metricID == Constants.OSIDs.Android_3 {
-                androidVals[index] += value/3
-            } else if metricID == Constants.OSIDs.Linux_1 || metricID == Constants.OSIDs.Linux_2 || metricID == Constants.OSIDs.Linux_3 {
-                linuxVals[index] += value/3
-            } else {
-                println("Something went wrong in getting the line graph data.")
+            if index != -1 {
+                if metricID == Constants.OSIDs.WindowsVista_1 || metricID == Constants.OSIDs.WindowsVista_2 || metricID == Constants.OSIDs.WindowsVista_3 {
+                    wVistaVals[index] += value/3
+                } else if metricID == Constants.OSIDs.Windows7_1 || metricID == Constants.OSIDs.Windows7_2 || metricID == Constants.OSIDs.Windows7_3 {
+                    w7Vals[index] += value/3
+                } else if metricID == Constants.OSIDs.Windows8_1 || metricID == Constants.OSIDs.Windows8_2 || metricID == Constants.OSIDs.Windows8_3 {
+                    w8Vals[index] += value/3
+                } else if metricID == Constants.OSIDs.Windows8One_1 || metricID == Constants.OSIDs.Windows8One_2 || metricID == Constants.OSIDs.Windows8One_3 {
+                    w8OneVals[index] += value/3
+                } else if metricID == Constants.OSIDs.Mac_1 || metricID == Constants.OSIDs.Mac_2 || metricID == Constants.OSIDs.Mac_3 {
+                    macVals[index] += value/3
+                } else if metricID == Constants.OSIDs.iOS_1 || metricID == Constants.OSIDs.iOS_2 || metricID == Constants.OSIDs.iOS_3 {
+                    iOSVals[index] += value/3
+                } else if metricID == Constants.OSIDs.Android_1 || metricID == Constants.OSIDs.Android_2 || metricID == Constants.OSIDs.Android_3 {
+                    androidVals[index] += value/3
+                } else if metricID == Constants.OSIDs.Linux_1 || metricID == Constants.OSIDs.Linux_2 || metricID == Constants.OSIDs.Linux_3 {
+                    linuxVals[index] += value/3
+                } else {
+                    println("Something went wrong in getting the line graph data.")
+                }
             }
         }
     }

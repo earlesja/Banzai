@@ -19,7 +19,6 @@ class DashboardViewController: UIViewController, UITableViewDataSource, UITableV
     var dataObject: AnyObject?
     @IBOutlet weak var dashboardTable: UITableView!
     var delegate: DashboardViewControllerDelegate?
-    
     let settings = NSUserDefaults.standardUserDefaults()
     
     override func viewDidLoad() {
@@ -42,6 +41,16 @@ class DashboardViewController: UIViewController, UITableViewDataSource, UITableV
 //        super.viewWillAppear(animated)
 //        self.updateData()
 //    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+    }
     
     func defaultSettings() {
         settings.setBool(true, forKey: "changed")
