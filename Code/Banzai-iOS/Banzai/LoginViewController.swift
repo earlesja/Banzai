@@ -64,24 +64,35 @@ class LoginViewController: UIViewController {
             let url = NSURL(string: "http://pan-banzai.cloudapp.net/banzai/api/Data/DimMetric")
             var request = NSMutableURLRequest(URL: url)
             request.addValue(credentialString, forHTTPHeaderField: "Authorization")
-
-            var result = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)
-            var statusCode = (response as NSHTTPURLResponse).statusCode
-            println(statusCode)
-            JHProgressHUD.sharedHUD.hide()
-
-            if statusCode == 200 {
-                settings.setObject(base64Encoded, forKey: "credentials")
-                let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main",bundle: nil)
-                let destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("DashboardViewController") as UIViewController
-                sideMenuController()?.setContentViewControllerFromLogin(destViewController)
-            } else {
-                let alertController = UIAlertController(title: "", message: "", preferredStyle: UIAlertControllerStyle.Alert)
-                statusCode == 500 ? (alertController.title = "Incorrect username or password.") : (alertController.title = "There was an error logging in (status code: \(statusCode)).")
-                let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) { (action) -> Void in
+            
+            NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { (response, data, error) -> Void in
+                var statusCode = (response as NSHTTPURLResponse).statusCode
+                println(statusCode)
+                
+                if error != nil {
+                    println("Uh oh... there was an error logging in.")
+                    let alertController = UIAlertController(title: "", message: "", preferredStyle: UIAlertControllerStyle.Alert)
+                    statusCode == 500 ? (alertController.title = "Incorrect username or password.") : (alertController.title = "There was an error logging in (status code: \(statusCode)).")
+                    let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) { (action) -> Void in
+                    }
+                    alertController.addAction(okAction)
+                    self.presentViewController(alertController, animated: true, completion: nil)
+                } else {
+                    JHProgressHUD.sharedHUD.hide()
+                    if statusCode == 200 {
+                        self.settings.setObject(base64Encoded, forKey: "credentials")
+                        let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main",bundle: nil)
+                        let destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("DashboardViewController") as UIViewController
+                        self.sideMenuController()?.setContentViewControllerFromLogin(destViewController)
+                    } else {
+                        let alertController = UIAlertController(title: "", message: "", preferredStyle: UIAlertControllerStyle.Alert)
+                        statusCode == 500 ? (alertController.title = "Incorrect username or password.") : (alertController.title = "There was an error logging in (status code: \(statusCode)).")
+                        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) { (action) -> Void in
+                        }
+                        alertController.addAction(okAction)
+                        self.presentViewController(alertController, animated: true, completion: nil)
+                    }
                 }
-                alertController.addAction(okAction)
-                presentViewController(alertController, animated: true, completion: nil)
             }
         }
     }

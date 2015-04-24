@@ -26,7 +26,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                             </textField>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="* Username cannot be blank." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l4O-mi-fEX">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="* Username cannot be blank." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l4O-mi-fEX">
                                 <rect key="frame" x="214" y="211" width="165" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="172" id="wU6-v0-ylZ"/>
@@ -35,7 +35,7 @@
                                 <color key="textColor" red="1" green="0.09963372929" blue="0.055744233130000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Uif-HN-0gm">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Uif-HN-0gm">
                                 <rect key="frame" x="214" y="233" width="172" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="172" id="aGc-6O-sca"/>
@@ -53,7 +53,7 @@
                                     </mask>
                                 </variation>
                             </textField>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="* Password cannot be blank." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="twp-MB-AFZ">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="* Password cannot be blank." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="twp-MB-AFZ">
                                 <rect key="frame" x="214" y="263" width="165" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="172" id="IuF-HF-ixg"/>
@@ -62,7 +62,7 @@
                                 <color key="textColor" red="1" green="0.09963372929" blue="0.055744233130000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dBN-Lp-lB7">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dBN-Lp-lB7">
                                 <rect key="frame" x="214" y="292" width="172" height="30"/>
                                 <color key="backgroundColor" red="0.80000001192092896" green="0.80000001192092896" blue="0.80000001192092896" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -944,16 +944,16 @@
                                         <exclude reference="07B-L8-PaP"/>
                                     </mask>
                                     <mask key="constraints">
+                                        <exclude reference="4TW-Yi-OdY"/>
+                                        <exclude reference="CVU-ng-7vK"/>
+                                        <exclude reference="hWR-6Z-8ro"/>
+                                        <exclude reference="sgF-YO-PGj"/>
                                         <exclude reference="59U-6Z-qrp"/>
                                         <exclude reference="Lgp-Vp-fgy"/>
                                         <exclude reference="OS4-Pv-VHz"/>
                                         <exclude reference="S0f-R5-YNS"/>
                                         <exclude reference="ZKg-xa-8EF"/>
                                         <exclude reference="hUG-JK-S1i"/>
-                                        <exclude reference="4TW-Yi-OdY"/>
-                                        <exclude reference="CVU-ng-7vK"/>
-                                        <exclude reference="hWR-6Z-8ro"/>
-                                        <exclude reference="sgF-YO-PGj"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=compact">
@@ -961,16 +961,16 @@
                                         <include reference="07B-L8-PaP"/>
                                     </mask>
                                     <mask key="constraints">
+                                        <include reference="4TW-Yi-OdY"/>
+                                        <include reference="CVU-ng-7vK"/>
+                                        <include reference="hWR-6Z-8ro"/>
+                                        <include reference="sgF-YO-PGj"/>
                                         <include reference="59U-6Z-qrp"/>
                                         <include reference="Lgp-Vp-fgy"/>
                                         <include reference="OS4-Pv-VHz"/>
                                         <include reference="S0f-R5-YNS"/>
                                         <include reference="ZKg-xa-8EF"/>
                                         <include reference="hUG-JK-S1i"/>
-                                        <include reference="4TW-Yi-OdY"/>
-                                        <include reference="CVU-ng-7vK"/>
-                                        <include reference="hWR-6Z-8ro"/>
-                                        <include reference="sgF-YO-PGj"/>
                                     </mask>
                                 </variation>
                             </view>

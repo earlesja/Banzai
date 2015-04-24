@@ -13,7 +13,7 @@ class BrowserUsageViewController: UIViewController {
     @IBOutlet weak var pieGraphView: UIView!
     @IBOutlet weak var lineGraphView: UIView!
     let settings = NSUserDefaults.standardUserDefaults()
-    let LEGEND_WIDTH : CGFloat = 65
+    let LEGEND_WIDTH : CGFloat = 100
     var browserNames = ["Firefox", "Chrome", "Safari", "IE 8", "IE 9", "IE 10", "IE 11"]
     var browserPercentages = ["Firefox":0.0, "Chrome":0.0, "Safari":0.0, "IE8":0.0, "IE9":0.0, "IE10":0.0, "IE11":0.0]
     var browserCounts = ["Firefox":0, "Chrome":0, "Safari":0, "IE8":0, "IE9":0, "IE10":0, "IE11":0]
@@ -29,27 +29,27 @@ class BrowserUsageViewController: UIViewController {
     
     
     // For server calls
-    let ie8_1 = NSDictionary(objects: [Constants.BrowserIDs.IE8_1, 1], forKeys: ["MetricId", "ApplicationID"])
-    let ie8_2 = NSDictionary(objects: [Constants.BrowserIDs.IE8_2, 1], forKeys: ["MetricId", "ApplicationID"])
-    let ie8_3 = NSDictionary(objects: [Constants.BrowserIDs.IE8_3, 1], forKeys: ["MetricId", "ApplicationID"])
-    let ie9_1 = NSDictionary(objects: [Constants.BrowserIDs.IE9_1, 1], forKeys: ["MetricId", "ApplicationID"])
-    let ie9_2 = NSDictionary(objects: [Constants.BrowserIDs.IE9_2, 1], forKeys: ["MetricId", "ApplicationID"])
-    let ie9_3 = NSDictionary(objects: [Constants.BrowserIDs.IE9_3, 1], forKeys: ["MetricId", "ApplicationID"])
-    let ie10_1 = NSDictionary(objects: [Constants.BrowserIDs.IE10_1, 1], forKeys: ["MetricId", "ApplicationID"])
-    let ie10_2 = NSDictionary(objects: [Constants.BrowserIDs.IE10_2, 1], forKeys: ["MetricId", "ApplicationID"])
-    let ie10_3 = NSDictionary(objects: [Constants.BrowserIDs.IE10_3, 1], forKeys: ["MetricId", "ApplicationID"])
-    let ie11_1 = NSDictionary(objects: [Constants.BrowserIDs.IE11_1, 1], forKeys: ["MetricId", "ApplicationID"])
-    let ie11_2 = NSDictionary(objects: [Constants.BrowserIDs.IE11_2, 1], forKeys: ["MetricId", "ApplicationID"])
-    let ie11_3 = NSDictionary(objects: [Constants.BrowserIDs.IE11_3, 1], forKeys: ["MetricId", "ApplicationID"])
-    let firefox_1 = NSDictionary(objects: [Constants.BrowserIDs.Firefox_1, 1], forKeys: ["MetricId", "ApplicationID"])
-    let firefox_2 = NSDictionary(objects: [Constants.BrowserIDs.Firefox_2, 1], forKeys: ["MetricId", "ApplicationID"])
-    let firefox_3 = NSDictionary(objects: [Constants.BrowserIDs.Firefox_3, 1], forKeys: ["MetricId", "ApplicationID"])
-    let chrome_1 = NSDictionary(objects: [Constants.BrowserIDs.Chrome_1, 1], forKeys: ["MetricId", "ApplicationID"])
-    let chrome_2 = NSDictionary(objects: [Constants.BrowserIDs.Chrome_2, 1], forKeys: ["MetricId", "ApplicationID"])
-    let chrome_3 = NSDictionary(objects: [Constants.BrowserIDs.Chrome_3, 1], forKeys: ["MetricId", "ApplicationID"])
-    let safari_1 = NSDictionary(objects: [Constants.BrowserIDs.Safari_1, 1], forKeys: ["MetricId", "ApplicationID"])
-    let safari_2 = NSDictionary(objects: [Constants.BrowserIDs.Safari_2, 1], forKeys: ["MetricId", "ApplicationID"])
-    let safari_3 = NSDictionary(objects: [Constants.BrowserIDs.Safari_3, 1], forKeys: ["MetricId", "ApplicationID"])
+    let ie8_1 = NSDictionary(objects: [Constants.BrowserIDs.IE8_1], forKeys: ["MetricId"])
+    let ie8_2 = NSDictionary(objects: [Constants.BrowserIDs.IE8_2], forKeys: ["MetricId"])
+    let ie8_3 = NSDictionary(objects: [Constants.BrowserIDs.IE8_3], forKeys: ["MetricId"])
+    let ie9_1 = NSDictionary(objects: [Constants.BrowserIDs.IE9_1], forKeys: ["MetricId"])
+    let ie9_2 = NSDictionary(objects: [Constants.BrowserIDs.IE9_2], forKeys: ["MetricId"])
+    let ie9_3 = NSDictionary(objects: [Constants.BrowserIDs.IE9_3], forKeys: ["MetricId"])
+    let ie10_1 = NSDictionary(objects: [Constants.BrowserIDs.IE10_1], forKeys: ["MetricId"])
+    let ie10_2 = NSDictionary(objects: [Constants.BrowserIDs.IE10_2], forKeys: ["MetricId"])
+    let ie10_3 = NSDictionary(objects: [Constants.BrowserIDs.IE10_3], forKeys: ["MetricId"])
+    let ie11_1 = NSDictionary(objects: [Constants.BrowserIDs.IE11_1], forKeys: ["MetricId"])
+    let ie11_2 = NSDictionary(objects: [Constants.BrowserIDs.IE11_2], forKeys: ["MetricId"])
+    let ie11_3 = NSDictionary(objects: [Constants.BrowserIDs.IE11_3], forKeys: ["MetricId"])
+    let firefox_1 = NSDictionary(objects: [Constants.BrowserIDs.Firefox_1], forKeys: ["MetricId"])
+    let firefox_2 = NSDictionary(objects: [Constants.BrowserIDs.Firefox_2], forKeys: ["MetricId"])
+    let firefox_3 = NSDictionary(objects: [Constants.BrowserIDs.Firefox_3], forKeys: ["MetricId"])
+    let chrome_1 = NSDictionary(objects: [Constants.BrowserIDs.Chrome_1], forKeys: ["MetricId"])
+    let chrome_2 = NSDictionary(objects: [Constants.BrowserIDs.Chrome_2], forKeys: ["MetricId"])
+    let chrome_3 = NSDictionary(objects: [Constants.BrowserIDs.Chrome_3], forKeys: ["MetricId"])
+    let safari_1 = NSDictionary(objects: [Constants.BrowserIDs.Safari_1], forKeys: ["MetricId"])
+    let safari_2 = NSDictionary(objects: [Constants.BrowserIDs.Safari_2], forKeys: ["MetricId"])
+    let safari_3 = NSDictionary(objects: [Constants.BrowserIDs.Safari_3], forKeys: ["MetricId"])
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -107,13 +107,13 @@ class BrowserUsageViewController: UIViewController {
         }
         
         var items : [PNPieChartDataItem] = []
-        items.append(PNPieChartDataItem(value: CGFloat(percentages[0]), color: Constants.UIColors.purple, description: "IE 8"))
-        items.append(PNPieChartDataItem(value: CGFloat(percentages[1]), color: Constants.UIColors.deepPurple, description: "IE 9"))
-        items.append(PNPieChartDataItem(value: CGFloat(percentages[2]), color: Constants.UIColors.indigo, description: "IE 10"))
-        items.append(PNPieChartDataItem(value: CGFloat(percentages[3]), color: Constants.UIColors.blue, description: "IE 11"))
-        items.append(PNPieChartDataItem(value: CGFloat(percentages[4]), color: Constants.UIColors.teal, description: "Firefox"))
-        items.append(PNPieChartDataItem(value: CGFloat(percentages[5]), color: Constants.UIColors.green, description: "Chrome"))
-        items.append(PNPieChartDataItem(value: CGFloat(percentages[6]), color: Constants.UIColors.gray, description: "Safari"))
+        items.append(PNPieChartDataItem(value: CGFloat(percentages[0]), color: Constants.UIColors.purple, description: NSString(format: "IE 8 (%.0f%%)", percentages[0])))
+        items.append(PNPieChartDataItem(value: CGFloat(percentages[1]), color: Constants.UIColors.deepPurple, description: NSString(format: "IE 9 (%.0f%%)", percentages[1])))
+        items.append(PNPieChartDataItem(value: CGFloat(percentages[2]), color: Constants.UIColors.indigo, description: NSString(format: "IE 10 (%.0f%%)", percentages[2])))
+        items.append(PNPieChartDataItem(value: CGFloat(percentages[3]), color: Constants.UIColors.blue, description: NSString(format: "IE 11 (%.0f%%)", percentages[3])))
+        items.append(PNPieChartDataItem(value: CGFloat(percentages[4]), color: Constants.UIColors.teal, description: NSString(format: "Firefox (%.0f%%)", percentages[4])))
+        items.append(PNPieChartDataItem(value: CGFloat(percentages[5]), color: Constants.UIColors.green, description: NSString(format: "Chrome (%.0f%%)", percentages[5])))
+        items.append(PNPieChartDataItem(value: CGFloat(percentages[6]), color: Constants.UIColors.gray, description: NSString(format: "Safari (%.0f%%)", percentages[6])))
         var graphSquareDimension : CGFloat
         var graphStartX : CGFloat
         var graphStartY : CGFloat

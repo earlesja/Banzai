@@ -13,7 +13,7 @@ class OSUsageViewController: UIViewController {
     @IBOutlet weak var lineGraphView: UIView!
     @IBOutlet weak var pieGraphView: UIView!
     let settings = NSUserDefaults.standardUserDefaults()
-    let LEGEND_WIDTH : CGFloat = 65
+    let LEGEND_WIDTH : CGFloat = 100
     var osNames = ["W Vista", "W 7", "W 8", "W 8.1", "Mac", "iOS", "Linux", "Android"]
     var osPercentages = ["WVista":0.0, "W7":0.0, "W8":0.0, "W8One":0.0, "Mac":0.0, "iOS":0.0, "Android":0.0, "Linux":0.0]
     var osCounts = ["WVista":0, "W7":0, "W8":0, "W8One":0, "Mac":0, "iOS":0, "Android":0, "Linux":0]
@@ -28,30 +28,30 @@ class OSUsageViewController: UIViewController {
     
     
     // For server calls
-    let wVista_1 = NSDictionary(objects: [Constants.OSIDs.WindowsVista_1, 1], forKeys: ["MetricId", "ApplicationID"])
-    let wVista_2 = NSDictionary(objects: [Constants.OSIDs.WindowsVista_2, 1], forKeys: ["MetricId", "ApplicationID"])
-    let wVista_3 = NSDictionary(objects: [Constants.OSIDs.WindowsVista_3, 1], forKeys: ["MetricId", "ApplicationID"])
-    let w7_1 = NSDictionary(objects: [Constants.OSIDs.Windows7_1, 1], forKeys: ["MetricId", "ApplicationID"])
-    let w7_2 = NSDictionary(objects: [Constants.OSIDs.Windows7_2, 1], forKeys: ["MetricId", "ApplicationID"])
-    let w7_3 = NSDictionary(objects: [Constants.OSIDs.Windows7_3, 1], forKeys: ["MetricId", "ApplicationID"])
-    let w8_1 = NSDictionary(objects: [Constants.OSIDs.Windows8_1, 1], forKeys: ["MetricId", "ApplicationID"])
-    let w8_2 = NSDictionary(objects: [Constants.OSIDs.Windows8_2, 1], forKeys: ["MetricId", "ApplicationID"])
-    let w8_3 = NSDictionary(objects: [Constants.OSIDs.Windows8_3, 1], forKeys: ["MetricId", "ApplicationID"])
-    let w8One_1 = NSDictionary(objects: [Constants.OSIDs.Windows8One_1, 1], forKeys: ["MetricId", "ApplicationID"])
-    let w8One_2 = NSDictionary(objects: [Constants.OSIDs.Windows8One_2, 1], forKeys: ["MetricId", "ApplicationID"])
-    let w8One_3 = NSDictionary(objects: [Constants.OSIDs.Windows8One_3, 1], forKeys: ["MetricId", "ApplicationID"])
-    let mac_1 = NSDictionary(objects: [Constants.OSIDs.Mac_1, 1], forKeys: ["MetricId", "ApplicationID"])
-    let mac_2 = NSDictionary(objects: [Constants.OSIDs.Mac_2, 1], forKeys: ["MetricId", "ApplicationID"])
-    let mac_3 = NSDictionary(objects: [Constants.OSIDs.Mac_3, 1], forKeys: ["MetricId", "ApplicationID"])
-    let iOS_1 = NSDictionary(objects: [Constants.OSIDs.iOS_1, 1], forKeys: ["MetricId", "ApplicationID"])
-    let iOS_2 = NSDictionary(objects: [Constants.OSIDs.iOS_2, 1], forKeys: ["MetricId", "ApplicationID"])
-    let iOS_3 = NSDictionary(objects: [Constants.OSIDs.iOS_3, 1], forKeys: ["MetricId", "ApplicationID"])
-    let android_1 = NSDictionary(objects: [Constants.OSIDs.Android_1, 1], forKeys: ["MetricId", "ApplicationID"])
-    let android_2 = NSDictionary(objects: [Constants.OSIDs.Android_2, 1], forKeys: ["MetricId", "ApplicationID"])
-    let android_3 = NSDictionary(objects: [Constants.OSIDs.Android_3, 1], forKeys: ["MetricId", "ApplicationID"])
-    let linux_1 = NSDictionary(objects: [Constants.OSIDs.Linux_1, 1], forKeys: ["MetricId", "ApplicationID"])
-    let linux_2 = NSDictionary(objects: [Constants.OSIDs.Linux_2, 1], forKeys: ["MetricId", "ApplicationID"])
-    let linux_3 = NSDictionary(objects: [Constants.OSIDs.Linux_3, 1], forKeys: ["MetricId", "ApplicationID"])
+    let wVista_1 = NSDictionary(objects: [Constants.OSIDs.WindowsVista_1], forKeys: ["MetricId"])
+    let wVista_2 = NSDictionary(objects: [Constants.OSIDs.WindowsVista_2], forKeys: ["MetricId"])
+    let wVista_3 = NSDictionary(objects: [Constants.OSIDs.WindowsVista_3], forKeys: ["MetricId"])
+    let w7_1 = NSDictionary(objects: [Constants.OSIDs.Windows7_1], forKeys: ["MetricId"])
+    let w7_2 = NSDictionary(objects: [Constants.OSIDs.Windows7_2], forKeys: ["MetricId"])
+    let w7_3 = NSDictionary(objects: [Constants.OSIDs.Windows7_3], forKeys: ["MetricId"])
+    let w8_1 = NSDictionary(objects: [Constants.OSIDs.Windows8_1], forKeys: ["MetricId"])
+    let w8_2 = NSDictionary(objects: [Constants.OSIDs.Windows8_2], forKeys: ["MetricId"])
+    let w8_3 = NSDictionary(objects: [Constants.OSIDs.Windows8_3], forKeys: ["MetricId"])
+    let w8One_1 = NSDictionary(objects: [Constants.OSIDs.Windows8One_1], forKeys: ["MetricId"])
+    let w8One_2 = NSDictionary(objects: [Constants.OSIDs.Windows8One_2], forKeys: ["MetricId"])
+    let w8One_3 = NSDictionary(objects: [Constants.OSIDs.Windows8One_3], forKeys: ["MetricId"])
+    let mac_1 = NSDictionary(objects: [Constants.OSIDs.Mac_1], forKeys: ["MetricId"])
+    let mac_2 = NSDictionary(objects: [Constants.OSIDs.Mac_2], forKeys: ["MetricId"])
+    let mac_3 = NSDictionary(objects: [Constants.OSIDs.Mac_3], forKeys: ["MetricId"])
+    let iOS_1 = NSDictionary(objects: [Constants.OSIDs.iOS_1], forKeys: ["MetricId"])
+    let iOS_2 = NSDictionary(objects: [Constants.OSIDs.iOS_2], forKeys: ["MetricId"])
+    let iOS_3 = NSDictionary(objects: [Constants.OSIDs.iOS_3], forKeys: ["MetricId"])
+    let android_1 = NSDictionary(objects: [Constants.OSIDs.Android_1], forKeys: ["MetricId"])
+    let android_2 = NSDictionary(objects: [Constants.OSIDs.Android_2], forKeys: ["MetricId"])
+    let android_3 = NSDictionary(objects: [Constants.OSIDs.Android_3], forKeys: ["MetricId"])
+    let linux_1 = NSDictionary(objects: [Constants.OSIDs.Linux_1], forKeys: ["MetricId"])
+    let linux_2 = NSDictionary(objects: [Constants.OSIDs.Linux_2], forKeys: ["MetricId"])
+    let linux_3 = NSDictionary(objects: [Constants.OSIDs.Linux_3], forKeys: ["MetricId"])
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,15 +98,17 @@ class OSUsageViewController: UIViewController {
         linuxData.color = Constants.UIColors.brown
         linuxData.inflexionPointStyle = PNLineChartPointStyle.Circle
         linuxData.itemCount = 7
-        
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        println("Height: \(pieGraphView.bounds.height) Width: \(pieGraphView.bounds.width)")
-        println("Height: \(lineGraphView.bounds.height) Width: \(lineGraphView.bounds.width)")
-        JHProgressHUD.sharedHUD.showInView(self.view, withHeader: "Fetching Data", andFooter: "")
-        getServerData()
+        //if !settings.boolForKey("FetchedOSData") {
+            //println("Fetched data was false, so get the data")
+            JHProgressHUD.sharedHUD.showInView(self.view, withHeader: "Fetching Data", andFooter: "")
+            getServerData()
+        //} else {
+            //updateGraphs()
+        //}
     }
     
     func updateGraphs() {
@@ -118,14 +120,14 @@ class OSUsageViewController: UIViewController {
         }
         
         var items : [PNPieChartDataItem] = []
-        items.append(PNPieChartDataItem(value: CGFloat(percentages[0]), color: Constants.UIColors.purple, description: "W Vista"))
-        items.append(PNPieChartDataItem(value: CGFloat(percentages[1]), color: Constants.UIColors.deepPurple, description: "W 7"))
-        items.append(PNPieChartDataItem(value: CGFloat(percentages[2]), color: Constants.UIColors.indigo, description: "W 8"))
-        items.append(PNPieChartDataItem(value: CGFloat(percentages[3]), color: Constants.UIColors.blue, description: "W 8.1"))
-        items.append(PNPieChartDataItem(value: CGFloat(percentages[4]), color: Constants.UIColors.teal, description: "Mac"))
-        items.append(PNPieChartDataItem(value: CGFloat(percentages[5]), color: Constants.UIColors.green, description: "iOS"))
-        items.append(PNPieChartDataItem(value: CGFloat(percentages[6]), color: Constants.UIColors.gray, description: "Android"))
-        items.append(PNPieChartDataItem(value: CGFloat(percentages[7]), color: Constants.UIColors.brown, description: "Linux"))
+        items.append(PNPieChartDataItem(value: CGFloat(percentages[0]), color: Constants.UIColors.purple, description: NSString(format: "W Vista (%.0f%%)", percentages[0])))
+        items.append(PNPieChartDataItem(value: CGFloat(percentages[1]), color: Constants.UIColors.deepPurple, description: NSString(format: "W 7 (%.0f%%)", percentages[1])))
+        items.append(PNPieChartDataItem(value: CGFloat(percentages[2]), color: Constants.UIColors.indigo, description: NSString(format: "W 8 (%.0f%%)", percentages[2])))
+        items.append(PNPieChartDataItem(value: CGFloat(percentages[3]), color: Constants.UIColors.blue, description: NSString(format: "W 8.1 (%.0f%%)", percentages[3])))
+        items.append(PNPieChartDataItem(value: CGFloat(percentages[4]), color: Constants.UIColors.teal, description: NSString(format: "Mac (%.0f%%)", percentages[4])))
+        items.append(PNPieChartDataItem(value: CGFloat(percentages[5]), color: Constants.UIColors.green, description: NSString(format: "iOS (%.0f%%)", percentages[5])))
+        items.append(PNPieChartDataItem(value: CGFloat(percentages[6]), color: Constants.UIColors.gray, description: NSString(format: "Android (%.0f%%)", percentages[6])))
+        items.append(PNPieChartDataItem(value: CGFloat(percentages[7]), color: Constants.UIColors.brown, description: NSString(format: "Linux (%.0f%%)", percentages[7])))
         var graphSquareDimension : CGFloat
         var graphStartX : CGFloat
         var graphStartY : CGFloat
@@ -267,7 +269,7 @@ class OSUsageViewController: UIViewController {
                 if  anyObj is Array<AnyObject> {
                     self.parseData(anyObj!)
                 }
-                
+                self.settings.setBool(true, forKey: "FetchedOSData")
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 JHProgressHUD.sharedHUD.hide()
                 self.updateGraphs()

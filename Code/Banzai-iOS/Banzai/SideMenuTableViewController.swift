@@ -10,6 +10,7 @@ import UIKit
 
 class SideMenuTableViewController: UITableViewController {
     var selectedMenuItem : Int = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -39,7 +40,7 @@ class SideMenuTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Return the number of rows in the section.
-        return 7
+        return 5
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -59,16 +60,12 @@ class SideMenuTableViewController: UITableViewController {
         case 0:
             cell!.textLabel?.text = "Dashboard"
         case 1:
-            cell!.textLabel?.text = "Server Details"
-        case 2:
             cell!.textLabel?.text = "OS Usage"
-        case 3:
+        case 2:
             cell!.textLabel?.text = "Browser Usage"
-        case 4:
-            cell!.textLabel?.text = "System Errors"
-        case 5:
+        case 3:
             cell!.textLabel?.text = "Settings"
-        case 6:
+        case 4:
             cell!.textLabel?.text = "Log Out"
         default:
             cell!.textLabel?.text = "ERROR..."
@@ -99,26 +96,18 @@ class SideMenuTableViewController: UITableViewController {
             sideMenuController()?.setContentViewController(destViewController)
             break
         case 1:
-            destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ServerDetailsViewController") as UIViewController
-            sideMenuController()?.setContentViewController(destViewController)
-            break
-        case 2:
             destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("OSUsageViewController") as UIViewController
             sideMenuController()?.setContentViewController(destViewController)
             break
-        case 3:
+        case 2:
             destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("BrowserUsageController") as UIViewController
             sideMenuController()?.setContentViewController(destViewController)
             break
-        case 4:
-            destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("SystemErrorsViewController") as UIViewController
-            sideMenuController()?.setContentViewController(destViewController)
-            break
-        case 5:
+        case 3:
             destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("SettingsViewController") as UIViewController
             sideMenuController()?.setContentViewController(destViewController)
             break
-        case 6:
+        case 4:
             destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("LoginViewController") as UIViewController
             topMostController()?.setContentViewController(destViewController)
             

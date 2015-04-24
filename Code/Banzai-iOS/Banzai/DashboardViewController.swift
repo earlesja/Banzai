@@ -31,6 +31,8 @@ class DashboardViewController: UIViewController, UITableViewDataSource, UITableV
             alertController.addAction(defaultAction)
             presentViewController(alertController, animated: true, completion: nil)
         }
+        
+
         dashboardTable.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
         self.dashboardTable.tableFooterView = UIView()
         // wrap the centerViewController in a navigation controller, so we can push views to it
