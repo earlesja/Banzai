@@ -117,16 +117,24 @@ class BrowserUsageViewController: UIViewController {
         var graphSquareDimension : CGFloat
         var graphStartX : CGFloat
         var graphStartY : CGFloat
+        
+        println("minx: \(pieGraphView.bounds.minX)")
+        println("miny: \(pieGraphView.bounds.minY)")
+        println("width: \(pieGraphView.bounds.width)")
+        println("height: \(pieGraphView.bounds.height)")
+        
+        
         if pieGraphView.bounds.height < pieGraphView.bounds.width - LEGEND_WIDTH {
+            println("yeah...")
             graphSquareDimension = pieGraphView.bounds.height
             graphStartX = pieGraphView.bounds.minX + ((pieGraphView.bounds.width - LEGEND_WIDTH - pieGraphView.bounds.height) / 2)
             graphStartY = pieGraphView.bounds.minY
         } else {
             graphSquareDimension = pieGraphView.bounds.width - LEGEND_WIDTH
             graphStartX = pieGraphView.bounds.minX
-            graphStartY = pieGraphView.bounds.minY + ((pieGraphView.bounds.height - pieGraphView.bounds.width - LEGEND_WIDTH) / 2)
+            graphStartY = pieGraphView.bounds.minY + ((pieGraphView.bounds.height - (pieGraphView.bounds.width - LEGEND_WIDTH)) / 2)
         }
-        
+        println("Startx: \(graphStartX) Starty: \(graphStartY)")
         self.pieChart = PNPieChart(frame: CGRectMake(graphStartX, graphStartY, graphSquareDimension, graphSquareDimension), items: items)
         pieChart.descriptionTextFont = UIFont(name: "Avenir-Medium", size: 13.0)
         pieChart.showOnlyValues = true

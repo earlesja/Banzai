@@ -138,7 +138,7 @@ class OSUsageViewController: UIViewController {
         } else {
             graphSquareDimension = pieGraphView.bounds.width - LEGEND_WIDTH
             graphStartX = pieGraphView.bounds.minX
-            graphStartY = pieGraphView.bounds.minY + ((pieGraphView.bounds.height - pieGraphView.bounds.width - LEGEND_WIDTH) / 2)
+            graphStartY = pieGraphView.bounds.minY + ((pieGraphView.bounds.height - (pieGraphView.bounds.width - LEGEND_WIDTH)) / 2)
         }
         
         self.pieChart = PNPieChart(frame: CGRectMake(graphStartX, graphStartY, graphSquareDimension, graphSquareDimension), items: items)
@@ -269,7 +269,6 @@ class OSUsageViewController: UIViewController {
                 if  anyObj is Array<AnyObject> {
                     self.parseData(anyObj!)
                 }
-                self.settings.setBool(true, forKey: "FetchedOSData")
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 JHProgressHUD.sharedHUD.hide()
                 self.updateGraphs()
