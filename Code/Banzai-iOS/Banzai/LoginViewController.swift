@@ -56,17 +56,17 @@ class LoginViewController: UIViewController {
             
             var fullLoginText = emailText + ":" + passwordText
             let utf8str: NSData = fullLoginText.dataUsingEncoding(NSUTF8StringEncoding)!
-            let base64Encoded:NSString = utf8str.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.fromRaw(0)!)
-            let credentialString = "Basic " + base64Encoded
+            let base64Encoded:NSString = utf8str.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0))
+            let credentialString = "Basic " + (base64Encoded as String)
             
             var error : NSError? = nil
             var response : NSURLResponse? = nil
             let url = NSURL(string: "http://pan-banzai.cloudapp.net/banzai/api/Data/DimMetric")
-            var request = NSMutableURLRequest(URL: url)
+            var request = NSMutableURLRequest(URL: url!)
             request.addValue(credentialString, forHTTPHeaderField: "Authorization")
             
             NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { (response, data, error) -> Void in
-                var statusCode = (response as NSHTTPURLResponse).statusCode
+                var statusCode = (response as! NSHTTPURLResponse).statusCode
                 println(statusCode)
                 
                 if error != nil {
@@ -82,7 +82,7 @@ class LoginViewController: UIViewController {
                     if statusCode == 200 {
                         self.settings.setObject(base64Encoded, forKey: "credentials")
                         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main",bundle: nil)
-                        let destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("DashboardViewController") as UIViewController
+                        let destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("DashboardViewController") as! UIViewController
                         self.sideMenuController()?.setContentViewControllerFromLogin(destViewController)
                     } else {
                         let alertController = UIAlertController(title: "", message: "", preferredStyle: UIAlertControllerStyle.Alert)

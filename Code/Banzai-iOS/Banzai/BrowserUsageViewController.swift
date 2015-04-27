@@ -107,13 +107,13 @@ class BrowserUsageViewController: UIViewController {
         }
         
         var items : [PNPieChartDataItem] = []
-        items.append(PNPieChartDataItem(value: CGFloat(percentages[0]), color: Constants.UIColors.purple, description: NSString(format: "IE 8 (%.0f%%)", percentages[0])))
-        items.append(PNPieChartDataItem(value: CGFloat(percentages[1]), color: Constants.UIColors.deepPurple, description: NSString(format: "IE 9 (%.0f%%)", percentages[1])))
-        items.append(PNPieChartDataItem(value: CGFloat(percentages[2]), color: Constants.UIColors.indigo, description: NSString(format: "IE 10 (%.0f%%)", percentages[2])))
-        items.append(PNPieChartDataItem(value: CGFloat(percentages[3]), color: Constants.UIColors.blue, description: NSString(format: "IE 11 (%.0f%%)", percentages[3])))
-        items.append(PNPieChartDataItem(value: CGFloat(percentages[4]), color: Constants.UIColors.teal, description: NSString(format: "Firefox (%.0f%%)", percentages[4])))
-        items.append(PNPieChartDataItem(value: CGFloat(percentages[5]), color: Constants.UIColors.green, description: NSString(format: "Chrome (%.0f%%)", percentages[5])))
-        items.append(PNPieChartDataItem(value: CGFloat(percentages[6]), color: Constants.UIColors.gray, description: NSString(format: "Safari (%.0f%%)", percentages[6])))
+        items.append(PNPieChartDataItem(value: CGFloat(percentages[0]), color: Constants.UIColors.purple, description: NSString(format: "IE 8 (%.0f%%)", percentages[0]) as String))
+        items.append(PNPieChartDataItem(value: CGFloat(percentages[1]), color: Constants.UIColors.deepPurple, description: NSString(format: "IE 9 (%.0f%%)", percentages[1]) as String))
+        items.append(PNPieChartDataItem(value: CGFloat(percentages[2]), color: Constants.UIColors.indigo, description: NSString(format: "IE 10 (%.0f%%)", percentages[2]) as String))
+        items.append(PNPieChartDataItem(value: CGFloat(percentages[3]), color: Constants.UIColors.blue, description: NSString(format: "IE 11 (%.0f%%)", percentages[3]) as String))
+        items.append(PNPieChartDataItem(value: CGFloat(percentages[4]), color: Constants.UIColors.teal, description: NSString(format: "Firefox (%.0f%%)", percentages[4]) as String))
+        items.append(PNPieChartDataItem(value: CGFloat(percentages[5]), color: Constants.UIColors.green, description: NSString(format: "Chrome (%.0f%%)", percentages[5]) as String))
+        items.append(PNPieChartDataItem(value: CGFloat(percentages[6]), color: Constants.UIColors.gray, description: NSString(format: "Safari (%.0f%%)", percentages[6]) as String))
         var graphSquareDimension : CGFloat
         var graphStartX : CGFloat
         var graphStartY : CGFloat
@@ -228,10 +228,10 @@ class BrowserUsageViewController: UIViewController {
 
         var error : NSError? = nil
         let url = NSURL(string: "http://pan-banzai.cloudapp.net/banzai/api/data/historicaldata")
-        var request = NSMutableURLRequest(URL: url)
+        var request = NSMutableURLRequest(URL: url!)
         request.HTTPMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        var credentialString = "Basic " + (settings.valueForKey("credentials") as NSString)
+        var credentialString = "Basic " + ((settings.valueForKey("credentials") as! NSString) as String)
         request.addValue(credentialString, forHTTPHeaderField: "Authorization")
         
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
@@ -246,7 +246,7 @@ class BrowserUsageViewController: UIViewController {
             } else {
                 var responseText = NSString(data: data, encoding: NSASCIIStringEncoding)
                 
-                var data: NSData = responseText.dataUsingEncoding(NSUTF8StringEncoding)!
+                var data: NSData = responseText!.dataUsingEncoding(NSUTF8StringEncoding)!
                 var error: NSError?
                 
                 // convert NSData to 'AnyObject'
@@ -268,7 +268,7 @@ class BrowserUsageViewController: UIViewController {
         var date = ""
         var value = 0.0
         var array = []
-        for json in data as Array<AnyObject>{
+        for json in data as! Array<AnyObject>{
             metricID = (json["MetricId"] as AnyObject? as? Int) ?? -1 // to get rid of null
             date = (json["DateCapturedUtc"]  as AnyObject? as? String) ?? ""
             value = (json["Value"] as AnyObject? as? Double) ?? -1.0
@@ -362,7 +362,7 @@ class BrowserUsageViewController: UIViewController {
         println(self.lineGraphDates)
         // Parse data for line graph
         var index = 0
-        for json in data as Array<AnyObject>{
+        for json in data as! Array<AnyObject>{
             metricID = (json["MetricId"] as AnyObject? as? Int) ?? -1 // to get rid of null
             date = (json["DateCapturedUtc"]  as AnyObject? as? String) ?? ""
             value = (json["Value"] as AnyObject? as? Double) ?? -1.0

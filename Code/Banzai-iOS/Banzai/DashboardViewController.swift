@@ -72,7 +72,7 @@ class DashboardViewController: UIViewController, UITableViewDataSource, UITableV
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(
             "DashboardCell", forIndexPath: indexPath)
-                as DashboardTableCell
+                as! DashboardTableCell
         
         switch(indexPath.row) {
         case 0:
@@ -89,7 +89,7 @@ class DashboardViewController: UIViewController, UITableViewDataSource, UITableV
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         println("Selected row #\(indexPath.row)")
-        var selectedCell : DashboardTableCell = tableView.cellForRowAtIndexPath(indexPath)! as DashboardTableCell
+        var selectedCell : DashboardTableCell = tableView.cellForRowAtIndexPath(indexPath)! as! DashboardTableCell
         
         tableView.beginUpdates()
         selectedCell.updateDoughnuts()
@@ -101,7 +101,7 @@ class DashboardViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
-        var selectedCell : DashboardTableCell = tableView.cellForRowAtIndexPath(indexPath)! as DashboardTableCell
+        var selectedCell : DashboardTableCell = tableView.cellForRowAtIndexPath(indexPath)! as! DashboardTableCell
         selectedCell.clearDoughnuts()
         selectedCell.accessoryType = .DisclosureIndicator
         selectedCell.circleArea.hidden = true;
