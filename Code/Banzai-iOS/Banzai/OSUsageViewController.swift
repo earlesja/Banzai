@@ -301,85 +301,38 @@ class OSUsageViewController: UIViewController {
             value = (json["Value"] as AnyObject? as? Double) ?? -1.0
             array = date.componentsSeparatedByString("T")
             array = array[0].componentsSeparatedByString("-")
-            switch (metricID) {
-            case Constants.OSIDs.WindowsVista_1:
+
+            if metricID == Constants.OSIDs.WindowsVista_1 {
                 self.osPercentages.updateValue(self.osPercentages["WVista"]! + value, forKey: "WVista")
                 self.osCounts.updateValue(self.osCounts["WVista"]! + 1, forKey: "WVista")
                 date = "\(array[1])-\(array[2])"
                 if !contains(self.lineGraphDates, date){
                     self.lineGraphDates.append(date)
                 }
-            case Constants.OSIDs.WindowsVista_2:
+            } else if metricID == Constants.OSIDs.WindowsVista_2 || metricID == Constants.OSIDs.WindowsVista_3 {
                 self.osPercentages.updateValue(self.osPercentages["WVista"]! + value, forKey: "WVista")
                 self.osCounts.updateValue(self.osCounts["WVista"]! + 1, forKey: "WVista")
-            case Constants.OSIDs.WindowsVista_3:
-                self.osPercentages.updateValue(self.osPercentages["WVista"]! + value, forKey: "WVista")
-                self.osCounts.updateValue(self.osCounts["WVista"]! + 1, forKey: "WVista")
-            case Constants.OSIDs.Windows7_1:
+            } else if metricID == Constants.OSIDs.Windows7_1 || metricID == Constants.OSIDs.Windows7_2 || metricID == Constants.OSIDs.Windows7_3 {
                 self.osPercentages.updateValue(self.osPercentages["W7"]! + value, forKey: "W7")
                 self.osCounts.updateValue(self.osCounts["W7"]! + 1, forKey: "W7")
-            case Constants.OSIDs.Windows7_2:
-                self.osPercentages.updateValue(self.osPercentages["W7"]! + value, forKey: "W7")
-                self.osCounts.updateValue(self.osCounts["W7"]! + 1, forKey: "W7")
-            case Constants.OSIDs.Windows7_3:
-                self.osPercentages.updateValue(self.osPercentages["W7"]! + value, forKey: "W7")
-                self.osCounts.updateValue(self.osCounts["W7"]! + 1, forKey: "W7")
-            case Constants.OSIDs.Windows8_1:
+            } else if metricID == Constants.OSIDs.Windows8_1 || metricID == Constants.OSIDs.Windows8_2 || metricID == Constants.OSIDs.Windows8_3 {
                 self.osPercentages.updateValue(self.osPercentages["W8"]! + value, forKey: "W8")
                 self.osCounts.updateValue(self.osCounts["W8"]! + 1, forKey: "W8")
-            case Constants.OSIDs.Windows8_2:
-                self.osPercentages.updateValue(self.osPercentages["W8"]! + value, forKey: "W8")
-                self.osCounts.updateValue(self.osCounts["W8"]! + 1, forKey: "W8")
-            case Constants.OSIDs.Windows8_3:
-                self.osPercentages.updateValue(self.osPercentages["W8"]! + value, forKey: "W8")
-                self.osCounts.updateValue(self.osCounts["W8"]! + 1, forKey: "W8")
-            case Constants.OSIDs.Windows8One_1:
+            } else if metricID == Constants.OSIDs.Windows8One_1 || metricID == Constants.OSIDs.Windows8One_2 || metricID == Constants.OSIDs.Windows8One_3 {
                 self.osPercentages.updateValue(self.osPercentages["W8One"]! + value, forKey: "W8One")
                 self.osCounts.updateValue(self.osCounts["W8One"]! + 1, forKey: "W8One")
-            case Constants.OSIDs.Windows8One_2:
-                self.osPercentages.updateValue(self.osPercentages["W8One"]! + value, forKey: "W8One")
-                self.osCounts.updateValue(self.osCounts["W8One"]! + 1, forKey: "W8One")
-            case Constants.OSIDs.Windows8One_3:
-                self.osPercentages.updateValue(self.osPercentages["W8One"]! + value, forKey: "W8One")
-                self.osCounts.updateValue(self.osCounts["W8One"]! + 1, forKey: "W8One")
-            case Constants.OSIDs.Mac_1:
+            } else if metricID == Constants.OSIDs.Mac_1 || metricID == Constants.OSIDs.Mac_2 || metricID == Constants.OSIDs.Mac_3 {
                 self.osPercentages.updateValue(self.osPercentages["Mac"]! + value, forKey: "Mac")
                 self.osCounts.updateValue(self.osCounts["Mac"]! + 1, forKey: "Mac")
-            case Constants.OSIDs.Mac_2:
-                self.osPercentages.updateValue(self.osPercentages["Mac"]! + value, forKey: "Mac")
-                self.osCounts.updateValue(self.osCounts["Mac"]! + 1, forKey: "Mac")
-            case Constants.OSIDs.Mac_3:
-                self.osPercentages.updateValue(self.osPercentages["Mac"]! + value, forKey: "Mac")
-                self.osCounts.updateValue(self.osCounts["Mac"]! + 1, forKey: "Mac")
-            case Constants.OSIDs.iOS_1:
+            } else if metricID == Constants.OSIDs.iOS_1 || metricID == Constants.OSIDs.iOS_2 || metricID == Constants.OSIDs.iOS_3 {
                 self.osPercentages.updateValue(self.osPercentages["iOS"]! + value, forKey: "iOS")
                 self.osCounts.updateValue(self.osCounts["iOS"]! + 1, forKey: "iOS")
-            case Constants.OSIDs.iOS_2:
-                self.osPercentages.updateValue(self.osPercentages["iOS"]! + value, forKey: "iOS")
-                self.osCounts.updateValue(self.osCounts["iOS"]! + 1, forKey: "iOS")
-            case Constants.OSIDs.iOS_3:
-                self.osPercentages.updateValue(self.osPercentages["iOS"]! + value, forKey: "iOS")
-                self.osCounts.updateValue(self.osCounts["iOS"]! + 1, forKey: "iOS")
-            case Constants.OSIDs.Android_1:
+            } else if metricID == Constants.OSIDs.Android_1 || metricID == Constants.OSIDs.Android_2 || metricID == Constants.OSIDs.Android_3 {
                 self.osPercentages.updateValue(self.osPercentages["Android"]! + value, forKey: "Android")
                 self.osCounts.updateValue(self.osCounts["Android"]! + 1, forKey: "Android")
-            case Constants.OSIDs.Android_2:
-                self.osPercentages.updateValue(self.osPercentages["Android"]! + value, forKey: "Android")
-                self.osCounts.updateValue(self.osCounts["Android"]! + 1, forKey: "Android")
-            case Constants.OSIDs.Android_3:
-                self.osPercentages.updateValue(self.osPercentages["Android"]! + value, forKey: "Android")
-                self.osCounts.updateValue(self.osCounts["Android"]! + 1, forKey: "Android")
-            case Constants.OSIDs.Linux_1:
+            } else if metricID == Constants.OSIDs.Linux_1 || metricID == Constants.OSIDs.Linux_2 || metricID == Constants.OSIDs.Linux_3 {
                 self.osPercentages.updateValue(self.osPercentages["Linux"]! + value, forKey: "Linux")
                 self.osCounts.updateValue(self.osCounts["Linux"]! + 1, forKey: "Linux")
-            case Constants.OSIDs.Linux_2:
-                self.osPercentages.updateValue(self.osPercentages["Linux"]! + value, forKey: "Linux")
-                self.osCounts.updateValue(self.osCounts["Linux"]! + 1, forKey: "Linux")
-            case Constants.OSIDs.Linux_3:
-                self.osPercentages.updateValue(self.osPercentages["Linux"]! + value, forKey: "Linux")
-                self.osCounts.updateValue(self.osCounts["Linux"]! + 1, forKey: "Linux")
-            default:
-                println("An error occured in the browser usage switch statement")
             }
         }
         self.lineGraphDates = sorted(self.lineGraphDates, {(d1: String, d2: String) -> Bool in

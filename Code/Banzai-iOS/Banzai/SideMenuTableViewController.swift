@@ -110,12 +110,6 @@ class SideMenuTableViewController: UITableViewController {
         case 4:
             destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("LoginViewController") as! UIViewController
             topMostController()?.setContentViewController(destViewController)
-            
-            //self.presentViewController(destViewController, animated: true, completion: nil)
-            //self.showViewController(destViewController, sender: destViewController)
-            //destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("SettingsViewController") as UIViewController
-            //let vc : AnyObject! = mainStoryboard.instantiateViewControllerWithIdentifier("LoginViewController")
-            //self.showViewController(vc as UIViewController, sender: vc)
             break
         default:
             // ERROR!!!

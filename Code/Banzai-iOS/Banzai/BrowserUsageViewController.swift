@@ -122,7 +122,6 @@ class BrowserUsageViewController: UIViewController {
         var percentages : [Double] = []
         for key in keys {
             percentages.append(browserPercentages[key]! / Double(browserCounts[key]!))
-            println("\(key) %: \(percentages.last!)")
         }
         
         var items : [PNPieChartDataItem] = []
@@ -137,14 +136,7 @@ class BrowserUsageViewController: UIViewController {
         var graphStartX : CGFloat
         var graphStartY : CGFloat
         
-        println("minx: \(pieGraphView.bounds.minX)")
-        println("miny: \(pieGraphView.bounds.minY)")
-        println("width: \(pieGraphView.bounds.width)")
-        println("height: \(pieGraphView.bounds.height)")
-        
-        
         if pieGraphView.bounds.height < pieGraphView.bounds.width - LEGEND_WIDTH {
-            println("yeah...")
             graphSquareDimension = pieGraphView.bounds.height
             graphStartX = pieGraphView.bounds.minX + ((pieGraphView.bounds.width - LEGEND_WIDTH - pieGraphView.bounds.height) / 2)
             graphStartY = pieGraphView.bounds.minY
@@ -153,7 +145,6 @@ class BrowserUsageViewController: UIViewController {
             graphStartX = pieGraphView.bounds.minX
             graphStartY = pieGraphView.bounds.minY + ((pieGraphView.bounds.height - (pieGraphView.bounds.width - LEGEND_WIDTH)) / 2)
         }
-        println("Startx: \(graphStartX) Starty: \(graphStartY)")
         self.pieChart = PNPieChart(frame: CGRectMake(graphStartX, graphStartY, graphSquareDimension, graphSquareDimension), items: items)
         pieChart.descriptionTextFont = UIFont(name: "Avenir-Medium", size: 13.0)
         pieChart.showOnlyValues = true
@@ -293,76 +284,34 @@ class BrowserUsageViewController: UIViewController {
             value = (json["Value"] as AnyObject? as? Double) ?? -1.0
             array = date.componentsSeparatedByString("T")
             array = array[0].componentsSeparatedByString("-")
-            switch (metricID) {
-            case Constants.BrowserIDs.IE8_1:
+            if metricID == Constants.BrowserIDs.IE8_1 {
                 self.browserPercentages.updateValue(self.browserPercentages["IE8"]! + value, forKey: "IE8")
                 self.browserCounts.updateValue(self.browserCounts["IE8"]! + 1, forKey: "IE8")
                 date = "\(array[1])-\(array[2])"
                 if !contains(self.lineGraphDates, date){
                     self.lineGraphDates.append(date)
                 }
-            case Constants.BrowserIDs.IE8_2:
+            } else if metricID == Constants.BrowserIDs.IE8_2 || metricID == Constants.BrowserIDs.IE8_3 {
                 self.browserPercentages.updateValue(self.browserPercentages["IE8"]! + value, forKey: "IE8")
                 self.browserCounts.updateValue(self.browserCounts["IE8"]! + 1, forKey: "IE8")
-            case Constants.BrowserIDs.IE8_3:
-                self.browserPercentages.updateValue(self.browserPercentages["IE8"]! + value, forKey: "IE8")
-                self.browserCounts.updateValue(self.browserCounts["IE8"]! + 1, forKey: "IE8")
-            case Constants.BrowserIDs.IE9_1:
+            } else if metricID == Constants.BrowserIDs.IE9_1 || metricID == Constants.BrowserIDs.IE9_2 || metricID == Constants.BrowserIDs.IE9_3 {
                 self.browserPercentages.updateValue(self.browserPercentages["IE9"]! + value, forKey: "IE9")
                 self.browserCounts.updateValue(self.browserCounts["IE9"]! + 1, forKey: "IE9")
-            case Constants.BrowserIDs.IE9_2:
-                self.browserPercentages.updateValue(self.browserPercentages["IE9"]! + value, forKey: "IE9")
-                self.browserCounts.updateValue(self.browserCounts["IE9"]! + 1, forKey: "IE9")
-            case Constants.BrowserIDs.IE9_3:
-                self.browserPercentages.updateValue(self.browserPercentages["IE9"]! + value, forKey: "IE9")
-                self.browserCounts.updateValue(self.browserCounts["IE9"]! + 1, forKey: "IE9")
-            case Constants.BrowserIDs.IE10_1:
+            } else if metricID == Constants.BrowserIDs.IE10_1 || metricID == Constants.BrowserIDs.IE10_2 || metricID == Constants.BrowserIDs.IE10_3 {
                 self.browserPercentages.updateValue(self.browserPercentages["IE10"]! + value, forKey: "IE10")
                 self.browserCounts.updateValue(self.browserCounts["IE10"]! + 1, forKey: "IE10")
-            case Constants.BrowserIDs.IE10_2:
-                self.browserPercentages.updateValue(self.browserPercentages["IE10"]! + value, forKey: "IE10")
-                self.browserCounts.updateValue(self.browserCounts["IE10"]! + 1, forKey: "IE10")
-            case Constants.BrowserIDs.IE10_3:
-                self.browserPercentages.updateValue(self.browserPercentages["IE10"]! + value, forKey: "IE10")
-                self.browserCounts.updateValue(self.browserCounts["IE10"]! + 1, forKey: "IE10")
-            case Constants.BrowserIDs.IE11_1:
+            } else if metricID == Constants.BrowserIDs.IE11_1 || metricID == Constants.BrowserIDs.IE11_2 || metricID == Constants.BrowserIDs.IE11_3 {
                 self.browserPercentages.updateValue(self.browserPercentages["IE11"]! + value, forKey: "IE11")
                 self.browserCounts.updateValue(self.browserCounts["IE11"]! + 1, forKey: "IE11")
-            case Constants.BrowserIDs.IE11_2:
-                self.browserPercentages.updateValue(self.browserPercentages["IE11"]! + value, forKey: "IE11")
-                self.browserCounts.updateValue(self.browserCounts["IE11"]! + 1, forKey: "IE11")
-            case Constants.BrowserIDs.IE11_3:
-                self.browserPercentages.updateValue(self.browserPercentages["IE11"]! + value, forKey: "IE11")
-                self.browserCounts.updateValue(self.browserCounts["IE11"]! + 1, forKey: "IE11")
-            case Constants.BrowserIDs.Firefox_1:
+            } else if metricID == Constants.BrowserIDs.Firefox_1 || metricID == Constants.BrowserIDs.Firefox_2 || metricID == Constants.BrowserIDs.Firefox_3 {
                 self.browserPercentages.updateValue(self.browserPercentages["Firefox"]! + value, forKey: "Firefox")
                 self.browserCounts.updateValue(self.browserCounts["Firefox"]! + 1, forKey: "Firefox")
-            case Constants.BrowserIDs.Firefox_2:
-                self.browserPercentages.updateValue(self.browserPercentages["Firefox"]! + value, forKey: "Firefox")
-                self.browserCounts.updateValue(self.browserCounts["Firefox"]! + 1, forKey: "Firefox")
-            case Constants.BrowserIDs.Firefox_3:
-                self.browserPercentages.updateValue(self.browserPercentages["Firefox"]! + value, forKey: "Firefox")
-                self.browserCounts.updateValue(self.browserCounts["Firefox"]! + 1, forKey: "Firefox")
-            case Constants.BrowserIDs.Chrome_1:
+            } else if metricID == Constants.BrowserIDs.Chrome_1 || metricID == Constants.BrowserIDs.Chrome_2 || metricID == Constants.BrowserIDs.Chrome_3 {
                 self.browserPercentages.updateValue(self.browserPercentages["Chrome"]! + value, forKey: "Chrome")
                 self.browserCounts.updateValue(self.browserCounts["Chrome"]! + 1, forKey: "Chrome")
-            case Constants.BrowserIDs.Chrome_2:
-                self.browserPercentages.updateValue(self.browserPercentages["Chrome"]! + value, forKey: "Chrome")
-                self.browserCounts.updateValue(self.browserCounts["Chrome"]! + 1, forKey: "Chrome")
-            case Constants.BrowserIDs.Chrome_3:
-                self.browserPercentages.updateValue(self.browserPercentages["Chrome"]! + value, forKey: "Chrome")
-                self.browserCounts.updateValue(self.browserCounts["Chrome"]! + 1, forKey: "Chrome")
-            case Constants.BrowserIDs.Safari_1:
+            } else if metricID == Constants.BrowserIDs.Safari_1 || metricID == Constants.BrowserIDs.Safari_2 || metricID == Constants.BrowserIDs.Safari_3 {
                 self.browserPercentages.updateValue(self.browserPercentages["Safari"]! + value, forKey: "Safari")
                 self.browserCounts.updateValue(self.browserCounts["Safari"]! + 1, forKey: "Safari")
-            case Constants.BrowserIDs.Safari_2:
-                self.browserPercentages.updateValue(self.browserPercentages["Safari"]! + value, forKey: "Safari")
-                self.browserCounts.updateValue(self.browserCounts["Safari"]! + 1, forKey: "Safari")
-            case Constants.BrowserIDs.Safari_3:
-                self.browserPercentages.updateValue(self.browserPercentages["Safari"]! + value, forKey: "Safari")
-                self.browserCounts.updateValue(self.browserCounts["Safari"]! + 1, forKey: "Safari")
-            default:
-                println("An error occured in the browser usage switch statement")
             }
         }
         self.lineGraphDates = sorted(self.lineGraphDates, {(d1: String, d2: String) -> Bool in
@@ -412,10 +361,8 @@ class BrowserUsageViewController: UIViewController {
         
         // Store the data
         settings.setBool(true, forKey: "FetchedBrowserData")
-        
         settings.setObject(self.browserPercentages, forKey: "browserPercentages")
         settings.setObject(self.browserCounts, forKey: "browserCounts")
-        
         settings.setObject(self.lineGraphDates, forKey: "browserDates")
         settings.setObject(self.ie8Vals, forKey: "ie8Values")
         settings.setObject(self.ie9Vals, forKey: "ie9Values")
