@@ -20,6 +20,7 @@ class DashboardViewController: UIViewController, UITableViewDataSource, UITableV
     @IBOutlet weak var dashboardTable: UITableView!
     var delegate: DashboardViewControllerDelegate?
     let settings = NSUserDefaults.standardUserDefaults()
+    var selectedRow : Int = -1
     var tier1_cpu = 50
     var tier1_mem = 50
     var tier1_disk = 50
@@ -173,6 +174,14 @@ class DashboardViewController: UIViewController, UITableViewDataSource, UITableV
         tier3_mem = Int(t3_mem)
         tier3_disk = Int(t3_disk)
         
+        if selectedRow == 0 {
+            (self.dashboardTable.cellForRowAtIndexPath(NSIndexPath(forRow: selectedRow, inSection: 0)) as! DashboardTableCell).updateDoughnuts(tier1_cpu, memVal: tier1_mem, diskVal: tier1_disk)
+        } else if selectedRow == 1 {
+            (self.dashboardTable.cellForRowAtIndexPath(NSIndexPath(forRow: selectedRow, inSection: 0)) as! DashboardTableCell).updateDoughnuts(tier2_cpu, memVal: tier2_mem, diskVal: tier2_disk)
+        } else if selectedRow == 2 {
+            (self.dashboardTable.cellForRowAtIndexPath(NSIndexPath(forRow: selectedRow, inSection: 0)) as! DashboardTableCell).updateDoughnuts(tier3_cpu, memVal: tier3_mem, diskVal: tier3_disk)
+        }
+        
         println("Finished updating data")
     }
     
@@ -225,6 +234,7 @@ class DashboardViewController: UIViewController, UITableViewDataSource, UITableV
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         println("Selected row #\(indexPath.row)")
+        self.selectedRow = indexPath.row
         var selectedCell : DashboardTableCell = tableView.cellForRowAtIndexPath(indexPath)! as! DashboardTableCell
         
         tableView.beginUpdates()
