@@ -12,9 +12,36 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    let settings = NSUserDefaults.standardUserDefaults()
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        settings.setBool(false, forKey: "FetchedBrowserData")
+        settings.setBool(false, forKey: "FetchedOSData")
+        
+        settings.setObject([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], forKey: "browserPercentages")
+        settings.setObject([0, 0, 0, 0, 0, 0, 0], forKey: "browserCounts")
+        settings.setObject(["", "", "", "", "", "", ""], forKey: "browserDates")
+        settings.setObject([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], forKey: "ie8Values")
+        settings.setObject([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], forKey: "ie9Values")
+        settings.setObject([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], forKey: "ie10Values")
+        settings.setObject([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], forKey: "ie11Values")
+        settings.setObject([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], forKey: "firefoxValues")
+        settings.setObject([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], forKey: "chromeValues")
+        settings.setObject([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], forKey: "safariValues")
+        
+        settings.setObject([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], forKey: "osPercentages")
+        settings.setObject([0, 0, 0, 0, 0, 0, 0, 0], forKey: "osCounts")
+        settings.setObject(["", "", "", "", "", "", ""], forKey: "osDates")
+        settings.setObject([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], forKey: "wVistaValues")
+        settings.setObject([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], forKey: "w7Values")
+        settings.setObject([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], forKey: "w8Values")
+        settings.setObject([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], forKey: "w8OneValues")
+        settings.setObject([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], forKey: "macValues")
+        settings.setObject([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], forKey: "iOSValues")
+        settings.setObject([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], forKey: "androidValues")
+        settings.setObject([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], forKey: "linuxValues")
+        
         return true
     }
 

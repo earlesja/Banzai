@@ -94,8 +94,27 @@ class BrowserUsageViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        JHProgressHUD.sharedHUD.showInView(self.view, withHeader: "Fetching Data", andFooter: "")
-        getServerData()
+        if settings.boolForKey("FetchedBrowserData") {
+            getStoredData()
+            updateGraphs()
+        } else {
+            JHProgressHUD.sharedHUD.showInView(self.view, withHeader: "Fetching Data", andFooter: "")
+            getServerData()
+        }
+
+    }
+    
+    func getStoredData() {
+        self.browserPercentages = settings.objectForKey("browserPercentages") as! [String : Double]
+        self.browserCounts = settings.objectForKey("browserCounts") as! [String : Int]
+        self.lineGraphDates = settings.objectForKey("browserDates") as! [String]
+        self.ie8Vals = settings.objectForKey("ie8Values") as! [Double]
+        self.ie9Vals = settings.objectForKey("ie9Values") as! [Double]
+        self.ie10Vals = settings.objectForKey("ie10Values") as! [Double]
+        self.ie11Vals = settings.objectForKey("ie11Values") as! [Double]
+        self.firefoxVals = settings.objectForKey("firefoxValues") as! [Double]
+        self.chromeVals = settings.objectForKey("chromeValues") as! [Double]
+        self.safariVals = settings.objectForKey("safariValues") as! [Double]
     }
     
     func updateGraphs() {
@@ -390,6 +409,22 @@ class BrowserUsageViewController: UIViewController {
                 }
             }
         }
+        
+        // Store the data
+        settings.setBool(true, forKey: "FetchedBrowserData")
+        
+        settings.setObject(self.browserPercentages, forKey: "browserPercentages")
+        settings.setObject(self.browserCounts, forKey: "browserCounts")
+        
+        settings.setObject(self.lineGraphDates, forKey: "browserDates")
+        settings.setObject(self.ie8Vals, forKey: "ie8Values")
+        settings.setObject(self.ie9Vals, forKey: "ie9Values")
+        settings.setObject(self.ie10Vals, forKey: "ie10Values")
+        settings.setObject(self.ie11Vals, forKey: "ie11Values")
+        settings.setObject(self.firefoxVals, forKey: "firefoxValues")
+        settings.setObject(self.chromeVals, forKey: "chromeValues")
+        settings.setObject(self.safariVals, forKey: "safariValues")
+        
     }
     
     func getIndexOfDate(date : String) -> Int {

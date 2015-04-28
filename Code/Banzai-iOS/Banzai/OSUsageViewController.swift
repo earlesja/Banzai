@@ -102,13 +102,27 @@ class OSUsageViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        //if !settings.boolForKey("FetchedOSData") {
-            //println("Fetched data was false, so get the data")
+        if settings.boolForKey("FetchedOSData") {
+            getStoredData()
+            updateGraphs()
+        } else {
             JHProgressHUD.sharedHUD.showInView(self.view, withHeader: "Fetching Data", andFooter: "")
             getServerData()
-        //} else {
-            //updateGraphs()
-        //}
+        }
+    }
+    
+    func getStoredData() {
+        self.osPercentages = settings.objectForKey("osPercentages") as! [String : Double]
+        self.osCounts = settings.objectForKey("osCounts") as! [String : Int]
+        self.lineGraphDates = settings.objectForKey("osDates") as! [String]
+        self.wVistaVals = settings.objectForKey("wVistaValues") as! [Double]
+        self.w7Vals = settings.objectForKey("w7Values") as! [Double]
+        self.w8Vals = settings.objectForKey("w8Values") as! [Double]
+        self.w8OneVals = settings.objectForKey("w8OneValues") as! [Double]
+        self.macVals = settings.objectForKey("macValues") as! [Double]
+        self.iOSVals = settings.objectForKey("iOSValues") as! [Double]
+        self.androidVals = settings.objectForKey("androidValues") as! [Double]
+        self.linuxVals = settings.objectForKey("linuxValues") as! [Double]
     }
     
     func updateGraphs() {
@@ -413,6 +427,20 @@ class OSUsageViewController: UIViewController {
                 }
             }
         }
+        
+        // Store the data
+        settings.setBool(true, forKey: "FetchedOSData")
+        settings.setObject(self.osPercentages, forKey: "osPercentages")
+        settings.setObject(self.osCounts, forKey: "osCounts")
+        settings.setObject(self.lineGraphDates, forKey: "osDates")
+        settings.setObject(self.wVistaVals, forKey: "wVistaValues")
+        settings.setObject(self.w7Vals, forKey: "w7Values")
+        settings.setObject(self.w8Vals, forKey: "w8Values")
+        settings.setObject(self.w8OneVals, forKey: "w8OneValues")
+        settings.setObject(self.macVals, forKey: "macValues")
+        settings.setObject(self.iOSVals, forKey: "iOSValues")
+        settings.setObject(self.androidVals, forKey: "androidValues")
+        settings.setObject(self.linuxVals, forKey: "linuxValues")
     }
     
     func getIndexOfDate(date : String) -> Int {
