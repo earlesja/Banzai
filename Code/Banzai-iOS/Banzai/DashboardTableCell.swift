@@ -63,20 +63,20 @@ class DashboardTableCell: UITableViewCell {
     func initDoughnuts(){
         var spacing : CGFloat = 30.0
         var posAdjust : CGFloat = 10.0
-        var widthh = (cpuArea.bounds.width-spacing)
+        var width = (cpuArea.bounds.width-spacing)
         var height = (cpuArea.bounds.height-spacing)
         
-        cpuRect = CGRect(x: cpuArea.bounds.minX + posAdjust, y: cpuArea.bounds.minY + posAdjust, width: widthh, height: height)
-        memRect = CGRect(x: memArea.bounds.minX + posAdjust, y: memArea.bounds.minY + posAdjust, width: widthh, height: height)
-        diskRect = CGRect(x: diskArea.bounds.minX + posAdjust, y: diskArea.bounds.minY + posAdjust, width:widthh, height: height)
+        cpuRect = CGRect(x: cpuArea.bounds.minX + posAdjust, y: cpuArea.bounds.minY + posAdjust, width: width, height: height)
+        memRect = CGRect(x: memArea.bounds.minX + posAdjust, y: memArea.bounds.minY + posAdjust, width: width, height: height)
+        diskRect = CGRect(x: diskArea.bounds.minX + posAdjust, y: diskArea.bounds.minY + posAdjust, width: width, height: height)
         
-        cpuDoughnut = PNCircleChart(frame: cpuRect, total: 100, current: 40, clockwise: false)
-        memDoughnut = PNCircleChart(frame: memRect, total: 100, current: 80, clockwise: false)
-        diskDoughnut = PNCircleChart(frame: diskRect, total: 100, current: 96, clockwise: false)
+        cpuDoughnut = PNCircleChart(frame: cpuRect, total: 100, current: 50, clockwise: false)
+        memDoughnut = PNCircleChart(frame: memRect, total: 100, current: 50, clockwise: false)
+        diskDoughnut = PNCircleChart(frame: diskRect, total: 100, current: 50, clockwise: false)
         
-        cpuDoughnut.lineWidth = 15
-        memDoughnut.lineWidth = 15
-        diskDoughnut.lineWidth = 15
+        cpuDoughnut.lineWidth = 10
+        memDoughnut.lineWidth = 10
+        diskDoughnut.lineWidth = 10
         
         updateColors()
     }
@@ -87,9 +87,13 @@ class DashboardTableCell: UITableViewCell {
         diskDoughnut.removeFromSuperview()
     }
     
-    func updateDoughnuts() {
+    func updateDoughnuts(cpuVal : Int, memVal : Int, diskVal : Int) {
         clearDoughnuts()
         updateColors()
+        
+        cpuDoughnut.current = cpuVal
+        memDoughnut.current = memVal
+        diskDoughnut.current = diskVal
         
         cpuArea.addSubview(cpuDoughnut)
         memArea.addSubview(memDoughnut)
