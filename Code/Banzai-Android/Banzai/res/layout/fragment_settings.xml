@@ -1,97 +1,61 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res/com.pan.banzai"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" 
-        android:orientation="vertical" >
+    android:layout_height="match_parent" >
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical" 
-        android:layout_weight="1">
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/saveSettingsButton"
+        android:layout_alignParentTop="true" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/notifications"
-                android:textColor="@color/titles_text"
-                android:textSize="20sp" />
-
-            <Switch
-                android:id="@+id/notificationsSwitch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <com.pan.banzai.ThresholdView
-            android:id="@+id/cpuThreshold"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
-            android:orientation="vertical"
-            custom:descText="@string/cpu_threshold_desc"
-            custom:descTextColor="@color/titles_text"
-            custom:descTextSize="20" />
-
-        <com.pan.banzai.ThresholdView
-            android:id="@+id/ramThreshold"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
-            android:orientation="vertical"
-            custom:descText="@string/ram_threshold_desc"
-            custom:descTextColor="@color/titles_text"
-            custom:descTextSize="20" />
-
-        <com.pan.banzai.ThresholdView
-            android:id="@+id/storageThreshold"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
-            android:orientation="vertical"
-            custom:descText="@string/storage_threshold_desc"
-            custom:descTextColor="@color/titles_text"
-            custom:descTextSize="20" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
             android:orientation="vertical" >
 
-            <TextView
-                android:layout_width="wrap_content"
+            <com.pan.banzai.ThresholdView
+                android:id="@+id/cpuThreshold"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:labelFor="@+id/graphTimeFrameInput"
-                android:text="@string/graph_time_frame"
-                android:textColor="@color/titles_text"
-                android:textSize="20sp" />
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical"
+                custom:descText="@string/cpu_threshold_desc"
+                custom:descTextColor="@color/titles_text"
+                custom:descTextSize="20" />
 
-            <EditText
-                android:id="@+id/graphTimeFrameInput"
-                android:layout_width="200dp"
+            <com.pan.banzai.ThresholdView
+                android:id="@+id/ramThreshold"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number" />
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical"
+                custom:descText="@string/ram_threshold_desc"
+                custom:descTextColor="@color/titles_text"
+                custom:descTextSize="20" />
+
+            <com.pan.banzai.ThresholdView
+                android:id="@+id/storageThreshold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical"
+                custom:descText="@string/storage_threshold_desc"
+                custom:descTextColor="@color/titles_text"
+                custom:descTextSize="20" />
         </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
 
     <Button
         android:id="@+id/saveSettingsButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:background="@color/submit_button"
         android:text="@string/save"
         android:textColor="@color/submit_button_text" />
 
-</LinearLayout>
+</RelativeLayout>

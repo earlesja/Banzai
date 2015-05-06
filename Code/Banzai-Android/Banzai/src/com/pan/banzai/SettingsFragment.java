@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 public class SettingsFragment extends Fragment {
@@ -15,7 +14,6 @@ public class SettingsFragment extends Fragment {
 	private ThresholdView mCpuThresholdView;
 	private ThresholdView mRamThresholdView;
 	private ThresholdView mStorageThresholdView;
-	private EditText mGraphTimeFrameInput;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -47,11 +45,6 @@ public class SettingsFragment extends Fragment {
 				DefaultValues.getStorageWarningThreshold(),
 				DefaultValues.getStorageCriticalThreshold());
 
-		// set inputs
-		mGraphTimeFrameInput = (EditText) view
-				.findViewById(R.id.graphTimeFrameInput);
-		mGraphTimeFrameInput.setText((DefaultValues.getGraphTimeFrame() / 3600)
-				+ "");
 
 		// attach listeners to buttons
 		((Button) view.findViewById(R.id.saveSettingsButton))
@@ -88,9 +81,5 @@ public class SettingsFragment extends Fragment {
 				.getWarningThreshold());
 		DefaultValues.putStorageCriticalThreshold(mStorageThresholdView
 				.getCriticalThreshold());
-
-		int timeframeSecs = Integer.parseInt(mGraphTimeFrameInput.getText()
-				.toString()) * 3600;
-		DefaultValues.putGraphTimeFrame(timeframeSecs);
 	}
 }

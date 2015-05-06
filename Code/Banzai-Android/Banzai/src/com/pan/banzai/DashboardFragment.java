@@ -2,11 +2,13 @@ package com.pan.banzai;
 
 import java.util.ArrayList;
 
+import android.app.ActionBar;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 
 public class DashboardFragment extends Fragment {
@@ -44,12 +46,22 @@ public class DashboardFragment extends Fragment {
 		// add the adapter to the expandable list view
 		ExpandableListView serverStatusList = (ExpandableListView) view
 				.findViewById(R.id.expandableListView);
-		serverStatusList.setAdapter(new ServerStatusExpandableListAdapter(
-				getActivity(), getData()));
+		ExpandableListAdapter adapter = new ServerStatusExpandableListAdapter(
+					getActivity(), getData());
+		serverStatusList.setAdapter(adapter);
+		
+		for(int i=0; i<adapter.getGroupCount(); i++){
+			serverStatusList.expandGroup(i);
+		}
 
+		
+		ActionBar bar = getActivity().getActionBar();
+		bar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+		bar.setListNavigationCallbacks(null, null);
+		
 		return view;
 	}
-
+	
 	@Override
 	public void onPause() {
 		super.onPause();

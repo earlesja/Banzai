@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="login_logo_text_size">32sp</dimen>
+    
+    <dimen name="main_margin">5dp</dimen>
+    
+    <dimen name="nav_text_size">8sp</dimen>
+    
+    <dimen name="donut_pie_chart_radius">50dp</dimen>
+    <dimen name="donut_pie_chart_margins">0dp</dimen>
+    <dimen name="donut_pie_chart_text_size">5dp</dimen>
+    
+    
+    <dimen name="pie_land_height">100dp</dimen>
+    <dimen name="chart_land_height">150dp</dimen>
+</resources>

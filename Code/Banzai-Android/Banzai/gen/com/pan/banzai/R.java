@@ -12,6 +12,7 @@ public final class R {
         public static final int nav_drawer_icons=0x7f040001;
         public static final int nav_drawer_items=0x7f040000;
         public static final int pie_chart_colors=0x7f040002;
+        public static final int time_frames=0x7f040003;
     }
     public static final class attr {
         /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
@@ -216,20 +217,21 @@ containing a value of this type.
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
-
-         Example customization of dimensions originally defined in res/values/dimens.xml
-         (such as screen margins) for screens with more than 820dp of available width. This
-         would include 7" and 10" devices in landscape (~960dp and ~1280dp respectively).
-    
          */
         public static final int activity_horizontal_margin=0x7f060000;
         public static final int activity_vertical_margin=0x7f060001;
-        public static final int donut_pie_chart_margins=0x7f060004;
-        public static final int donut_pie_chart_radius=0x7f060003;
-        public static final int expandable_list_child_text_size=0x7f060007;
-        public static final int expandable_list_group_text_size=0x7f060005;
-        public static final int expandable_list_group_update_text_size=0x7f060006;
+        public static final int chart_land_height=0x7f06000d;
+        public static final int donut_pie_chart_margins=0x7f06000a;
+        public static final int donut_pie_chart_radius=0x7f060009;
+        public static final int donut_pie_chart_text_size=0x7f06000b;
+        public static final int expandable_list_child_text_size=0x7f060005;
+        public static final int expandable_list_group_text_size=0x7f060003;
+        public static final int expandable_list_group_update_text_size=0x7f060004;
+        public static final int login_logo_text_size=0x7f060006;
+        public static final int main_margin=0x7f060007;
+        public static final int nav_text_size=0x7f060008;
         public static final int navigation_drawer_width=0x7f060002;
+        public static final int pie_land_height=0x7f06000c;
     }
     public static final class drawable {
         public static final int drawer_shadow=0x7f020000;
@@ -245,48 +247,46 @@ containing a value of this type.
         public static final int seek_thumb_pressed=0x7f02000a;
     }
     public static final class id {
-        public static final int action_settings=0x7f0a002a;
+        public static final int action_settings=0x7f0a0028;
         public static final int browser_current_pie_chart=0x7f0a000c;
         public static final int browser_historic_line_chart=0x7f0a000e;
         public static final int browser_line_progress=0x7f0a000f;
         public static final int browser_pie_progress=0x7f0a000d;
         public static final int container=0x7f0a000a;
         public static final int cpu=0x7f0a0002;
-        public static final int cpuContainer=0x7f0a0022;
-        public static final int cpuPieGraph=0x7f0a0023;
+        public static final int cpuContainer=0x7f0a0020;
+        public static final int cpuPieGraph=0x7f0a0021;
         public static final int cpuThreshold=0x7f0a0016;
-        public static final int donutContainer=0x7f0a0021;
+        public static final int donutContainer=0x7f0a001f;
         public static final int drawer_layout=0x7f0a0009;
         public static final int expandableListView=0x7f0a0010;
-        public static final int graphTimeFrameInput=0x7f0a0019;
         public static final int horizontal=0x7f0a0000;
-        public static final int listGroupStatusContainer=0x7f0a0020;
-        public static final int listGroupTextView=0x7f0a001f;
-        public static final int marker_text=0x7f0a001e;
-        public static final int navItemTitle=0x7f0a0029;
+        public static final int listGroupStatusContainer=0x7f0a001e;
+        public static final int listGroupTextView=0x7f0a001d;
+        public static final int marker_text=0x7f0a001c;
+        public static final int navItemTitle=0x7f0a0027;
         public static final int nav_list=0x7f0a000b;
-        public static final int notificationsSwitch=0x7f0a0015;
         public static final int os_current_pie_chart=0x7f0a0011;
         public static final int os_historic_line_chart=0x7f0a0013;
         public static final int os_line_progress=0x7f0a0014;
         public static final int os_pie_progress=0x7f0a0012;
-        public static final int queueLengthContainer=0x7f0a0028;
+        public static final int queueLengthContainer=0x7f0a0026;
         public static final int ram=0x7f0a0003;
-        public static final int ramContainer=0x7f0a0024;
-        public static final int ramPieGraph=0x7f0a0025;
+        public static final int ramContainer=0x7f0a0022;
+        public static final int ramPieGraph=0x7f0a0023;
         public static final int ramThreshold=0x7f0a0017;
-        public static final int saveSettingsButton=0x7f0a001a;
+        public static final int saveSettingsButton=0x7f0a0015;
         public static final int signinEmail=0x7f0a0005;
         public static final int signinPassword=0x7f0a0006;
         public static final int signinSubmitButton=0x7f0a0007;
         public static final int storage=0x7f0a0004;
-        public static final int storageContainer=0x7f0a0026;
-        public static final int storagePieGraph=0x7f0a0027;
+        public static final int storageContainer=0x7f0a0024;
+        public static final int storagePieGraph=0x7f0a0025;
         public static final int storageThreshold=0x7f0a0018;
         public static final int textView2=0x7f0a0008;
-        public static final int utilization_breakdown_graph=0x7f0a001c;
-        public static final int utilization_breakdown_title=0x7f0a001b;
-        public static final int utilization_line_progress=0x7f0a001d;
+        public static final int utilization_breakdown_graph=0x7f0a001a;
+        public static final int utilization_breakdown_title=0x7f0a0019;
+        public static final int utilization_line_progress=0x7f0a001b;
         public static final int vertical=0x7f0a0001;
     }
     public static final class layout {
@@ -370,7 +370,6 @@ containing a value of this type.
          */
         public static final int AppBaseTheme=0x7f080000;
         /**  Application theme. 
- All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f080001;
     }

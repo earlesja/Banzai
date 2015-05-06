@@ -30,4 +30,10 @@
         <item>@color/pie_chart_red_dark</item>
     </array>
 
+    <array name="time_frames">
+        <item>Last Hour</item>
+        <item>Last Day</item>
+        <item>Last Week</item>
+        <item>Last Month</item>
+    </array>
 </resources>

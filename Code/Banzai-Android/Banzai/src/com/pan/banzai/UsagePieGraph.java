@@ -1,13 +1,14 @@
 package com.pan.banzai;
 
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Locale;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -42,7 +43,7 @@ public class UsagePieGraph extends PieChart {
 		super.init();
 		// set default values setDrawHoleEnabled(false);
 		setDrawCenterText(false);
-		setDrawYValues(true);
+		setDrawYValues(false);
 		setRotationEnabled(true);
 		setUsePercentValues(true);
 		setDrawCenterText(false);
@@ -74,14 +75,17 @@ public class UsagePieGraph extends PieChart {
 		int pos = 0;
 		while (keysIterator.hasNext()) {
 			String title = keysIterator.next();
-
+			
 			values.add(new Entry(data.get(title), pos));
-			titles.add(title);
+			
+			StringBuilder newTitle = new StringBuilder();
+			new Formatter(newTitle, Locale.US).format("%1$.2f%%", data.get(title)).close();
+			
+			newTitle.append(" - " + title);
+			titles.add(newTitle.toString());
 
 			pos++;
 		}
-		Log.d("HHH", titles.toString());
-
 		PieDataSet dataValues = new PieDataSet(values, getContext().getString(
 				R.string.operating_systems));
 		dataValues.setSliceSpace(2f);

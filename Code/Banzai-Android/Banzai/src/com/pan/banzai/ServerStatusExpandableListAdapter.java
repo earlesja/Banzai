@@ -2,18 +2,17 @@ package com.pan.banzai;
 
 import java.util.ArrayList;
 
-import com.pan.banzai.UtlizationFragment.UtilizationType;
-
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
+
+import com.pan.banzai.UtilizationFragment.UtilizationType;
 
 public class ServerStatusExpandableListAdapter extends
 		BaseExpandableListAdapter {
@@ -100,20 +99,18 @@ public class ServerStatusExpandableListAdapter extends
 		ServerTier tier = (ServerTier) getChild(groupPosition, childPosition);
 
 		// setup the donut graphs
-		setUpDonut((DonutGraph) itemView.findViewById(R.id.cpuPieGraph),
-				tier.getCpuStatusPercent(), "CPU");
-		setContainerListener(itemView.findViewById(R.id.cpuContainer), tier,
-				UtilizationType.CPU);
+		DonutGraph cpuGraph = (DonutGraph) itemView.findViewById(R.id.cpuPieGraph);
+		setUpDonut(cpuGraph, tier.getCpuStatusPercent(), "CPU");
+		setUtilizationClickListener(cpuGraph, tier,	UtilizationType.CPU);
 
-		setUpDonut((DonutGraph) itemView.findViewById(R.id.ramPieGraph),
-				tier.getRamStatusPercent(), "Memory");
-		setContainerListener(itemView.findViewById(R.id.ramContainer), tier,
-				UtilizationType.RAM);
 
-		setUpDonut((DonutGraph) itemView.findViewById(R.id.storagePieGraph),
-				tier.getStorageStatusPercent(), "Disk");
-		setContainerListener(itemView.findViewById(R.id.storageContainer),
-				tier, UtilizationType.DISK);
+		DonutGraph ramGraph = (DonutGraph) itemView.findViewById(R.id.ramPieGraph);
+		setUpDonut(ramGraph,tier.getRamStatusPercent(), "Memory");
+		setUtilizationClickListener(ramGraph, tier, UtilizationType.RAM);
+
+		DonutGraph storageGraph = (DonutGraph) itemView.findViewById(R.id.storagePieGraph);
+		setUpDonut(storageGraph, tier.getStorageStatusPercent(), "Disk");
+		setUtilizationClickListener(storageGraph, tier, UtilizationType.DISK);
 
 		return itemView;
 	}
@@ -131,14 +128,14 @@ public class ServerStatusExpandableListAdapter extends
 		donut.setPercentage(value);
 	}
 
-	private void setContainerListener(View container, final ServerTier tier,
+	private void setUtilizationClickListener(View container, final ServerTier tier,
 			final UtilizationType type) {
 		container.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				FragmentManager fm = ((Activity) mContext).getFragmentManager();
-				UtlizationFragment uFrag = new UtlizationFragment(tier, type);
+				UtilizationFragment uFrag = new UtilizationFragment(tier, type);
 				fm.beginTransaction().replace(R.id.container, uFrag)
 						.addToBackStack("frag").commit();
 			}

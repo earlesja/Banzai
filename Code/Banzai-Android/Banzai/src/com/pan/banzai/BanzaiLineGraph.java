@@ -20,10 +20,14 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.utils.Legend.LegendPosition;
 
+@SuppressLint("SimpleDateFormat")
 public class BanzaiLineGraph extends LineChart {
 
 	@SuppressLint("SimpleDateFormat")
-	public static final DateFormat formatter = new SimpleDateFormat("HH:mm");
+	public static final DateFormat hourFormatter = new SimpleDateFormat("hh:mm aa");
+	public static final DateFormat dayFormatter = new SimpleDateFormat("hh aa");
+	public static final DateFormat weekFormatter = new SimpleDateFormat("MM/dd");
+	public static final DateFormat monthFormatter = new SimpleDateFormat("MM/dd");
 	private int[] mColors;
 
 	public BanzaiLineGraph(Context context) {
@@ -69,7 +73,7 @@ public class BanzaiLineGraph extends LineChart {
 		// do nothing
 	}
 
-	public void addToData(HashMap<String, Float> data, Date time) {
+	public void addToData(HashMap<String, Float> data, Date time, SimpleDateFormat formatter) {
 		ArrayList<String> titles = new ArrayList<String>();
 		titles.addAll(data.keySet());
 
@@ -89,7 +93,7 @@ public class BanzaiLineGraph extends LineChart {
 		invalidate();
 	}
 
-	public void setData(HashMap<String, ArrayList<Float>> data, Date[] times) {
+	public void setData(HashMap<String, ArrayList<Float>> data, Date[] times, DateFormat formatter) {
 		ArrayList<String> titles = new ArrayList<String>();
 		titles.addAll(data.keySet());
 

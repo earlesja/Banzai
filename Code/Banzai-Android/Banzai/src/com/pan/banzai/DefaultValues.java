@@ -8,11 +8,9 @@ public class DefaultValues {
 	public static final String sRamCriticalThresholdKey = "RAM_CRIT";
 	public static final String sStorageWarningThresholdKey = "STOR_WARN";
 	public static final String sStorageCriticalThresholdKey = "STOR_CRIT";
-	public static final String sGraphTimeFrameKey = "TIME_FRAME";
 
 	public static final int sDefaultWarningThreshold = 75;
 	public static final int sDefaultCriticalThreshold = 90;
-	public static final int sDefaultGraphTimeFrame = 2 * 3600;
 
 	public static void storeDefaultInSharedPref() {
 		if (SharedPreferenceHelper.isInit()) {
@@ -34,8 +32,6 @@ public class DefaultValues {
 					sDefaultWarningThreshold);
 			storeValueIfNotSet(sStorageCriticalThresholdKey,
 					sDefaultCriticalThreshold);
-			// graph defaults
-			storeValueIfNotSet(sGraphTimeFrameKey, sDefaultGraphTimeFrame);
 		}
 	}
 
@@ -107,16 +103,6 @@ public class DefaultValues {
 	public static int getStorageCriticalThreshold() {
 		return SharedPreferenceHelper.getIntPreference(
 				sStorageCriticalThresholdKey, sDefaultCriticalThreshold);
-	}
-
-	// graph time frame
-	public static void putGraphTimeFrame(int value) {
-		SharedPreferenceHelper.putIntPreference(sGraphTimeFrameKey, value);
-	}
-
-	public static int getGraphTimeFrame() {
-		return SharedPreferenceHelper.getIntPreference(sGraphTimeFrameKey,
-				sDefaultGraphTimeFrame);
 	}
 
 }

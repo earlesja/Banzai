@@ -88,6 +88,7 @@ public class DonutGraph extends PieGraph {
 		bufferSlice.setColor(getResources().getColor(R.color.transparent));
 		this.addSlice(coloredSlice);
 		this.addSlice(bufferSlice);
+		setClickable(true);
 	}
 
 	public void setPercentage(float percent) {
@@ -131,14 +132,6 @@ public class DonutGraph extends PieGraph {
 		return (int) Math.round(percentage) + "%";
 	}
 
-	/**
-	 * Determines the color of a donut graph based on the value and the set
-	 * threshholds
-	 * 
-	 * @param value
-	 *            Value to check
-	 * @return Int representing color of the graph
-	 */
 	private int determineDonutColor(float value, int warningThreshold,
 			int criticalThreshold) {
 		if (value >= criticalThreshold) {
@@ -150,4 +143,17 @@ public class DonutGraph extends PieGraph {
 
 		}
 	}
+
+	@Override
+	public void setOnClickListener(OnClickListener l) {
+		super.setOnClickListener(l);
+		
+		setOnSliceClickedListener(new OnSliceClickedListener() {			
+			@Override
+			public void onClick(int index) {
+				DonutGraph.this.performClick();				
+			}
+		});
+	}
+	
 }

@@ -1,7 +1,6 @@
 package com.pan.banzai;
 
 import java.util.Arrays;
-import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
 import microsoft.aspnet.signalr.client.MessageReceivedHandler;
@@ -29,6 +28,7 @@ public class DataCollectorService extends Service {
 	    @SuppressWarnings("deprecation")
 	    @Override
 	    public void onStart(Intent intent, int startId) {      
+	    	
 	            super.onStart(intent, startId);       
 	            Toast.makeText(this, "Service Start", Toast.LENGTH_LONG).show();
 	            Log.d("TEST","%%%%%Log works just fine%%%%%");

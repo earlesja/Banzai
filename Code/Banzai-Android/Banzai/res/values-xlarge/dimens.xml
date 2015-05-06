@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="donut_pie_chart_radius">150dp</dimen>
+    <dimen name="donut_pie_chart_margins">20dp</dimen>
+</resources>

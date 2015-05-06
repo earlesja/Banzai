@@ -11,19 +11,22 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
-import com.github.mikephil.charting.utils.LimitLine;
+import com.pan.banzai.TimeFrameChooser.Callback;
 import com.pan.banzai.apirequests.HistoricalDataTask;
 import com.pan.banzai.apirequests.IGetTaskCallback;
 
-public class UtlizationFragment extends Fragment {
+public class UtilizationFragment extends Fragment {
 
 	public static enum UtilizationType {
 		CPU, RAM, DISK
@@ -35,14 +38,16 @@ public class UtlizationFragment extends Fragment {
 	private ServerTier mTier;
 	private UtilizationType mType;
 
-	public UtlizationFragment(ServerTier tier, UtilizationType type) {
+	public UtilizationFragment(ServerTier tier, UtilizationType type) {
 		mTier = tier;
 		mType = type;
+		
 	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+		super.onCreate(savedInstanceState);		
+
 	}
 
 	@SuppressLint("ClickableViewAccessibility")
@@ -62,20 +67,33 @@ public class UtlizationFragment extends Fragment {
 				.findViewById(R.id.utilization_breakdown_graph);
 		mLineProgress = (ProgressBar) view
 				.findViewById(R.id.utilization_line_progress);
-
-		getAndSetData();
+		
+		SpinnerAdapter mSpinnerAdapter = ArrayAdapter.createFromResource(getActivity().getActionBar().getThemedContext(), R.array.time_frames, android.R.layout.simple_spinner_dropdown_item);
+		TimeFrameChooser mSpinnerCallback = new TimeFrameChooser(new Callback() {			
+			@Override
+			public void process(int timeframe, String groupBy, DateFormat formatter) {
+				setSpinnerVisibility(false);
+				UtilizationFragment.this.getAndSetData(timeframe, groupBy, formatter);						
+			}
+		});
+		
+		ActionBar actions = getActivity().getActionBar();
+		actions.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+		actions.setListNavigationCallbacks(mSpinnerAdapter, mSpinnerCallback);
+		actions.setTitle( getTitle() + " Utilization");
+	
 		return view;
 	}
 
-	private void getAndSetData() {
-		new HistoricalDataTask(getMetricIds(), new IGetTaskCallback() {
+	private void getAndSetData(int timeframe, String groupBy, final DateFormat dateFormatter) {
+		new HistoricalDataTask(timeframe, groupBy, getMetricIds(), new IGetTaskCallback() {
 			@Override
 			public void execute(JSONArray json) {
 				HashMap<String, ArrayList<Float>> map = new HashMap<String, ArrayList<Float>>();
 
 				ArrayList<Date> times = new ArrayList<Date>();
 				DateFormat formatter = new SimpleDateFormat(
-						"yyy-MM-DD'T'HH:mm:ss");
+						"yyyy-MM-dd'T'HH:mm:ss");
 
 				for (int i = 0; i < json.length(); i++) {
 					try {
@@ -98,43 +116,19 @@ public class UtlizationFragment extends Fragment {
 
 					}
 				}
-				mLineChart.setData(map, times.toArray(new Date[times.size()]));
-				setThresholdLines();
-				mLineProgress.setVisibility(View.GONE);
-				mLineChart.setVisibility(View.VISIBLE);
+				mLineChart.setData(map, times.toArray(new Date[times.size()]), dateFormatter);
+				setSpinnerVisibility(true);
 			}
 		}).execute();
 	}
 
-	private void setThresholdLines() {
-		LimitLine critical = null;
-		LimitLine warning = null;
-		switch (mType) {
-		case CPU:
-			critical = new LimitLine(DefaultValues.getCpuCriticalThreshold());
-			warning = new LimitLine(DefaultValues.getCpuWarningThreshold());
-			break;
-		case RAM:
-			critical = new LimitLine(DefaultValues.getRamCriticalThreshold());
-			warning = new LimitLine(DefaultValues.getRamWarningThreshold());
-			break;
-		case DISK:
-			critical = new LimitLine(
-					DefaultValues.getStorageCriticalThreshold());
-			warning = new LimitLine(DefaultValues.getStorageWarningThreshold());
-			break;
-		default:
-			critical = new LimitLine(DefaultValues.getCpuCriticalThreshold());
-			warning = new LimitLine(DefaultValues.getCpuWarningThreshold());
-			break;
 
-		}
-		critical.setLineColor(getResources().getColor(R.color.critical));
-		warning.setLineColor(getResources().getColor(R.color.warning));
-
-		mLineChart.getData().addLimitLine(critical);
-		mLineChart.getData().addLimitLine(warning);
+	public void setSpinnerVisibility(boolean isHidden){
+		mLineProgress.setVisibility(isHidden ? View.GONE : View.VISIBLE);
+		mLineChart.setVisibility(isHidden ? View.VISIBLE : View.GONE);
 	}
+	
+	
 
 	private String getServerName(int metricId) {
 		return mTier.getServerNames()[Arrays.binarySearch(getMetricIds(),
@@ -155,15 +149,19 @@ public class UtlizationFragment extends Fragment {
 	}
 
 	private String getTitle() {
+		String title = "";
 		switch (mType) {
 		case CPU:
-			return "CPU";
+			title = "CPU";
+			break;
 		case RAM:
-			return "Memory";
+			title = "Memory";
+			break;
 		case DISK:
-			return "Disk";
-		default:
-			return "";
+			title = "Disk";
+			break;
 		}
+		
+		return title;
 	}
 }

@@ -12,35 +12,24 @@ import org.json.JSONObject;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.pan.banzai.DefaultValues;
-
 public class HistoricalDataTask extends AsyncTask<Void, Void, JSONArray>
 		implements IApiTask {
 
 	public static final String HISTORICAL_DATA = "HistoricalData";
 	private int timeframe;
+	private String groupBy;
 	private int[] metricIds;
 	private IGetTaskCallback callback;
 
-	public HistoricalDataTask() {
-		this(DefaultValues.getGraphTimeFrame(), new int[] {});
-	}
-
-	public HistoricalDataTask(int[] metricIds) {
-		this(DefaultValues.getGraphTimeFrame(), metricIds);
-	}
-
-	public HistoricalDataTask(int[] metricIds, IGetTaskCallback callback) {
-		this(DefaultValues.getGraphTimeFrame(), metricIds, callback);
-	}
 
 	public HistoricalDataTask(int timeframe, int[] metricIds) {
-		this(timeframe, metricIds, null);
+		this(timeframe, "Hour", metricIds, null);
 	}
 
-	public HistoricalDataTask(int timeframe, int[] metricIds,
+	public HistoricalDataTask(int timeframe, String groupBy, int[] metricIds,
 			IGetTaskCallback callback) {
 		this.timeframe = timeframe;
+		this.groupBy = groupBy;
 		this.metricIds = metricIds;
 		this.callback = callback;
 		Log.d("HHH", getJSONData());
@@ -87,7 +76,7 @@ public class HistoricalDataTask extends AsyncTask<Void, Void, JSONArray>
 	private String getJSONData() {
 		JSONObject json = new JSONObject();
 		try {
-			json.put("GroupBy", "Hour");
+			json.put("GroupBy", this.groupBy);
 			json.put("TimeFrame", this.timeframe);
 			JSONArray widgetMetrics = new JSONArray();
 			for (int metricId : this.metricIds) {

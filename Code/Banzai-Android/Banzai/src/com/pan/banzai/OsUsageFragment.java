@@ -12,15 +12,17 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
+import android.widget.SpinnerAdapter;
 
+import com.pan.banzai.TimeFrameChooser.Callback;
 import com.pan.banzai.apirequests.HistoricalDataTask;
 import com.pan.banzai.apirequests.IGetTaskCallback;
 
@@ -66,16 +68,17 @@ public class OsUsageFragment extends Fragment {
 			this.currentMetricValues.put(allMetrics[i], 0f);
 		}
 		
-		metricIds.put("Windows Vista", this.WINDOWS_VISTA_METRIC_IDS);
-		metricIds.put("Windows 7", this.WINDOWS_VII_METRIC_IDS);
-		metricIds.put("Windows 8", this.WINDOWS_IIX_METRIC_IDS);
-		metricIds.put("Windows 8.1", this.WINDOWS_IIX_I_METRIC_IDS);
-		metricIds.put("Windows 10", this.WINDOWS_X_METRIC_IDS);
-		metricIds.put("OSX", this.OSX_METRIC_IDS);
-		metricIds.put("Linux", this.LINUX_METRIC_IDS);
-		metricIds.put("iOS", this.IOS_METRIC_IDS);
-		metricIds.put("Android", this.ANDROID_METRIC_IDS);
-		metricIds.put("Other OS", this.OTHER_OS_METRIC_IDS);
+		metricIds.put("Windows Vista", WINDOWS_VISTA_METRIC_IDS);
+		metricIds.put("Windows 7", WINDOWS_VII_METRIC_IDS);
+		metricIds.put("Windows 8", WINDOWS_IIX_METRIC_IDS);
+		metricIds.put("Windows 8.1", WINDOWS_IIX_I_METRIC_IDS);
+		metricIds.put("Windows 10", WINDOWS_X_METRIC_IDS);
+		metricIds.put("OSX", OSX_METRIC_IDS);
+		metricIds.put("Linux", LINUX_METRIC_IDS);
+		metricIds.put("iOS", IOS_METRIC_IDS);
+		metricIds.put("Android", ANDROID_METRIC_IDS);
+		metricIds.put("Other OS", OTHER_OS_METRIC_IDS);
+
 	}
 
 	@SuppressLint("ClickableViewAccessibility")
@@ -95,20 +98,33 @@ public class OsUsageFragment extends Fragment {
 				.findViewById(R.id.os_historic_line_chart);
 		mLineProgress = (ProgressBar) view.findViewById(R.id.os_line_progress);
 		
-		getAndSetChartData();
+		
+		
+		SpinnerAdapter mSpinnerAdapter = ArrayAdapter.createFromResource(getActivity().getActionBar().getThemedContext(), R.array.time_frames, android.R.layout.simple_spinner_dropdown_item);
+		TimeFrameChooser mSpinnerCallback = new TimeFrameChooser(new Callback() {			
+			@Override
+			public void process(int timeframe, String groupBy, DateFormat formatter) {
+				setSpinnerVisibility(false);
+				OsUsageFragment.this.getAndSetChartData(timeframe, groupBy, formatter);						
+			}
+		});
+		
+		ActionBar actions = getActivity().getActionBar();
+		actions.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+		actions.setListNavigationCallbacks(mSpinnerAdapter, mSpinnerCallback);
+		
 		return view;
 	}
 
-	// TODO optimize. slower than turtle in molasses
-	private void getAndSetChartData() {
-		new HistoricalDataTask(getAllMetricIds(), new IGetTaskCallback() {
+	private void getAndSetChartData(int timeframe, String groupBy, final DateFormat dateFormatter) {
+		new HistoricalDataTask(timeframe, groupBy, getAllMetricIds(), new IGetTaskCallback() {
 			@Override
 			public void execute(JSONArray json) {
 				HashMap<String, ArrayList<Float>> map = new HashMap<String, ArrayList<Float>>();
 
 				ArrayList<Date> times = new ArrayList<Date>();
 				DateFormat formatter = new SimpleDateFormat(
-						"yyy-MM-DD'T'HH:mm:ss");
+						"yyyy-MM-dd'T'HH:mm:ss");
 
 				for (int i = 0; i < json.length(); i++) {
 					try {
@@ -182,17 +198,22 @@ public class OsUsageFragment extends Fragment {
 				}
 
 				mPieChart.setData(pieData);
-				mPieProgress.setVisibility(View.GONE);
-				mPieChart.setVisibility(View.VISIBLE);
-
-				mLineChart.setData(map, times.toArray(new Date[times.size()]));
-				mLineProgress.setVisibility(View.GONE);
-				mLineChart.setVisibility(View.VISIBLE);
+				mLineChart.setData(map, times.toArray(new Date[times.size()]), dateFormatter);
+				
+				setSpinnerVisibility(true);
 			}
 		}).execute();
 
 	}
+	
+	public void setSpinnerVisibility(boolean isHidden){
+		mPieProgress.setVisibility(isHidden ? View.GONE : View.VISIBLE);
+		mPieChart.setVisibility(isHidden ? View.VISIBLE : View.GONE);
 
+		mLineProgress.setVisibility(isHidden ? View.GONE : View.VISIBLE);
+		mLineChart.setVisibility(isHidden ? View.VISIBLE : View.GONE);
+	}
+	
 	private static int[] getAllMetricIds() {
 		ArrayList<Integer> tmp = new ArrayList<Integer>();
 		tmp.addAll(WINDOWS_IIX_METRIC_IDS);
