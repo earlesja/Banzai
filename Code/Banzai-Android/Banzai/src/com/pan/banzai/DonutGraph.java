@@ -99,6 +99,7 @@ public class DonutGraph extends PieGraph {
 
 		// invisible second part of donut that's 100%-value
 		bufferSlice.setValue(100 - percentage);
+		
 	}
 
 	@Override

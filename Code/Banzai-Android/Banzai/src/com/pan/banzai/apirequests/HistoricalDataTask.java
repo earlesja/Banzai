@@ -1,5 +1,7 @@
 package com.pan.banzai.apirequests;
 
+import java.util.List;
+
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -26,11 +28,11 @@ public class HistoricalDataTask extends AsyncTask<Void, Void, JSONArray>
 		this(timeframe, "Hour", metricIds, null);
 	}
 
-	public HistoricalDataTask(int timeframe, String groupBy, int[] metricIds,
+	public HistoricalDataTask(int timeframe, String groupBy, int[] is,
 			IGetTaskCallback callback) {
 		this.timeframe = timeframe;
 		this.groupBy = groupBy;
-		this.metricIds = metricIds;
+		this.metricIds = is;
 		this.callback = callback;
 		Log.d("HHH", getJSONData());
 	}

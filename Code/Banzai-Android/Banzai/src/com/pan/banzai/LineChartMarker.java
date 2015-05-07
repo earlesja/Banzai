@@ -1,10 +1,11 @@
 package com.pan.banzai;
 
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.utils.MarkerView;
+
 import android.content.Context;
 import android.widget.TextView;
 
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.utils.MarkerView;
 
 public class LineChartMarker extends MarkerView {
 

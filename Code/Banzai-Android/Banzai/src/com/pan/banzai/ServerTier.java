@@ -1,5 +1,6 @@
 package com.pan.banzai;
 
+import java.util.List;
 import java.util.Random;
 
 public class ServerTier {
@@ -10,17 +11,21 @@ public class ServerTier {
 	private int[] diskMetricIds;
 	private int[] serverIds;
 	private String[] serverNames;
+	
+	private float cpuPercent = 0;
+	private float ramPercent = 0;
+	private float diskPercent = 0;
 
 	private Random r;
 
-	public ServerTier(String tierName, int[] cpuMetricIds, int[] ramMetricIds,
-			int[] diskMetricIds, int[] serverIds, String[] serverNames) {
+	public ServerTier(String tierName, int[] aPP_CPU_METRICIDS, int[] aPP_RAM_METRICIDS,
+			int[] aPP_DISK_METRICIDS, int[] aPP_SERVERIDS, String[] aPP_SERVER_NAMES) {
 		this.tierName = tierName;
-		this.cpuMetricIds = cpuMetricIds;
-		this.ramMetricIds = ramMetricIds;
-		this.diskMetricIds = diskMetricIds;
-		this.serverIds = serverIds;
-		this.serverNames = serverNames;
+		this.cpuMetricIds = aPP_CPU_METRICIDS;
+		this.ramMetricIds = aPP_RAM_METRICIDS;
+		this.diskMetricIds = aPP_DISK_METRICIDS;
+		this.serverIds = aPP_SERVERIDS;
+		this.serverNames = aPP_SERVER_NAMES;
 		
 
 		r = new Random();
@@ -31,15 +36,27 @@ public class ServerTier {
 	}
 
 	public float getCpuStatusPercent() {
-		return getRandomInteger(90, 100);
+		return cpuPercent;
 	}
 
 	public float getRamStatusPercent() {
-		return getRandomInteger(70, 80);
+		return ramPercent;
 	}
 
 	public float getStorageStatusPercent() {
-		return getRandomInteger(40, 60);
+		return diskPercent;
+	}
+	
+	public void setCpuStatusPercent(float value){
+		this.cpuPercent = value;
+	}
+	
+	public void setRamStatusPercent(float value){
+		this.ramPercent = value;
+	}
+	
+	public void setDiskStatusPercent(float value){
+		this.diskPercent = value;
 	}
 
 	public int[] getRamMetricIds() {
