@@ -6,6 +6,7 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.json.JSONArray;
+import com.pan.banzai.DefaultValues;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -62,7 +63,7 @@ public class GetTask extends AsyncTask<Void, Void, JSONArray> implements
 		ResponseHandler<String> handler = new BasicResponseHandler();
 
 		// TODO replace with actual authorization
-		httpget.setHeader("Authorization", "Basic dXNlck5hbWU6cGFzc3dvcmQ=");
+		httpget.setHeader("Authorization", "Basic " + DefaultValues.getAuthentication());
 		httpget.setHeader("Content-type", "application/json");
 
 		JSONArray json = new JSONArray();

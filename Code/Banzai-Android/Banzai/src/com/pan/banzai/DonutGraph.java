@@ -141,7 +141,6 @@ public class DonutGraph extends PieGraph {
 			return getResources().getColor(R.color.warning);
 		} else {
 			return getResources().getColor(R.color.safe);
-
 		}
 	}
 

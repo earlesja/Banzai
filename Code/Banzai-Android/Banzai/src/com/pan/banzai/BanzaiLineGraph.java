@@ -25,6 +25,7 @@ public class BanzaiLineGraph extends LineChart {
 
 	@SuppressLint("SimpleDateFormat")
 	public static final DateFormat hourFormatter = new SimpleDateFormat("hh:mm aa");
+	public static final DateFormat halfDayFormatter = new SimpleDateFormat("hh aa");
 	public static final DateFormat dayFormatter = new SimpleDateFormat("hh aa");
 	public static final DateFormat weekFormatter = new SimpleDateFormat("MM/dd");
 	public static final DateFormat monthFormatter = new SimpleDateFormat("MM/dd");

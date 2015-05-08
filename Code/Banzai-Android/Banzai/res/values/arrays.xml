@@ -8,13 +8,6 @@
         <item>Settings</item>
     </string-array>
 
-    <array name="nav_drawer_icons">
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-    </array>
     <array name="pie_chart_colors">
         <item>@color/pie_chart_purple</item>
         <item>@color/pie_chart_brown</item>
@@ -29,11 +22,12 @@
         <item>@color/pie_chart_orange_dark</item>
         <item>@color/pie_chart_red_dark</item>
     </array>
-
     <array name="time_frames">
-        <item>Last Hour</item>
-        <item>Last Day</item>
-        <item>Last Week</item>
-        <item>Last Month</item>
+        <item>Past Hour</item>
+        <item>Past 6 Hours</item>
+        <item>Past Day</item>
+        <item>Past Week</item>
+        <item>Past Month</item>
     </array>
+
 </resources>

@@ -26,20 +26,26 @@ public class TimeFrameChooser implements OnNavigationListener {
 			formatter = BanzaiLineGraph.hourFormatter;
 			break;
 		case 1:
+			//6 hours
+			seconds = 3600 * 6;
+			groupBy = "Hour";
+			formatter = BanzaiLineGraph.halfDayFormatter;
+			break;
+		case 2:
 			//one day
 			seconds = 3600 * 24;
 			groupBy = "Hour";
 			formatter = BanzaiLineGraph.dayFormatter;
 			break;
 			
-		case 2:
+		case 3:
 			//one week
 			seconds = 3600 * 24 * 7;
 			groupBy="Day";
 			formatter = BanzaiLineGraph.weekFormatter;
 			break;
 			
-		case 3:
+		case 4:
 			//one month
 			seconds = 3600 * 24 * 4;
 			groupBy="Day";

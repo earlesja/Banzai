@@ -8,6 +8,7 @@ public class DefaultValues {
 	public static final String sRamCriticalThresholdKey = "RAM_CRIT";
 	public static final String sStorageWarningThresholdKey = "STOR_WARN";
 	public static final String sStorageCriticalThresholdKey = "STOR_CRIT";
+	public static final String sAuthenticationKey = "AUTH";
 
 	public static final int sDefaultWarningThreshold = 75;
 	public static final int sDefaultCriticalThreshold = 90;
@@ -15,23 +16,16 @@ public class DefaultValues {
 	public static void storeDefaultInSharedPref() {
 		if (SharedPreferenceHelper.isInit()) {
 			// cpu defaults
-
-			storeValueIfNotSet(sCpuWarningThresholdKey,
-					sDefaultWarningThreshold);
-			storeValueIfNotSet(sCpuCriticalThresholdKey,
-					sDefaultCriticalThreshold);
+			storeValueIfNotSet(sCpuWarningThresholdKey,	sDefaultWarningThreshold);
+			storeValueIfNotSet(sCpuCriticalThresholdKey, sDefaultCriticalThreshold);
 
 			// ram defaults
-			storeValueIfNotSet(sRamWarningThresholdKey,
-					sDefaultWarningThreshold);
-			storeValueIfNotSet(sRamCriticalThresholdKey,
-					sDefaultCriticalThreshold);
+			storeValueIfNotSet(sRamWarningThresholdKey,	sDefaultWarningThreshold);
+			storeValueIfNotSet(sRamCriticalThresholdKey, sDefaultCriticalThreshold);
 
 			// storage defaults
-			storeValueIfNotSet(sStorageWarningThresholdKey,
-					sDefaultWarningThreshold);
-			storeValueIfNotSet(sStorageCriticalThresholdKey,
-					sDefaultCriticalThreshold);
+			storeValueIfNotSet(sStorageWarningThresholdKey, sDefaultWarningThreshold);
+			storeValueIfNotSet(sStorageCriticalThresholdKey, sDefaultCriticalThreshold);
 		}
 	}
 
@@ -47,19 +41,16 @@ public class DefaultValues {
 	}
 
 	public static int getCpuWarningThreshold() {
-		return SharedPreferenceHelper.getIntPreference(sCpuWarningThresholdKey,
-				sDefaultWarningThreshold);
+		return SharedPreferenceHelper.getIntPreference(sCpuWarningThresholdKey,	sDefaultWarningThreshold);
 	}
 
 	// CPU critical
 	public static void putCpuCriticalThreshold(int value) {
-		SharedPreferenceHelper
-				.putIntPreference(sCpuCriticalThresholdKey, value);
+		SharedPreferenceHelper.putIntPreference(sCpuCriticalThresholdKey, value);
 	}
 
 	public static int getCpuCriticalThreshold() {
-		return SharedPreferenceHelper.getIntPreference(
-				sCpuCriticalThresholdKey, sDefaultCriticalThreshold);
+		return SharedPreferenceHelper.getIntPreference(sCpuCriticalThresholdKey, sDefaultCriticalThreshold);
 	}
 
 	// RAM warning
@@ -68,41 +59,43 @@ public class DefaultValues {
 	}
 
 	public static int getRamWarningThreshold() {
-		return SharedPreferenceHelper.getIntPreference(sRamWarningThresholdKey,
-				sDefaultWarningThreshold);
+		return SharedPreferenceHelper.getIntPreference(sRamWarningThresholdKey,	sDefaultWarningThreshold);
 	}
 
 	// RAM critical
 	public static void putRamCriticalThreshold(int value) {
-		SharedPreferenceHelper
-				.putIntPreference(sRamCriticalThresholdKey, value);
+		SharedPreferenceHelper.putIntPreference(sRamCriticalThresholdKey, value);
 	}
 
 	public static int getRamCriticalThreshold() {
-		return SharedPreferenceHelper.getIntPreference(
-				sRamCriticalThresholdKey, sDefaultCriticalThreshold);
+		return SharedPreferenceHelper.getIntPreference(sRamCriticalThresholdKey, sDefaultCriticalThreshold);
 	}
 
 	// Storage warning
 	public static void putStorageWarningThreshold(int value) {
-		SharedPreferenceHelper.putIntPreference(sStorageWarningThresholdKey,
-				value);
+		SharedPreferenceHelper.putIntPreference(sStorageWarningThresholdKey, value);
 	}
 
 	public static int getStorageWarningThreshold() {
-		return SharedPreferenceHelper.getIntPreference(
-				sStorageWarningThresholdKey, sDefaultWarningThreshold);
+		return SharedPreferenceHelper.getIntPreference(sStorageWarningThresholdKey, sDefaultWarningThreshold);
 	}
 
 	// Storage critical
 	public static void putStorageCriticalThreshold(int value) {
-		SharedPreferenceHelper.putIntPreference(sStorageCriticalThresholdKey,
-				value);
+		SharedPreferenceHelper.putIntPreference(sStorageCriticalThresholdKey, value);
 	}
 
 	public static int getStorageCriticalThreshold() {
-		return SharedPreferenceHelper.getIntPreference(
-				sStorageCriticalThresholdKey, sDefaultCriticalThreshold);
+		return SharedPreferenceHelper.getIntPreference(sStorageCriticalThresholdKey, sDefaultCriticalThreshold);
+	}
+	
+	//authentication
+	public static void putAuthentication(String auth){
+		SharedPreferenceHelper.putStringPreference(sAuthenticationKey, auth);
+	}
+	
+	public static String getAuthentication(){
+		return SharedPreferenceHelper.getStringPreference(sAuthenticationKey, "");
 	}
 
 }

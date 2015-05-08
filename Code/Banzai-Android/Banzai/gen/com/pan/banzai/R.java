@@ -9,10 +9,9 @@ package com.pan.banzai;
 
 public final class R {
     public static final class array {
-        public static final int nav_drawer_icons=0x7f040001;
         public static final int nav_drawer_items=0x7f040000;
-        public static final int pie_chart_colors=0x7f040002;
-        public static final int time_frames=0x7f040003;
+        public static final int pie_chart_colors=0x7f040001;
+        public static final int time_frames=0x7f040002;
     }
     public static final class attr {
         /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
@@ -247,46 +246,47 @@ containing a value of this type.
         public static final int seek_thumb_pressed=0x7f02000a;
     }
     public static final class id {
-        public static final int action_settings=0x7f0a0028;
+        public static final int action_settings=0x7f0a0029;
         public static final int browser_current_pie_chart=0x7f0a000c;
         public static final int browser_historic_line_chart=0x7f0a000e;
         public static final int browser_line_progress=0x7f0a000f;
         public static final int browser_pie_progress=0x7f0a000d;
         public static final int container=0x7f0a000a;
         public static final int cpu=0x7f0a0002;
-        public static final int cpuContainer=0x7f0a0020;
-        public static final int cpuPieGraph=0x7f0a0021;
-        public static final int cpuThreshold=0x7f0a0016;
-        public static final int donutContainer=0x7f0a001f;
+        public static final int cpuContainer=0x7f0a0021;
+        public static final int cpuPieGraph=0x7f0a0022;
+        public static final int cpuThreshold=0x7f0a0017;
+        public static final int donutContainer=0x7f0a0020;
         public static final int drawer_layout=0x7f0a0009;
         public static final int expandableListView=0x7f0a0010;
         public static final int horizontal=0x7f0a0000;
-        public static final int listGroupStatusContainer=0x7f0a001e;
-        public static final int listGroupTextView=0x7f0a001d;
-        public static final int marker_text=0x7f0a001c;
-        public static final int navItemTitle=0x7f0a0027;
+        public static final int listGroupStatusContainer=0x7f0a001f;
+        public static final int listGroupTextView=0x7f0a001e;
+        public static final int marker_text=0x7f0a001d;
+        public static final int navItemTitle=0x7f0a0028;
         public static final int nav_list=0x7f0a000b;
+        public static final int notificationsSwitch=0x7f0a0016;
         public static final int os_current_pie_chart=0x7f0a0011;
         public static final int os_historic_line_chart=0x7f0a0013;
         public static final int os_line_progress=0x7f0a0014;
         public static final int os_pie_progress=0x7f0a0012;
-        public static final int queueLengthContainer=0x7f0a0026;
+        public static final int queueLengthContainer=0x7f0a0027;
         public static final int ram=0x7f0a0003;
-        public static final int ramContainer=0x7f0a0022;
-        public static final int ramPieGraph=0x7f0a0023;
-        public static final int ramThreshold=0x7f0a0017;
+        public static final int ramContainer=0x7f0a0023;
+        public static final int ramPieGraph=0x7f0a0024;
+        public static final int ramThreshold=0x7f0a0018;
         public static final int saveSettingsButton=0x7f0a0015;
         public static final int signinEmail=0x7f0a0005;
         public static final int signinPassword=0x7f0a0006;
         public static final int signinSubmitButton=0x7f0a0007;
         public static final int storage=0x7f0a0004;
-        public static final int storageContainer=0x7f0a0024;
-        public static final int storagePieGraph=0x7f0a0025;
-        public static final int storageThreshold=0x7f0a0018;
+        public static final int storageContainer=0x7f0a0025;
+        public static final int storagePieGraph=0x7f0a0026;
+        public static final int storageThreshold=0x7f0a0019;
         public static final int textView2=0x7f0a0008;
-        public static final int utilization_breakdown_graph=0x7f0a001a;
-        public static final int utilization_breakdown_title=0x7f0a0019;
-        public static final int utilization_line_progress=0x7f0a001b;
+        public static final int utilization_breakdown_graph=0x7f0a001b;
+        public static final int utilization_breakdown_title=0x7f0a001a;
+        public static final int utilization_line_progress=0x7f0a001c;
         public static final int vertical=0x7f0a0001;
     }
     public static final class layout {
