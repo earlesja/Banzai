@@ -85,8 +85,6 @@ public class GetTask extends AsyncTask<Void, Void, JSONArray> implements
 
 		for (int i = 0; i < result.length(); i++) {
 			try {
-				Log.d("MetricId", result.getJSONObject(i).getString("MetricId"));
-				Log.d("Name", result.getJSONObject(i).getString("Name"));
 			} catch (Exception e) {
 				Log.e("ERROR", "Position " + i);
 				e.printStackTrace();

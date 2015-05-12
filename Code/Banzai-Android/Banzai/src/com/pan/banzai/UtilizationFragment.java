@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -86,7 +85,8 @@ public class UtilizationFragment extends Fragment {
 		return view;
 	}
 
-	private void getAndSetData(int timeframe, String groupBy, final DateFormat dateFormatter) {
+	private void getAndSetData(final int timeframe, String groupBy, final DateFormat dateFormatter) {
+		final long now = new Date().getTime();
 		new HistoricalDataTask(timeframe, groupBy, getMetricIds(), new IGetTaskCallback() {
 			@Override
 			public void execute(JSONArray json) {
@@ -101,17 +101,23 @@ public class UtilizationFragment extends Fragment {
 						JSONObject j = (JSONObject) json.get(i);
 						float value = (float) j.getDouble("Value");
 						int metricId = j.getInt("MetricId");
-						String dataSetTitle = getServerName(metricId);
 
+
+						Date date = formatter.parse(j
+								.getString("DateCapturedUtc"));
+						if((now - date.getTime()) > timeframe * 1000){
+							continue;
+						}
+						
+						if (!times.contains(date)) {
+							times.add(date);
+						}
+
+						String dataSetTitle = getServerName(metricId);
 						if (map.get(dataSetTitle) == null) {
 							map.put(dataSetTitle, new ArrayList<Float>());
 						}
 						map.get(dataSetTitle).add(value);
-						Date date = formatter.parse(j
-								.getString("DateCapturedUtc"));
-						if (!times.contains(date)) {
-							times.add(date);
-						}
 
 					} catch (Exception e) {
 

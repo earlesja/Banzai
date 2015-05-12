@@ -1,7 +1,5 @@
 package com.pan.banzai.apirequests;
 
-import java.util.List;
-
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -11,10 +9,10 @@ import org.apache.http.params.BasicHttpParams;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.pan.banzai.DefaultValues;
-
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.pan.banzai.DefaultValues;
 
 public class HistoricalDataTask extends AsyncTask<Void, Void, JSONArray>
 		implements IApiTask {
@@ -36,7 +34,6 @@ public class HistoricalDataTask extends AsyncTask<Void, Void, JSONArray>
 		this.groupBy = groupBy;
 		this.metricIds = is;
 		this.callback = callback;
-		Log.d("HHH", getJSONData());
 	}
 
 	public String getUrl() {

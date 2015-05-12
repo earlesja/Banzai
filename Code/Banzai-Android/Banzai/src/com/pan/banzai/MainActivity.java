@@ -100,9 +100,6 @@ public class MainActivity extends Activity {
 		getActionBar().setHomeButtonEnabled(true);
 		drawerList.setItemChecked(0, true);
 
-		SharedPreferenceHelper.setSharedPreferences(this);
-		DefaultValues.storeDefaultInSharedPref();
-
 		FragmentManager fm = getFragmentManager();
 		Fragment frag = fm.findFragmentById(R.id.container);
 		if (frag == null) {

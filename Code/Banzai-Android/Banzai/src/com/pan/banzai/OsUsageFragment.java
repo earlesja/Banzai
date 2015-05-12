@@ -116,7 +116,8 @@ public class OsUsageFragment extends Fragment {
 		return view;
 	}
 
-	private void getAndSetChartData(int timeframe, String groupBy, final DateFormat dateFormatter) {
+	private void getAndSetChartData(final int timeframe, String groupBy, final DateFormat dateFormatter) {
+		final long now = new Date().getTime();
 		new HistoricalDataTask(timeframe, groupBy, getAllMetricIds(), new IGetTaskCallback() {
 			@Override
 			public void execute(JSONArray json) {
@@ -155,16 +156,20 @@ public class OsUsageFragment extends Fragment {
 							dataSetTitle = "Other OS";
 						}
 
+						Date date = formatter.parse(j
+								.getString("DateCapturedUtc"));
+						if((now - date.getTime()) > timeframe * 1000){
+							continue;
+						}
+						
+						if (!times.contains(date)) {
+							times.add(date);
+						}
+
 						if (map.get(dataSetTitle) == null) {
 							map.put(dataSetTitle, new ArrayList<Float>());
 						}
 						map.get(dataSetTitle).add(value);
-
-						Date date = formatter.parse(j
-								.getString("DateCapturedUtc"));
-						if (!times.contains(date)) {
-							times.add(date);
-						}
 
 					} catch (Exception e) {
 

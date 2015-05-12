@@ -30,6 +30,10 @@ public class LoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 
+		SharedPreferenceHelper.setSharedPreferences(this);
+		DefaultValues.storeDefaultInSharedPref();
+		
+		Log.d("HHH", DefaultValues.getAuthentication());
 		if(!DefaultValues.getAuthentication().equals("")){
 			goToDashboard();
 		}
@@ -117,6 +121,7 @@ public class LoginActivity extends Activity {
 			super.onPostExecute(result);
 			if(result){
 				  DefaultValues.putAuthentication(authentication);
+				  Log.d("DDD", authentication);
 				  LoginActivity.this.goToDashboard();
 			}else{
 				mUsernameInput.setError("Invalid");

@@ -1,25 +1,16 @@
 package com.pan.banzai;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import microsoft.aspnet.signalr.client.MessageReceivedHandler;
 import microsoft.aspnet.signalr.client.SignalRFuture;
 import microsoft.aspnet.signalr.client.hubs.HubConnection;
 import microsoft.aspnet.signalr.client.hubs.HubProxy;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.JsonElement;
@@ -54,8 +45,8 @@ public class DataCollectorService extends Service {
 		
 		public void startCollecting(){
             Toast.makeText(this, "Service Start", Toast.LENGTH_LONG).show();
-            Log.d("TEST","%%%%%Log works just fine%%%%%");
-
+            
+            
         String server = "http://pan-banzai.cloudapp.net/banzai/signalr";
             HubConnection connection = new HubConnection(server);
             HubProxy proxy = connection.createHubProxy("MetricHub");
@@ -114,7 +105,7 @@ public class DataCollectorService extends Service {
 
 			@Override
 			public void onMessageReceived(JsonElement json) {
-				Log.d("TEST", "RAW received message: " + json.toString());
+				//Log.d("TEST", "RAW received message: " + json.toString());
 				
 				Intent intent = new Intent();
 			       intent.setAction(DATA_RECEIVED);
