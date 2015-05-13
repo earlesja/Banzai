@@ -89,11 +89,11 @@ class DashboardTableCell: UITableViewCell {
     
     func updateDoughnuts(cpuVal : Int, memVal : Int, diskVal : Int) {
         clearDoughnuts()
-        updateColors()
         
         cpuDoughnut.current = cpuVal
         memDoughnut.current = memVal
         diskDoughnut.current = diskVal
+        updateColors()
         
         cpuArea.addSubview(cpuDoughnut)
         memArea.addSubview(memDoughnut)

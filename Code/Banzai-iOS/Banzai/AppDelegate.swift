@@ -18,9 +18,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         settings.setBool(false, forKey: "FetchedBrowserData")
         settings.setBool(false, forKey: "FetchedOSData")
+        settings.setBool(false, forKey: "FetchedDashboardData")
         
+        // Browser
         settings.setObject([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], forKey: "browserPercentages")
-        settings.setObject([0, 0, 0, 0, 0, 0, 0], forKey: "browserCounts")
         settings.setObject(["", "", "", "", "", "", ""], forKey: "browserDates")
         settings.setObject([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], forKey: "ie8Values")
         settings.setObject([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], forKey: "ie9Values")
@@ -30,8 +31,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         settings.setObject([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], forKey: "chromeValues")
         settings.setObject([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], forKey: "safariValues")
         
+        // OS
         settings.setObject([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], forKey: "osPercentages")
-        settings.setObject([0, 0, 0, 0, 0, 0, 0, 0], forKey: "osCounts")
         settings.setObject(["", "", "", "", "", "", ""], forKey: "osDates")
         settings.setObject([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], forKey: "wVistaValues")
         settings.setObject([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], forKey: "w7Values")
@@ -42,6 +43,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         settings.setObject([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], forKey: "androidValues")
         settings.setObject([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], forKey: "linuxValues")
         
+        // Dashboard
+        settings.setInteger(50, forKey: "tier1_cpu")
+        settings.setInteger(50, forKey: "tier1_mem")
+        settings.setInteger(50, forKey: "tier1_disk")
+        settings.setInteger(50, forKey: "tier2_cpu")
+        settings.setInteger(50, forKey: "tier2_mem")
+        settings.setInteger(50, forKey: "tier2_disk")
+        settings.setInteger(50, forKey: "tier3_cpu")
+        settings.setInteger(50, forKey: "tier3_mem")
+        settings.setInteger(50, forKey: "tier3_disk")
+
         return true
     }
 

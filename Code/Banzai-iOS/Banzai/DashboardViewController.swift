@@ -21,17 +21,9 @@ class DashboardViewController: UIViewController, UITableViewDataSource, UITableV
     var delegate: DashboardViewControllerDelegate?
     let settings = NSUserDefaults.standardUserDefaults()
     var selectedRow : Int = -1
-    var tier1_cpu = 50
-    var tier1_mem = 50
-    var tier1_disk = 50
-    var tier2_cpu = 50
-    var tier2_mem = 50
-    var tier2_disk = 50
-    var tier3_cpu = 50
-    var tier3_mem = 50
-    var tier3_disk = 50
     let timeFrame = 14500
     var currentlyUpdating : Bool = false
+    var timer = NSTimer()
     
     // App Tier
     let app_cpu_1 = NSDictionary(objects: [Constants.MetricIDs.AppTier.CPU1, Constants.ServerIDs.APP1], forKeys: ["MetricId", "ServerId"])
@@ -74,7 +66,6 @@ class DashboardViewController: UIViewController, UITableViewDataSource, UITableV
 
         dashboardTable.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
         self.dashboardTable.tableFooterView = UIView()
-
         // wrap the centerViewController in a navigation controller, so we can push views to it
         // and display bar button items in the navigation bar
     }
@@ -99,6 +90,13 @@ class DashboardViewController: UIViewController, UITableViewDataSource, UITableV
             NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { (response, data, error) -> Void in
                 if error != nil {
                     println("Uh oh... there was an error getting the browser data from the server.")
+                    var statusCode = (response as! NSHTTPURLResponse).statusCode
+                    let alertController = UIAlertController(title: "", message: "", preferredStyle: UIAlertControllerStyle.Alert)
+                    alertController.title = "Server error. Status code \(statusCode)"
+                    let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) { (action) -> Void in
+                    }
+                    alertController.addAction(okAction)
+                    self.presentViewController(alertController, animated: true, completion: nil)
                 } else {
                     var responseText = NSString(data: data, encoding: NSASCIIStringEncoding)
                     
@@ -111,10 +109,12 @@ class DashboardViewController: UIViewController, UITableViewDataSource, UITableV
                     if  anyObj is Array<AnyObject> {
                         self.parseData(anyObj!)
                     }
-                    self.currentlyUpdating = false
-                    JHProgressHUD.sharedHUD.hide()
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    
+
                 }
+                self.currentlyUpdating = false
+                JHProgressHUD.sharedHUD.hide()
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             }
         }
     }
@@ -133,53 +133,56 @@ class DashboardViewController: UIViewController, UITableViewDataSource, UITableV
         
         var dataList = data as! Array<AnyObject>
         var endRemove = dataList.count - 21 // 21 is the number of metrics we fetched.
-        dataList.removeRange(0..<endRemove)
-        println("Number elements: \(dataList.count)")
-        
-        var metricID = 0
-        var value = 0.0
-        var array = []
-        for json in dataList {
-            metricID = (json["MetricId"] as AnyObject? as? Int) ?? -1
-            value = (json["Value"] as AnyObject? as? Double) ?? -1.0
+        if endRemove > 0 {
+            dataList.removeRange(0..<endRemove)
             
-            if metricID == Constants.MetricIDs.AppTier.CPU1 || metricID == Constants.MetricIDs.AppTier.CPU2 || metricID == Constants.MetricIDs.AppTier.CPU3 {
-                t1_cpu += value/3
-            } else if metricID == Constants.MetricIDs.AppTier.MEM1 || metricID == Constants.MetricIDs.AppTier.MEM2 || metricID == Constants.MetricIDs.AppTier.MEM3 {
-                t1_mem += value/3
-            } else if metricID == Constants.MetricIDs.AppTier.DISK1 || metricID == Constants.MetricIDs.AppTier.DISK2 || metricID == Constants.MetricIDs.AppTier.DISK3 {
-                t1_disk += value/3
-            } else if metricID == Constants.MetricIDs.WebTier.CPU1 || metricID == Constants.MetricIDs.WebTier.CPU2 || metricID == Constants.MetricIDs.WebTier.CPU3 {
-                t2_cpu += value/3
-            } else if metricID == Constants.MetricIDs.WebTier.MEM1 || metricID == Constants.MetricIDs.WebTier.MEM2 || metricID == Constants.MetricIDs.WebTier.MEM3 {
-                t2_mem += value/3
-            } else if metricID == Constants.MetricIDs.WebTier.DISK1 || metricID == Constants.MetricIDs.WebTier.DISK2 || metricID == Constants.MetricIDs.WebTier.DISK3 {
-                t2_disk += value/3
-            } else if metricID == Constants.MetricIDs.DataTier.CPU {
-                t3_cpu += value
-            } else if metricID == Constants.MetricIDs.DataTier.MEM {
-                t3_mem += value
-            } else if metricID == Constants.MetricIDs.DataTier.DISK {
-                t3_disk += value
+            println("Number elements: \(dataList.count)")
+            
+            var metricID = 0
+            var value = 0.0
+            var array = []
+            for json in dataList {
+                metricID = (json["MetricId"] as AnyObject? as? Int) ?? -1
+                value = (json["Value"] as AnyObject? as? Double) ?? -1.0
+                
+                if metricID == Constants.MetricIDs.AppTier.CPU1 || metricID == Constants.MetricIDs.AppTier.CPU2 || metricID == Constants.MetricIDs.AppTier.CPU3 {
+                    t1_cpu += value/3
+                } else if metricID == Constants.MetricIDs.AppTier.MEM1 || metricID == Constants.MetricIDs.AppTier.MEM2 || metricID == Constants.MetricIDs.AppTier.MEM3 {
+                    t1_mem += value/3
+                } else if metricID == Constants.MetricIDs.AppTier.DISK1 || metricID == Constants.MetricIDs.AppTier.DISK2 || metricID == Constants.MetricIDs.AppTier.DISK3 {
+                    t1_disk += value/3
+                } else if metricID == Constants.MetricIDs.WebTier.CPU1 || metricID == Constants.MetricIDs.WebTier.CPU2 || metricID == Constants.MetricIDs.WebTier.CPU3 {
+                    t2_cpu += value/3
+                } else if metricID == Constants.MetricIDs.WebTier.MEM1 || metricID == Constants.MetricIDs.WebTier.MEM2 || metricID == Constants.MetricIDs.WebTier.MEM3 {
+                    t2_mem += value/3
+                } else if metricID == Constants.MetricIDs.WebTier.DISK1 || metricID == Constants.MetricIDs.WebTier.DISK2 || metricID == Constants.MetricIDs.WebTier.DISK3 {
+                    t2_disk += value/3
+                } else if metricID == Constants.MetricIDs.DataTier.CPU {
+                    t3_cpu += value
+                } else if metricID == Constants.MetricIDs.DataTier.MEM {
+                    t3_mem += value
+                } else if metricID == Constants.MetricIDs.DataTier.DISK {
+                    t3_disk += value
+                }
             }
-        }
-        
-        tier1_cpu = Int(t1_cpu)
-        tier1_mem = Int(t1_mem)
-        tier1_disk = Int(t1_disk)
-        tier2_cpu = Int(t2_cpu)
-        tier2_mem = Int(t2_mem)
-        tier2_disk = Int(t2_disk)
-        tier3_cpu = Int(t3_cpu)
-        tier3_mem = Int(t3_mem)
-        tier3_disk = Int(t3_disk)
-        
-        if selectedRow == 0 {
-            (self.dashboardTable.cellForRowAtIndexPath(NSIndexPath(forRow: selectedRow, inSection: 0)) as! DashboardTableCell).updateDoughnuts(tier1_cpu, memVal: tier1_mem, diskVal: tier1_disk)
-        } else if selectedRow == 1 {
-            (self.dashboardTable.cellForRowAtIndexPath(NSIndexPath(forRow: selectedRow, inSection: 0)) as! DashboardTableCell).updateDoughnuts(tier2_cpu, memVal: tier2_mem, diskVal: tier2_disk)
-        } else if selectedRow == 2 {
-            (self.dashboardTable.cellForRowAtIndexPath(NSIndexPath(forRow: selectedRow, inSection: 0)) as! DashboardTableCell).updateDoughnuts(tier3_cpu, memVal: tier3_mem, diskVal: tier3_disk)
+            
+            settings.setInteger(Int(t1_cpu), forKey: "tier1_cpu")
+            settings.setInteger(Int(t1_mem), forKey: "tier1_mem")
+            settings.setInteger(Int(t1_disk), forKey: "tier1_disk")
+            settings.setInteger(Int(t2_cpu), forKey: "tier2_cpu")
+            settings.setInteger(Int(t2_mem), forKey: "tier2_mem")
+            settings.setInteger(Int(t2_disk), forKey: "tier2_disk")
+            settings.setInteger(Int(t3_cpu), forKey: "tier3_cpu")
+            settings.setInteger(Int(t3_mem), forKey: "tier3_mem")
+            settings.setInteger(Int(t3_disk), forKey: "tier3_disk")
+            
+            if selectedRow == 0 {
+                (self.dashboardTable.cellForRowAtIndexPath(NSIndexPath(forRow: selectedRow, inSection: 0)) as! DashboardTableCell).updateDoughnuts(settings.integerForKey("tier1_cpu"), memVal: settings.integerForKey("tier1_mem"), diskVal: settings.integerForKey("tier1_disk"))
+            } else if selectedRow == 1 {
+                (self.dashboardTable.cellForRowAtIndexPath(NSIndexPath(forRow: selectedRow, inSection: 0)) as! DashboardTableCell).updateDoughnuts(settings.integerForKey("tier2_cpu"), memVal: settings.integerForKey("tier2_mem"), diskVal: settings.integerForKey("tier2_disk"))
+            } else if selectedRow == 2 {
+                (self.dashboardTable.cellForRowAtIndexPath(NSIndexPath(forRow: selectedRow, inSection: 0)) as! DashboardTableCell).updateDoughnuts(settings.integerForKey("tier3_cpu"), memVal: settings.integerForKey("tier3_mem"), diskVal: settings.integerForKey("tier3_disk"))
+            }
         }
         
         println("Finished updating data")
@@ -189,14 +192,22 @@ class DashboardViewController: UIViewController, UITableViewDataSource, UITableV
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
-    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        timer.invalidate()
+    }
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        JHProgressHUD.sharedHUD.showInView(self.view, withHeader: "Fetching Data", andFooter: "")
-        updateValues()
-        
-        // Update the values every 15 seconds.
-        var timer = NSTimer.scheduledTimerWithTimeInterval(15.0, target: self, selector: Selector("updateValues"), userInfo: nil, repeats: true)
+        if settings.boolForKey("FetchedDashboardData"){
+            updateValues()
+            timer = NSTimer.scheduledTimerWithTimeInterval(15.0, target: self, selector: Selector("updateValues"), userInfo: nil, repeats: true)
+        } else {
+            // Update the values every 15 seconds.
+            settings.setBool(true, forKey: "FetchedDashboardData")
+            JHProgressHUD.sharedHUD.showInView(self.view, withHeader: "Fetching Latest Data", andFooter: "")
+            updateValues()
+            timer = NSTimer.scheduledTimerWithTimeInterval(15.0, target: self, selector: Selector("updateValues"), userInfo: nil, repeats: true)
+        }
     }
     
     func defaultSettings() {
@@ -207,6 +218,7 @@ class DashboardViewController: UIViewController, UITableViewDataSource, UITableV
         settings.setDouble(0.8, forKey: "memUpper")
         settings.setDouble(0.2, forKey: "diskLower")
         settings.setDouble(0.8, forKey: "diskUpper")
+        settings.setInteger(0, forKey: "RowSelected")
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
@@ -234,27 +246,57 @@ class DashboardViewController: UIViewController, UITableViewDataSource, UITableV
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         println("Selected row #\(indexPath.row)")
+        settings.setInteger(indexPath.row, forKey: "RowSelected")
         self.selectedRow = indexPath.row
         var selectedCell : DashboardTableCell = tableView.cellForRowAtIndexPath(indexPath)! as! DashboardTableCell
+        
+        var cpuTap = UITapGestureRecognizer(target: self, action: "navigateToCPUServerDetails")
+        var memTap = UITapGestureRecognizer(target: self, action: "navigateToMEMServerDetails")
+        var diskTap = UITapGestureRecognizer(target: self, action: "navigateToDISKServerDetails")
+        cpuTap.numberOfTapsRequired = 1
+        memTap.numberOfTapsRequired = 1
+        diskTap.numberOfTapsRequired = 1
         
         tableView.beginUpdates()
         
         switch(indexPath.row) {
         case 0:
-            selectedCell.updateDoughnuts(tier1_cpu, memVal: tier1_mem, diskVal: tier1_disk)
+            selectedCell.updateDoughnuts(settings.integerForKey("tier1_cpu"), memVal: settings.integerForKey("tier1_mem"), diskVal: settings.integerForKey("tier1_disk"))
         case 1:
-            selectedCell.updateDoughnuts(tier2_cpu, memVal: tier2_mem, diskVal: tier2_disk)
+            selectedCell.updateDoughnuts(settings.integerForKey("tier2_cpu"), memVal: settings.integerForKey("tier2_mem"), diskVal: settings.integerForKey("tier2_disk"))
         case 2:
-            selectedCell.updateDoughnuts(tier3_cpu, memVal: tier3_mem, diskVal: tier3_disk)
+            selectedCell.updateDoughnuts(settings.integerForKey("tier3_cpu"), memVal: settings.integerForKey("tier3_mem"), diskVal: settings.integerForKey("tier3_disk"))
         default:
             selectedCell.serverName.text = "An Error Occurred"
         }
+        
+        selectedCell.cpuArea.addGestureRecognizer(cpuTap)
+        selectedCell.memArea.addGestureRecognizer(memTap)
+        selectedCell.diskArea.addGestureRecognizer(diskTap)
         
         selectedCell.circleArea.hidden = false
         selectedCell.accessoryType = .None
         selectedCell.selectionStyle = UITableViewCellSelectionStyle.None
         selectedCell.contentView.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleLeftMargin | UIViewAutoresizing.FlexibleRightMargin
         tableView.endUpdates()
+    }
+    
+    func navigateToCPUServerDetails() {
+        println("Worked")
+        if self.navigationController == nil {
+            println("no nc.")
+        }
+    }
+    
+    func navigateToMEMServerDetails() {
+        println("Worked 2")
+        let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main",bundle: nil)
+        let destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ServerDetailsViewController") as! UIViewController
+        self.sideMenuController()?.setContentViewControllerWithoutMenu(destViewController)
+    }
+    
+    func navigateToDISKServerDetails() {
+        println("Worked 3")
     }
     
     func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {

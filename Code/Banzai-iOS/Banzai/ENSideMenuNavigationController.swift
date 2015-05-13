@@ -55,7 +55,7 @@ public class ENSideMenuNavigationController: UINavigationController, ENSideMenuP
     }
     
     // Custom: Navigation to another controller without toggling the menu.
-    public func setContentViewControllerFromLogin(contentViewController: UIViewController) {
+    public func setContentViewControllerWithoutMenu(contentViewController: UIViewController) {
         switch sideMenuAnimationType {
         case .None:
             self.viewControllers = [contentViewController]
@@ -66,5 +66,4 @@ public class ENSideMenuNavigationController: UINavigationController, ENSideMenuP
             break
         }
     }
-
 }
