@@ -78,12 +78,12 @@ class LoginViewController: UIViewController {
                     alertController.addAction(okAction)
                     self.presentViewController(alertController, animated: true, completion: nil)
                 } else {
-                    JHProgressHUD.sharedHUD.hide()
+                    
                     if statusCode == 200 {
                         self.settings.setObject(base64Encoded, forKey: "credentials")
                         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main",bundle: nil)
                         let destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("DashboardViewController") as! UIViewController
-                        self.sideMenuController()?.setContentViewControllerFromLogin(destViewController)
+                        self.sideMenuController()?.setContentViewControllerWithoutMenu(destViewController)
                     } else {
                         let alertController = UIAlertController(title: "", message: "", preferredStyle: UIAlertControllerStyle.Alert)
                         statusCode == 500 ? (alertController.title = "Incorrect username or password.") : (alertController.title = "There was an error logging in (status code: \(statusCode)).")
@@ -93,6 +93,7 @@ class LoginViewController: UIViewController {
                         self.presentViewController(alertController, animated: true, completion: nil)
                     }
                 }
+                JHProgressHUD.sharedHUD.hide()
             }
         }
     }

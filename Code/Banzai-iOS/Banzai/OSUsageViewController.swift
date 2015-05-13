@@ -16,7 +16,6 @@ class OSUsageViewController: UIViewController {
     let LEGEND_WIDTH : CGFloat = 100
     var osNames = ["W Vista", "W 7", "W 8", "W 8.1", "Mac", "iOS", "Linux", "Android"]
     var osPercentages = ["WVista":0.0, "W7":0.0, "W8":0.0, "W8One":0.0, "Mac":0.0, "iOS":0.0, "Android":0.0, "Linux":0.0]
-    var osCounts = ["WVista":0, "W7":0, "W8":0, "W8One":0, "Mac":0, "iOS":0, "Android":0, "Linux":0]
     var timeFrame = 604800 // 604800 = 7 days
     var lineGraphDates : [String] = []
     var pieChart : PNPieChart!, lineChart : PNLineChart!
@@ -26,6 +25,8 @@ class OSUsageViewController: UIViewController {
     var wVistaVals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], w7Vals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], w8Vals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], w8OneVals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
     var macVals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], iOSVals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], androidVals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], linuxVals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
     
+    @IBOutlet weak var menuButton: UIBarButtonItem!
+    @IBOutlet weak var refreshButton: UIBarButtonItem!
     
     // For server calls
     let wVista_1 = NSDictionary(objects: [Constants.OSIDs.WindowsVista_1], forKeys: ["MetricId"])
@@ -107,13 +108,13 @@ class OSUsageViewController: UIViewController {
             updateGraphs()
         } else {
             JHProgressHUD.sharedHUD.showInView(self.view, withHeader: "Fetching Data", andFooter: "")
+            disableButtons()
             getServerData()
         }
     }
     
     func getStoredData() {
         self.osPercentages = settings.objectForKey("osPercentages") as! [String : Double]
-        self.osCounts = settings.objectForKey("osCounts") as! [String : Int]
         self.lineGraphDates = settings.objectForKey("osDates") as! [String]
         self.wVistaVals = settings.objectForKey("wVistaValues") as! [Double]
         self.w7Vals = settings.objectForKey("w7Values") as! [Double]
@@ -129,7 +130,7 @@ class OSUsageViewController: UIViewController {
         var keys = ["WVista", "W7", "W8", "W8One", "Mac", "iOS", "Android", "Linux"]
         var percentages : [Double] = []
         for key in keys {
-            percentages.append(osPercentages[key]! / Double(osCounts[key]!))
+            percentages.append(osPercentages[key]!)
             println("\(key) %: \(percentages.last!)")
         }
         
@@ -238,12 +239,12 @@ class OSUsageViewController: UIViewController {
     @IBAction func refreshData(sender: AnyObject) {
         println("Referesh the OS Usage page")
         JHProgressHUD.sharedHUD.showInView(self.view, withHeader: "Fetching Data", andFooter: "")
+        disableButtons()
         getServerData()
     }
     
     func getServerData() {
         self.osPercentages = ["WVista":0.0, "W7":0.0, "W8":0.0, "W8One":0.0, "Mac":0.0, "iOS":0.0, "Android":0.0, "Linux":0.0]
-        self.osCounts = ["WVista":0, "W7":0, "W8":0, "W8One":0, "Mac":0, "iOS":0, "Android":0, "Linux":0]
         wVistaVals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
         w7Vals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
         w8Vals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
@@ -271,6 +272,13 @@ class OSUsageViewController: UIViewController {
         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { (response, data, error) -> Void in
             if error != nil {
                 println("Uh oh... there was an error getting the os data from the server.")
+                var statusCode = (response as! NSHTTPURLResponse).statusCode
+                let alertController = UIAlertController(title: "", message: "", preferredStyle: UIAlertControllerStyle.Alert)
+                alertController.title = "Server error. Status code: \(statusCode)"
+                let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) { (action) -> Void in
+                }
+                alertController.addAction(okAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
             } else {
                 var responseText = NSString(data: data, encoding: NSASCIIStringEncoding)
                 
@@ -283,10 +291,11 @@ class OSUsageViewController: UIViewController {
                 if  anyObj is Array<AnyObject> {
                     self.parseData(anyObj!)
                 }
-                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                JHProgressHUD.sharedHUD.hide()
                 self.updateGraphs()
             }
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            JHProgressHUD.sharedHUD.hide()
+            self.enableButtons()
         }
     }
     
@@ -295,46 +304,19 @@ class OSUsageViewController: UIViewController {
         var date = ""
         var value = 0.0
         var array = []
-        for json in data as! Array<AnyObject>{
-            metricID = (json["MetricId"] as AnyObject? as? Int) ?? -1 // to get rid of null
-            date = (json["DateCapturedUtc"]  as AnyObject? as? String) ?? ""
-            value = (json["Value"] as AnyObject? as? Double) ?? -1.0
+        
+        // First, get the dates
+        for json in data as! Array<AnyObject> {
+            date = (json["DateCapturedUtc"] as AnyObject? as? String) ?? ""
             array = date.componentsSeparatedByString("T")
             array = array[0].componentsSeparatedByString("-")
-
-            if metricID == Constants.OSIDs.WindowsVista_1 {
-                self.osPercentages.updateValue(self.osPercentages["WVista"]! + value, forKey: "WVista")
-                self.osCounts.updateValue(self.osCounts["WVista"]! + 1, forKey: "WVista")
-                date = "\(array[1])-\(array[2])"
-                if !contains(self.lineGraphDates, date){
-                    self.lineGraphDates.append(date)
-                }
-            } else if metricID == Constants.OSIDs.WindowsVista_2 || metricID == Constants.OSIDs.WindowsVista_3 {
-                self.osPercentages.updateValue(self.osPercentages["WVista"]! + value, forKey: "WVista")
-                self.osCounts.updateValue(self.osCounts["WVista"]! + 1, forKey: "WVista")
-            } else if metricID == Constants.OSIDs.Windows7_1 || metricID == Constants.OSIDs.Windows7_2 || metricID == Constants.OSIDs.Windows7_3 {
-                self.osPercentages.updateValue(self.osPercentages["W7"]! + value, forKey: "W7")
-                self.osCounts.updateValue(self.osCounts["W7"]! + 1, forKey: "W7")
-            } else if metricID == Constants.OSIDs.Windows8_1 || metricID == Constants.OSIDs.Windows8_2 || metricID == Constants.OSIDs.Windows8_3 {
-                self.osPercentages.updateValue(self.osPercentages["W8"]! + value, forKey: "W8")
-                self.osCounts.updateValue(self.osCounts["W8"]! + 1, forKey: "W8")
-            } else if metricID == Constants.OSIDs.Windows8One_1 || metricID == Constants.OSIDs.Windows8One_2 || metricID == Constants.OSIDs.Windows8One_3 {
-                self.osPercentages.updateValue(self.osPercentages["W8One"]! + value, forKey: "W8One")
-                self.osCounts.updateValue(self.osCounts["W8One"]! + 1, forKey: "W8One")
-            } else if metricID == Constants.OSIDs.Mac_1 || metricID == Constants.OSIDs.Mac_2 || metricID == Constants.OSIDs.Mac_3 {
-                self.osPercentages.updateValue(self.osPercentages["Mac"]! + value, forKey: "Mac")
-                self.osCounts.updateValue(self.osCounts["Mac"]! + 1, forKey: "Mac")
-            } else if metricID == Constants.OSIDs.iOS_1 || metricID == Constants.OSIDs.iOS_2 || metricID == Constants.OSIDs.iOS_3 {
-                self.osPercentages.updateValue(self.osPercentages["iOS"]! + value, forKey: "iOS")
-                self.osCounts.updateValue(self.osCounts["iOS"]! + 1, forKey: "iOS")
-            } else if metricID == Constants.OSIDs.Android_1 || metricID == Constants.OSIDs.Android_2 || metricID == Constants.OSIDs.Android_3 {
-                self.osPercentages.updateValue(self.osPercentages["Android"]! + value, forKey: "Android")
-                self.osCounts.updateValue(self.osCounts["Android"]! + 1, forKey: "Android")
-            } else if metricID == Constants.OSIDs.Linux_1 || metricID == Constants.OSIDs.Linux_2 || metricID == Constants.OSIDs.Linux_3 {
-                self.osPercentages.updateValue(self.osPercentages["Linux"]! + value, forKey: "Linux")
-                self.osCounts.updateValue(self.osCounts["Linux"]! + 1, forKey: "Linux")
+            date = "\(array[1])-\(array[2])"
+            if !contains(self.lineGraphDates, date) {
+                self.lineGraphDates.append(date)
             }
         }
+        
+        // Sort the dates
         self.lineGraphDates = sorted(self.lineGraphDates, {(d1: String, d2: String) -> Bool in
             if d1.componentsSeparatedByString("-")[0] == d2.componentsSeparatedByString("-")[0] {
                 return d1.componentsSeparatedByString("-")[1].toInt() < d2.componentsSeparatedByString("-")[1].toInt()
@@ -342,12 +324,41 @@ class OSUsageViewController: UIViewController {
                 return d1.componentsSeparatedByString("-")[0].toInt() < d2.componentsSeparatedByString("-")[0].toInt()
             }
         })
-        println(self.lineGraphDates)
+        
         var numDates = lineGraphDates.count
         while(numDates > 7) {
             lineGraphDates.removeAtIndex(0)
             numDates = lineGraphDates.count
         }
+        
+        for json in data as! Array<AnyObject>{
+            metricID = (json["MetricId"] as AnyObject? as? Int) ?? -1 // to get rid of null
+            date = (json["DateCapturedUtc"]  as AnyObject? as? String) ?? ""
+            value = (json["Value"] as AnyObject? as? Double) ?? -1.0
+            array = date.componentsSeparatedByString("T")
+            array = array[0].componentsSeparatedByString("-")
+            date = "\(array[1])-\(array[2])"
+            if date == self.lineGraphDates.last! {
+                if metricID == Constants.OSIDs.WindowsVista_1 || metricID == Constants.OSIDs.WindowsVista_2 || metricID == Constants.OSIDs.WindowsVista_3 {
+                    self.osPercentages.updateValue(self.osPercentages["WVista"]! + value/3, forKey: "WVista")
+                } else if metricID == Constants.OSIDs.Windows7_1 || metricID == Constants.OSIDs.Windows7_2 || metricID == Constants.OSIDs.Windows7_3 {
+                    self.osPercentages.updateValue(self.osPercentages["W7"]! + value/3, forKey: "W7")
+                } else if metricID == Constants.OSIDs.Windows8_1 || metricID == Constants.OSIDs.Windows8_2 || metricID == Constants.OSIDs.Windows8_3 {
+                    self.osPercentages.updateValue(self.osPercentages["W8"]! + value/3, forKey: "W8")
+                } else if metricID == Constants.OSIDs.Windows8One_1 || metricID == Constants.OSIDs.Windows8One_2 || metricID == Constants.OSIDs.Windows8One_3 {
+                    self.osPercentages.updateValue(self.osPercentages["W8One"]! + value/3, forKey: "W8One")
+                } else if metricID == Constants.OSIDs.Mac_1 || metricID == Constants.OSIDs.Mac_2 || metricID == Constants.OSIDs.Mac_3 {
+                    self.osPercentages.updateValue(self.osPercentages["Mac"]! + value/3, forKey: "Mac")
+                } else if metricID == Constants.OSIDs.iOS_1 || metricID == Constants.OSIDs.iOS_2 || metricID == Constants.OSIDs.iOS_3 {
+                    self.osPercentages.updateValue(self.osPercentages["iOS"]! + value/3, forKey: "iOS")
+                } else if metricID == Constants.OSIDs.Android_1 || metricID == Constants.OSIDs.Android_2 || metricID == Constants.OSIDs.Android_3 {
+                    self.osPercentages.updateValue(self.osPercentages["Android"]! + value/3, forKey: "Android")
+                } else if metricID == Constants.OSIDs.Linux_1 || metricID == Constants.OSIDs.Linux_2 || metricID == Constants.OSIDs.Linux_3 {
+                    self.osPercentages.updateValue(self.osPercentages["Linux"]! + value/3, forKey: "Linux")
+                }
+            }
+        }
+        
         // Parse data for line graph
         var index = 0
         for json in data as! Array<AnyObject>{
@@ -384,7 +395,6 @@ class OSUsageViewController: UIViewController {
         // Store the data
         settings.setBool(true, forKey: "FetchedOSData")
         settings.setObject(self.osPercentages, forKey: "osPercentages")
-        settings.setObject(self.osCounts, forKey: "osCounts")
         settings.setObject(self.lineGraphDates, forKey: "osDates")
         settings.setObject(self.wVistaVals, forKey: "wVistaValues")
         settings.setObject(self.w7Vals, forKey: "w7Values")
@@ -404,6 +414,16 @@ class OSUsageViewController: UIViewController {
         }
         
         return -1
+    }
+    
+    func disableButtons() {
+        menuButton.enabled = false
+        refreshButton.enabled = false
+    }
+    
+    func enableButtons() {
+        menuButton.enabled = true
+        refreshButton.enabled = true
     }
 
 }
