@@ -7,11 +7,7 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.pan.banzai.DataCollectorService.DataCollectorBinder;
-
 import android.app.Activity;
-import android.app.ActivityManager;
-import android.app.ActivityManager.RunningTaskInfo;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.Notification;
@@ -32,6 +28,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+
+import com.pan.banzai.DataCollectorService.DataCollectorBinder;
 
 public class MainActivity extends Activity {
 
@@ -213,19 +211,21 @@ public class MainActivity extends Activity {
 				int metricType = 0;
 
 				if (MainActivity.CPU_METRICIDS.contains(metricId)
-						&& value > DefaultValues.getCpuCriticalThreshold()) {
+						&& value > Storage.getCpuCriticalThreshold()) {
 					shouldNotify = true;
 					metricType = 1;
 				} else if (MainActivity.RAM_METRICIDS.contains(metricId)
-						&& value > DefaultValues.getRamCriticalThreshold()) {
+						&& value > Storage.getRamCriticalThreshold()) {
 					shouldNotify = true;
 					metricType = 2;
 				} else if (MainActivity.DISK_METRICIDS.contains(metricId)
-						&& value > DefaultValues.getStorageCriticalThreshold()) {
+						&& value > Storage.getStorageCriticalThreshold()) {
 					shouldNotify = true;
 					metricType = 3;
 				}
-
+				
+				shouldNotify = shouldNotify && Storage.getNotificationsEnabled();
+				
 				if (shouldNotify) {
 
 //					ActivityManager activityManager = (ActivityManager) getApplicationContext()

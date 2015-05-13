@@ -31,10 +31,10 @@ public class LoginActivity extends Activity {
 		setContentView(R.layout.activity_login);
 
 		SharedPreferenceHelper.setSharedPreferences(this);
-		DefaultValues.storeDefaultInSharedPref();
+		Storage.storeDefaultInSharedPref();
 		
-		Log.d("HHH", DefaultValues.getAuthentication());
-		if(!DefaultValues.getAuthentication().equals("")){
+		Log.d("HHH", Storage.getAuthentication());
+		if(!Storage.getAuthentication().equals("")){
 			goToDashboard();
 		}
 		
@@ -120,7 +120,7 @@ public class LoginActivity extends Activity {
 		protected void onPostExecute(Boolean result) {
 			super.onPostExecute(result);
 			if(result){
-				  DefaultValues.putAuthentication(authentication);
+				  Storage.putAuthentication(authentication);
 				  Log.d("DDD", authentication);
 				  LoginActivity.this.goToDashboard();
 			}else{

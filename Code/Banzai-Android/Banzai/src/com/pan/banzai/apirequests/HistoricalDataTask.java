@@ -12,7 +12,7 @@ import org.json.JSONObject;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.pan.banzai.DefaultValues;
+import com.pan.banzai.Storage;
 
 public class HistoricalDataTask extends AsyncTask<Void, Void, JSONArray>
 		implements IApiTask {
@@ -51,7 +51,7 @@ public class HistoricalDataTask extends AsyncTask<Void, Void, JSONArray>
 		ResponseHandler<String> handler = new BasicResponseHandler();
 
 		// TODO replace with actual authorization
-		httppost.setHeader("Authorization", "Basic " + DefaultValues.getAuthentication());
+		httppost.setHeader("Authorization", "Basic " + Storage.getAuthentication());
 		httppost.setHeader("Content-type", "application/json");
 		try {
 			httppost.setEntity(new StringEntity(getJSONData()));

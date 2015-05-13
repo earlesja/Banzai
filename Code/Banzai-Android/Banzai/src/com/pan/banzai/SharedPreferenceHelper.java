@@ -64,4 +64,21 @@ public class SharedPreferenceHelper {
 		editor.commit();
 		return true;
 	}
+
+	public static boolean getBoolPreference(String key, boolean defValue) {
+		if(isInit()){
+			return mSharedPrefs.getBoolean(key, defValue);
+		} 
+		return defValue;
+	}
+
+	public static boolean putBoolPreference(String key, boolean value) {
+		if(!isInit()){
+			return false;
+		}
+		SharedPreferences.Editor editor = mSharedPrefs.edit();
+		editor.putBoolean(key, value);
+		editor.commit();
+		return true;
+	}
 }

@@ -16,34 +16,34 @@ public class DonutGraph extends PieGraph {
 		CPU {
 			@Override
 			public int getWarning() {
-				return DefaultValues.getCpuWarningThreshold();
+				return Storage.getCpuWarningThreshold();
 			}
 
 			@Override
 			public int getCritical() {
-				return DefaultValues.getCpuCriticalThreshold();
+				return Storage.getCpuCriticalThreshold();
 			}
 		},
 		RAM {
 			@Override
 			public int getWarning() {
-				return DefaultValues.getRamWarningThreshold();
+				return Storage.getRamWarningThreshold();
 			}
 
 			@Override
 			public int getCritical() {
-				return DefaultValues.getRamCriticalThreshold();
+				return Storage.getRamCriticalThreshold();
 			}
 		},
 		STORAGE {
 			@Override
 			public int getWarning() {
-				return DefaultValues.getStorageWarningThreshold();
+				return Storage.getStorageWarningThreshold();
 			}
 
 			@Override
 			public int getCritical() {
-				return DefaultValues.getStorageCriticalThreshold();
+				return Storage.getStorageCriticalThreshold();
 			}
 		};
 

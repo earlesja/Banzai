@@ -1,6 +1,6 @@
 package com.pan.banzai;
 
-public class DefaultValues {
+public class Storage {
 
 	public static final String sCpuWarningThresholdKey = "CPU_WARN";
 	public static final String sCpuCriticalThresholdKey = "CPU_CRIT";
@@ -9,9 +9,11 @@ public class DefaultValues {
 	public static final String sStorageWarningThresholdKey = "STOR_WARN";
 	public static final String sStorageCriticalThresholdKey = "STOR_CRIT";
 	public static final String sAuthenticationKey = "AUTH";
+	public static final String sNotificationsEnabledKey = "NOTIF";
 
 	public static final int sDefaultWarningThreshold = 75;
 	public static final int sDefaultCriticalThreshold = 90;
+	public static final boolean sDefaultNotifications = true;
 
 	public static void storeDefaultInSharedPref() {
 		if (SharedPreferenceHelper.isInit()) {
@@ -34,6 +36,7 @@ public class DefaultValues {
 			SharedPreferenceHelper.putIntPreference(key, value);
 		}
 	}
+	
 
 	// CPU warning
 	public static void putCpuWarningThreshold(int value) {
@@ -97,5 +100,15 @@ public class DefaultValues {
 	public static String getAuthentication(){
 		return SharedPreferenceHelper.getStringPreference(sAuthenticationKey, "");
 	}
+	
+	//notifications
+	public static void putNotificationsEnabled(boolean enabled){
+		SharedPreferenceHelper.putBoolPreference(sNotificationsEnabledKey, enabled);		
+	}
+	
+	public static boolean getNotificationsEnabled(){
+		return SharedPreferenceHelper.getBoolPreference(sNotificationsEnabledKey, true);		
+	}
+
 
 }
