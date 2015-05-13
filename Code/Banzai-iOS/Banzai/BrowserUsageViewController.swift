@@ -12,23 +12,12 @@ class BrowserUsageViewController: UIViewController {
     
     @IBOutlet weak var pieGraphView: UIView!
     @IBOutlet weak var lineGraphView: UIView!
-    let settings = NSUserDefaults.standardUserDefaults()
-    let LEGEND_WIDTH : CGFloat = 100
-    var browserNames = ["Firefox", "Chrome", "Safari", "IE 8", "IE 9", "IE 10", "IE 11"]
-    var browserPercentages = ["Firefox":0.0, "Chrome":0.0, "Safari":0.0, "IE8":0.0, "IE9":0.0, "IE10":0.0, "IE11":0.0]
-    var timeFrame = 604800 // 604800 = 7 days
-    var lineGraphDates : [String] = []
-    var pieChart : PNPieChart!
-    var lineChart : PNLineChart!
-    var ie8Data = PNLineChartData(), ie9Data = PNLineChartData(), ie10Data = PNLineChartData(), ie11Data = PNLineChartData()
-    var firefoxData = PNLineChartData(), chromeData = PNLineChartData(), safariData = PNLineChartData()
-    
-    var ie8Vals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], ie9Vals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], ie10Vals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], ie11Vals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-    var firefoxVals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], chromeVals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], safariVals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-    
     @IBOutlet weak var menuButton: UIBarButtonItem!
     @IBOutlet weak var refreshButton: UIBarButtonItem!
     
+    // Constants
+    let settings = NSUserDefaults.standardUserDefaults()
+    let LEGEND_WIDTH : CGFloat = 100
     // For server calls
     let ie8_1 = NSDictionary(objects: [Constants.BrowserIDs.IE8_1], forKeys: ["MetricId"])
     let ie8_2 = NSDictionary(objects: [Constants.BrowserIDs.IE8_2], forKeys: ["MetricId"])
@@ -51,6 +40,18 @@ class BrowserUsageViewController: UIViewController {
     let safari_1 = NSDictionary(objects: [Constants.BrowserIDs.Safari_1], forKeys: ["MetricId"])
     let safari_2 = NSDictionary(objects: [Constants.BrowserIDs.Safari_2], forKeys: ["MetricId"])
     let safari_3 = NSDictionary(objects: [Constants.BrowserIDs.Safari_3], forKeys: ["MetricId"])
+    
+    // Variables
+    var browserNames = ["Firefox", "Chrome", "Safari", "IE 8", "IE 9", "IE 10", "IE 11"]
+    var browserPercentages = ["Firefox":0.0, "Chrome":0.0, "Safari":0.0, "IE8":0.0, "IE9":0.0, "IE10":0.0, "IE11":0.0]
+    var firefoxData = PNLineChartData(), chromeData = PNLineChartData(), safariData = PNLineChartData()
+    var firefoxVals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], chromeVals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], safariVals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    var ie8Data = PNLineChartData(), ie9Data = PNLineChartData(), ie10Data = PNLineChartData(), ie11Data = PNLineChartData()
+    var ie8Vals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], ie9Vals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], ie10Vals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], ie11Vals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    var lineChart : PNLineChart!
+    var lineGraphDates : [String] = []
+    var pieChart : PNPieChart!
+    var timeFrame = 604800 // 604800 = 7 days
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -106,6 +107,27 @@ class BrowserUsageViewController: UIViewController {
 
     }
     
+    @IBAction func toggleSideMenu(sender: AnyObject) {
+        toggleSideMenuView()
+    }
+    
+    @IBAction func refreshData(sender: AnyObject) {
+        println("Referesh the Browser Usage page")
+        disableButtons()
+        JHProgressHUD.sharedHUD.showInView(self.view, withHeader: "Fetching Data", andFooter: "")
+        getServerData()
+    }
+    
+    func disableButtons() {
+        menuButton.enabled = false
+        refreshButton.enabled = false
+    }
+    
+    func enableBUttons() {
+        menuButton.enabled = true
+        refreshButton.enabled = true
+    }
+    
     func getStoredData() {
         self.browserPercentages = settings.objectForKey("browserPercentages") as! [String : Double]
         self.lineGraphDates = settings.objectForKey("browserDates") as! [String]
@@ -158,8 +180,6 @@ class BrowserUsageViewController: UIViewController {
         self.lineChart = PNLineChart(frame: lineRect) as PNLineChart
         lineChart.backgroundColor = UIColor.clearColor()
         lineChart.showCoordinateAxis = true
-        //lineChart.yFixedValueMax = 100
-        //lineChart.yFixedValueMin = 5
         lineChart.yValueMax = 100
         lineChart.yValueMin = 0
         
@@ -214,17 +234,6 @@ class BrowserUsageViewController: UIViewController {
         lineGraphView.addSubview(lineChart)
     }
     
-    @IBAction func toggleSideMenu(sender: AnyObject) {
-        toggleSideMenuView()
-    }
-    
-    @IBAction func refreshData(sender: AnyObject) {
-        println("Referesh the Browser Usage page")
-        disableButtons()
-        JHProgressHUD.sharedHUD.showInView(self.view, withHeader: "Fetching Data", andFooter: "")
-        getServerData()
-    }
-    
     func getServerData() {
         self.browserPercentages = ["Firefox":0.0, "Chrome":0.0, "Safari":0.0, "IE8":0.0, "IE9":0.0, "IE10":0.0, "IE11":0.0]
         ie8Vals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
@@ -252,8 +261,6 @@ class BrowserUsageViewController: UIViewController {
 
         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { (response, data, error) -> Void in
             var statusCode = (response as! NSHTTPURLResponse).statusCode
-            println(statusCode)
-            
             if error != nil {
                 println("Uh oh... there was an error getting the browser data from the server.")
                 let alertController = UIAlertController(title: "", message: "", preferredStyle: UIAlertControllerStyle.Alert)
@@ -394,15 +401,5 @@ class BrowserUsageViewController: UIViewController {
         }
         
         return -1
-    }
-    
-    func disableButtons() {
-        menuButton.enabled = false
-        refreshButton.enabled = false
-    }
-    
-    func enableBUttons() {
-        menuButton.enabled = true
-        refreshButton.enabled = true
     }
 }

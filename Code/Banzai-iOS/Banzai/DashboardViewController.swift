@@ -16,14 +16,11 @@ protocol DashboardViewControllerDelegate {
 
 class DashboardViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    var dataObject: AnyObject?
     @IBOutlet weak var dashboardTable: UITableView!
-    var delegate: DashboardViewControllerDelegate?
+    
+    // Constants
     let settings = NSUserDefaults.standardUserDefaults()
-    var selectedRow : Int = -1
     let timeFrame = 14500
-    var currentlyUpdating : Bool = false
-    var timer = NSTimer()
     
     // App Tier
     let app_cpu_1 = NSDictionary(objects: [Constants.MetricIDs.AppTier.CPU1, Constants.ServerIDs.APP1], forKeys: ["MetricId", "ServerId"])
@@ -52,6 +49,14 @@ class DashboardViewController: UIViewController, UITableViewDataSource, UITableV
     let data_mem = NSDictionary(objects: [Constants.MetricIDs.DataTier.MEM, Constants.ServerIDs.DISK], forKeys: ["MetricId", "ServerId"])
     let data_disk = NSDictionary(objects: [Constants.MetricIDs.DataTier.DISK, Constants.ServerIDs.DISK], forKeys: ["MetricId", "ServerId"])
     
+    // Variables
+    var dataObject: AnyObject?
+    var delegate: DashboardViewControllerDelegate?
+    var currentlyUpdating : Bool = false
+    var selectedRow : Int = -1
+    var timer = NSTimer()
+    var disabled : Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if !settings.boolForKey("changed") {
@@ -63,11 +68,37 @@ class DashboardViewController: UIViewController, UITableViewDataSource, UITableV
             presentViewController(alertController, animated: true, completion: nil)
         }
         
-
         dashboardTable.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
         self.dashboardTable.tableFooterView = UIView()
         // wrap the centerViewController in a navigation controller, so we can push views to it
         // and display bar button items in the navigation bar
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+    }
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        timer.invalidate()
+    }
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        if settings.boolForKey("FetchedDashboardData"){
+            updateValues()
+            timer = NSTimer.scheduledTimerWithTimeInterval(15.0, target: self, selector: Selector("updateValues"), userInfo: nil, repeats: true)
+        } else {
+            // Update the values every 15 seconds.
+            settings.setBool(true, forKey: "FetchedDashboardData")
+            disabled = true
+            JHProgressHUD.sharedHUD.showInView(self.view, withHeader: "Fetching Latest Data", andFooter: "")
+            updateValues()
+            timer = NSTimer.scheduledTimerWithTimeInterval(15.0, target: self, selector: Selector("updateValues"), userInfo: nil, repeats: true)
+        }
+    }
+    
+    @IBAction func toggleSideMenu(sender: AnyObject) {
+        toggleSideMenuView()
     }
     
     func updateValues() {
@@ -109,9 +140,9 @@ class DashboardViewController: UIViewController, UITableViewDataSource, UITableV
                     if  anyObj is Array<AnyObject> {
                         self.parseData(anyObj!)
                     }
-                    
 
                 }
+                self.disabled = false
                 self.currentlyUpdating = false
                 JHProgressHUD.sharedHUD.hide()
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
@@ -188,28 +219,6 @@ class DashboardViewController: UIViewController, UITableViewDataSource, UITableV
         println("Finished updating data")
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(false, animated: false)
-    }
-    override func viewDidDisappear(animated: Bool) {
-        super.viewDidDisappear(animated)
-        timer.invalidate()
-    }
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        if settings.boolForKey("FetchedDashboardData"){
-            updateValues()
-            timer = NSTimer.scheduledTimerWithTimeInterval(15.0, target: self, selector: Selector("updateValues"), userInfo: nil, repeats: true)
-        } else {
-            // Update the values every 15 seconds.
-            settings.setBool(true, forKey: "FetchedDashboardData")
-            JHProgressHUD.sharedHUD.showInView(self.view, withHeader: "Fetching Latest Data", andFooter: "")
-            updateValues()
-            timer = NSTimer.scheduledTimerWithTimeInterval(15.0, target: self, selector: Selector("updateValues"), userInfo: nil, repeats: true)
-        }
-    }
-    
     func defaultSettings() {
         settings.setBool(true, forKey: "changed")
         settings.setDouble(0.2, forKey: "cpuLower")
@@ -242,6 +251,14 @@ class DashboardViewController: UIViewController, UITableViewDataSource, UITableV
             cell.serverName.text = "An Error Occurred"
         }
         return cell
+    }
+    
+    func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        if disabled {
+            return nil
+        } else {
+            return indexPath
+        }
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -282,21 +299,24 @@ class DashboardViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func navigateToCPUServerDetails() {
-        println("Worked")
-        if self.navigationController == nil {
-            println("no nc.")
-        }
+        settings.setObject("cpu", forKey: "server")
+        let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main",bundle: nil)
+        let destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ServerDetailsViewController") as! UIViewController
+        self.sideMenuController()?.setContentViewControllerWithoutMenu(destViewController)
     }
     
     func navigateToMEMServerDetails() {
-        println("Worked 2")
+        settings.setObject("mem", forKey: "server")
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main",bundle: nil)
         let destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ServerDetailsViewController") as! UIViewController
         self.sideMenuController()?.setContentViewControllerWithoutMenu(destViewController)
     }
     
     func navigateToDISKServerDetails() {
-        println("Worked 3")
+        settings.setObject("disk", forKey: "server")
+        let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main",bundle: nil)
+        let destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ServerDetailsViewController") as! UIViewController
+        self.sideMenuController()?.setContentViewControllerWithoutMenu(destViewController)
     }
     
     func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
@@ -312,9 +332,5 @@ class DashboardViewController: UIViewController, UITableViewDataSource, UITableV
             return 250.0
         }
         return 37.0
-    }
-
-    @IBAction func toggleSideMenu(sender: AnyObject) {
-        toggleSideMenuView()
     }
 }

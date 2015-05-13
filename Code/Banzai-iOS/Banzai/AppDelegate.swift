@@ -53,7 +53,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         settings.setInteger(50, forKey: "tier3_cpu")
         settings.setInteger(50, forKey: "tier3_mem")
         settings.setInteger(50, forKey: "tier3_disk")
-
+        
+        // Server Details
+        settings.setObject("cpu", forKey: "server")
+        
         return true
     }
 

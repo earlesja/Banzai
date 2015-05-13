@@ -12,22 +12,12 @@ class OSUsageViewController: UIViewController {
     
     @IBOutlet weak var lineGraphView: UIView!
     @IBOutlet weak var pieGraphView: UIView!
-    let settings = NSUserDefaults.standardUserDefaults()
-    let LEGEND_WIDTH : CGFloat = 100
-    var osNames = ["W Vista", "W 7", "W 8", "W 8.1", "Mac", "iOS", "Linux", "Android"]
-    var osPercentages = ["WVista":0.0, "W7":0.0, "W8":0.0, "W8One":0.0, "Mac":0.0, "iOS":0.0, "Android":0.0, "Linux":0.0]
-    var timeFrame = 604800 // 604800 = 7 days
-    var lineGraphDates : [String] = []
-    var pieChart : PNPieChart!, lineChart : PNLineChart!
-    var wVistaData = PNLineChartData(), w7Data = PNLineChartData(), w8Data = PNLineChartData(), w8OneData = PNLineChartData()
-    var macData = PNLineChartData(), iOSData = PNLineChartData(), androidData = PNLineChartData(), linuxData = PNLineChartData()
-    
-    var wVistaVals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], w7Vals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], w8Vals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], w8OneVals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-    var macVals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], iOSVals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], androidVals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], linuxVals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-    
     @IBOutlet weak var menuButton: UIBarButtonItem!
     @IBOutlet weak var refreshButton: UIBarButtonItem!
     
+    // Constants
+    let settings = NSUserDefaults.standardUserDefaults()
+    let LEGEND_WIDTH : CGFloat = 100
     // For server calls
     let wVista_1 = NSDictionary(objects: [Constants.OSIDs.WindowsVista_1], forKeys: ["MetricId"])
     let wVista_2 = NSDictionary(objects: [Constants.OSIDs.WindowsVista_2], forKeys: ["MetricId"])
@@ -54,6 +44,17 @@ class OSUsageViewController: UIViewController {
     let linux_2 = NSDictionary(objects: [Constants.OSIDs.Linux_2], forKeys: ["MetricId"])
     let linux_3 = NSDictionary(objects: [Constants.OSIDs.Linux_3], forKeys: ["MetricId"])
     
+    // Variables
+    var lineGraphDates : [String] = []
+    var macData = PNLineChartData(), iOSData = PNLineChartData(), androidData = PNLineChartData(), linuxData = PNLineChartData()
+    var macVals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], iOSVals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], androidVals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], linuxVals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    var osNames = ["W Vista", "W 7", "W 8", "W 8.1", "Mac", "iOS", "Linux", "Android"]
+    var osPercentages = ["WVista":0.0, "W7":0.0, "W8":0.0, "W8One":0.0, "Mac":0.0, "iOS":0.0, "Android":0.0, "Linux":0.0]
+    var pieChart : PNPieChart!, lineChart : PNLineChart!
+    var timeFrame = 604800 // 604800 = 7 days
+    var wVistaData = PNLineChartData(), w7Data = PNLineChartData(), w8Data = PNLineChartData(), w8OneData = PNLineChartData()
+    var wVistaVals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], w7Vals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], w8Vals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], w8OneVals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -111,6 +112,27 @@ class OSUsageViewController: UIViewController {
             disableButtons()
             getServerData()
         }
+    }
+    
+    @IBAction func toggleSideMenu(sender: AnyObject) {
+        toggleSideMenuView()
+    }
+    
+    @IBAction func refreshData(sender: AnyObject) {
+        println("Referesh the OS Usage page")
+        JHProgressHUD.sharedHUD.showInView(self.view, withHeader: "Fetching Data", andFooter: "")
+        disableButtons()
+        getServerData()
+    }
+    
+    func disableButtons() {
+        menuButton.enabled = false
+        refreshButton.enabled = false
+    }
+    
+    func enableButtons() {
+        menuButton.enabled = true
+        refreshButton.enabled = true
     }
     
     func getStoredData() {
@@ -230,17 +252,6 @@ class OSUsageViewController: UIViewController {
         
         pieGraphView.addSubview(pieChart)
         lineGraphView.addSubview(lineChart)
-    }
-    
-    @IBAction func toggleSideMenu(sender: AnyObject) {
-        toggleSideMenuView()
-    }
-    
-    @IBAction func refreshData(sender: AnyObject) {
-        println("Referesh the OS Usage page")
-        JHProgressHUD.sharedHUD.showInView(self.view, withHeader: "Fetching Data", andFooter: "")
-        disableButtons()
-        getServerData()
     }
     
     func getServerData() {
@@ -415,15 +426,6 @@ class OSUsageViewController: UIViewController {
         
         return -1
     }
-    
-    func disableButtons() {
-        menuButton.enabled = false
-        refreshButton.enabled = false
-    }
-    
-    func enableButtons() {
-        menuButton.enabled = true
-        refreshButton.enabled = true
-    }
+
 
 }
