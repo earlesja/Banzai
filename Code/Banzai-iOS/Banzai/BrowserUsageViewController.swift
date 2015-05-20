@@ -52,10 +52,12 @@ class BrowserUsageViewController: UIViewController {
     var lineGraphDates : [String] = []
     var pieChart : PNPieChart!
     var timeFrame = 604800 // 604800 = 7 days
+    var pieUpdated : Bool = false
+    var lineUpdated : Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // LINE GRAPH
         ie8Data.dataTitle = "IE 8"
         ie8Data.color = Constants.UIColors.purple
@@ -98,13 +100,14 @@ class BrowserUsageViewController: UIViewController {
         super.viewDidAppear(animated)
         if settings.boolForKey("FetchedBrowserData") {
             getStoredData()
-            updateGraphs()
+            updatePieGraph()
+            updateLineGraph()
         } else {
             JHProgressHUD.sharedHUD.showInView(self.view, withHeader: "Fetching Data", andFooter: "")
             disableButtons()
             getServerData()
         }
-
+        
     }
     
     @IBAction func toggleSideMenu(sender: AnyObject) {
@@ -140,7 +143,7 @@ class BrowserUsageViewController: UIViewController {
         self.safariVals = settings.objectForKey("safariValues") as! [Double]
     }
     
-    func updateGraphs() {
+    func updatePieGraph() {
         var keys = ["IE8", "IE9", "IE10", "IE11", "Firefox", "Chrome", "Safari"]
         var percentages : [Double] = []
         for key in keys {
@@ -176,6 +179,11 @@ class BrowserUsageViewController: UIViewController {
         legend.frame = CGRectMake(pieGraphView.bounds.width - LEGEND_WIDTH, pieGraphView.bounds.minY + pieGraphView.bounds.height / 4, LEGEND_WIDTH, pieGraphView.bounds.height/2)
         pieGraphView.addSubview(legend)
         
+        pieGraphView.addSubview(pieChart)
+        
+    }
+    
+    func updateLineGraph() {
         var lineRect = CGRect(x: lineGraphView.bounds.minX, y: lineGraphView.bounds.minY, width: lineGraphView.bounds.width, height: lineGraphView.bounds.height)
         self.lineChart = PNLineChart(frame: lineRect) as PNLineChart
         lineChart.backgroundColor = UIColor.clearColor()
@@ -183,13 +191,12 @@ class BrowserUsageViewController: UIViewController {
         lineChart.yValueMax = 100
         lineChart.yValueMin = 0
         
-        // LINE GRAPH
         for (var i = 0; i < lineGraphDates.count; i++) {
             if i % 2 != 0 {
                 lineGraphDates[i] = ""
             }
         }
-
+        
         lineChart.setXLabels(lineGraphDates, withWidth: ((lineGraphView.bounds.width - 80) / CGFloat(lineGraphDates.count)))
         ie8Data.getData = ({ (index: UInt) -> PNLineChartDataItem in
             var yValue : CGFloat = CGFloat(self.ie8Vals[Int(index) as Int])
@@ -230,7 +237,6 @@ class BrowserUsageViewController: UIViewController {
         lineChart.chartData = [ie8Data, ie9Data, ie10Data, ie11Data, firefoxData, chromeData, safariData]
         lineChart.strokeChart()
         
-        pieGraphView.addSubview(pieChart)
         lineGraphView.addSubview(lineChart)
     }
     
@@ -244,10 +250,13 @@ class BrowserUsageViewController: UIViewController {
         chromeVals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
         safariVals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
         self.lineGraphDates = []
-
+        self.pieUpdated = false
+        self.lineUpdated = false
+        
         var error : NSError? = nil
         let url = NSURL(string: "http://pan-banzai.cloudapp.net/banzai/api/data/historicaldata")
         var request = NSMutableURLRequest(URL: url!)
+        
         request.HTTPMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         var credentialString = "Basic " + ((settings.valueForKey("credentials") as! NSString) as String)
@@ -255,10 +264,14 @@ class BrowserUsageViewController: UIViewController {
         
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
-        var outerDictionary = NSDictionary(objects: ["Day", timeFrame, [ie8_1, ie8_2, ie8_3, ie9_1, ie9_2, ie9_3, ie10_1, ie10_2, ie10_3, ie11_1, ie11_2, ie11_3, firefox_1, firefox_2, firefox_3, chrome_1, chrome_2, chrome_3, safari_1, safari_2, safari_3]], forKeys: ["GroupBy", "TimeFrame", "WidgetMetrics"])
+        var outerDictionary = NSDictionary(objects: ["Second", 10, [ie8_1, ie8_2, ie8_3, ie9_1, ie9_2, ie9_3, ie10_1, ie10_2, ie10_3, ie11_1, ie11_2, ie11_3, firefox_1, firefox_2, firefox_3, chrome_1, chrome_2, chrome_3, safari_1, safari_2, safari_3]], forKeys: ["GroupBy", "TimeFrame", "WidgetMetrics"])
         var jsonData = NSJSONSerialization.dataWithJSONObject(outerDictionary, options: NSJSONWritingOptions.PrettyPrinted, error: &error)
         request.HTTPBody = jsonData!
-
+        
+        var response = NSURLResponse()
+        var data = NSData()
+        
+        // Pie Graph
         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { (response, data, error) -> Void in
             var statusCode = (response as! NSHTTPURLResponse).statusCode
             if error != nil {
@@ -279,17 +292,137 @@ class BrowserUsageViewController: UIViewController {
                 let anyObj: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(0), error: &error)
                 
                 if  anyObj is Array<AnyObject> {
-                    self.parseData(anyObj!)
+                    self.parsePieGraphData(anyObj!)
                 }
-                self.updateGraphs()
+                self.updatePieGraph()
+                self.pieUpdated = true
             }
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-            JHProgressHUD.sharedHUD.hide()
-            self.enableBUttons()
+            if self.lineUpdated {
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                JHProgressHUD.sharedHUD.hide()
+                self.enableBUttons()
+                self.settings.setBool(true, forKey: "FetchedBrowserData")
+                
+            }
+            
+        }
+        
+        
+        // Line Graph
+        outerDictionary = NSDictionary(objects: ["Day", timeFrame, [ie8_1, ie8_2, ie8_3, ie9_1, ie9_2, ie9_3, ie10_1, ie10_2, ie10_3, ie11_1, ie11_2, ie11_3, firefox_1, firefox_2, firefox_3, chrome_1, chrome_2, chrome_3, safari_1, safari_2, safari_3]], forKeys: ["GroupBy", "TimeFrame", "WidgetMetrics"])
+        jsonData = NSJSONSerialization.dataWithJSONObject(outerDictionary, options: NSJSONWritingOptions.PrettyPrinted, error: &error)
+        request.HTTPBody = jsonData!
+        
+        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { (response, data, error) -> Void in
+            var statusCode = (response as! NSHTTPURLResponse).statusCode
+            if error != nil {
+                println("Uh oh... there was an error getting the browser data from the server.")
+                let alertController = UIAlertController(title: "", message: "", preferredStyle: UIAlertControllerStyle.Alert)
+                alertController.title = "Server error. Status code: \(statusCode)"
+                let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) { (action) -> Void in
+                }
+                alertController.addAction(okAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
+            } else {
+                var responseText = NSString(data: data, encoding: NSASCIIStringEncoding)
+                
+                var data: NSData = responseText!.dataUsingEncoding(NSUTF8StringEncoding)!
+                var error: NSError?
+                
+                // convert NSData to 'AnyObject'
+                let anyObj: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(0), error: &error)
+                
+                if  anyObj is Array<AnyObject> {
+                    self.parseLineGraphData(anyObj!)
+                }
+                self.updateLineGraph()
+                self.lineUpdated = true
+            }
+            
+            if self.pieUpdated {
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                JHProgressHUD.sharedHUD.hide()
+                self.enableBUttons()
+                self.settings.setBool(true, forKey: "FetchedBrowserData")
+            }
         }
     }
     
-    func parseData(data : AnyObject) {
+    func parsePieGraphData(data: AnyObject) {
+        var dates : [String] = []
+        var browserCounts : [Int] = [0, 0, 0, 0, 0, 0, 0]
+        var metricID = 0
+        var date = ""
+        var value = 0.0
+        var array = []
+        
+        // First, get the dates
+        for json in data as! Array<AnyObject> {
+            date = (json["DateCapturedUtc"] as AnyObject? as? String) ?? ""
+            array = date.componentsSeparatedByString("T")
+            array = array[0].componentsSeparatedByString("-")
+            
+            if !contains(dates, date) {
+                dates.append(date)
+            }
+        }
+        
+        // Sort the dates
+        dates = sorted(dates, {(d1: String, d2: String) -> Bool in
+            if d1.componentsSeparatedByString("-")[0] == d2.componentsSeparatedByString("-")[0] {
+                return d1.componentsSeparatedByString("-")[1].toInt() < d2.componentsSeparatedByString("-")[1].toInt()
+            } else {
+                return d1.componentsSeparatedByString("-")[0].toInt() < d2.componentsSeparatedByString("-")[0].toInt()
+            }
+        })
+        
+        var lastDate = dates.last
+        
+        for json in data as! Array<AnyObject>{
+            metricID = (json["MetricId"] as AnyObject? as? Int) ?? -1 // to get rid of null
+            date = (json["DateCapturedUtc"]  as AnyObject? as? String) ?? ""
+            value = (json["Value"] as AnyObject? as? Double) ?? -1.0
+            array = date.componentsSeparatedByString("T")
+            array = array[0].componentsSeparatedByString("-")
+            
+            if date == lastDate! {
+                if metricID == Constants.BrowserIDs.IE8_1 || metricID == Constants.BrowserIDs.IE8_2 || metricID == Constants.BrowserIDs.IE8_3 {
+                    self.browserPercentages.updateValue(self.browserPercentages["IE8"]! + value, forKey: "IE8")
+                    browserCounts[0] += 1
+                } else if metricID == Constants.BrowserIDs.IE9_1 || metricID == Constants.BrowserIDs.IE9_2 || metricID == Constants.BrowserIDs.IE9_3 {
+                    self.browserPercentages.updateValue(self.browserPercentages["IE9"]! + value, forKey: "IE9")
+                    browserCounts[1] += 1
+                } else if metricID == Constants.BrowserIDs.IE10_1 || metricID == Constants.BrowserIDs.IE10_2 || metricID == Constants.BrowserIDs.IE10_3 {
+                    self.browserPercentages.updateValue(self.browserPercentages["IE10"]! + value, forKey: "IE10")
+                    browserCounts[2] += 1
+                } else if metricID == Constants.BrowserIDs.IE11_1 || metricID == Constants.BrowserIDs.IE11_2 || metricID == Constants.BrowserIDs.IE11_3 {
+                    self.browserPercentages.updateValue(self.browserPercentages["IE11"]! + value, forKey: "IE11")
+                    browserCounts[3] += 1
+                } else if metricID == Constants.BrowserIDs.Firefox_1 || metricID == Constants.BrowserIDs.Firefox_2 || metricID == Constants.BrowserIDs.Firefox_3 {
+                    self.browserPercentages.updateValue(self.browserPercentages["Firefox"]! + value, forKey: "Firefox")
+                    browserCounts[4] += 1
+                } else if metricID == Constants.BrowserIDs.Chrome_1 || metricID == Constants.BrowserIDs.Chrome_2 || metricID == Constants.BrowserIDs.Chrome_3 {
+                    self.browserPercentages.updateValue(self.browserPercentages["Chrome"]! + value, forKey: "Chrome")
+                    browserCounts[5] += 1
+                } else if metricID == Constants.BrowserIDs.Safari_1 || metricID == Constants.BrowserIDs.Safari_2 || metricID == Constants.BrowserIDs.Safari_3 {
+                    self.browserPercentages.updateValue(self.browserPercentages["Safari"]! + value, forKey: "Safari")
+                    browserCounts[6] += 1
+                }
+            }
+        }
+        
+        browserPercentages.updateValue(browserPercentages["IE8"]!/Double(browserCounts[0]), forKey: "IE8")
+        browserPercentages.updateValue(browserPercentages["IE9"]!/Double(browserCounts[1]), forKey: "IE9")
+        browserPercentages.updateValue(browserPercentages["IE10"]!/Double(browserCounts[2]), forKey: "IE10")
+        browserPercentages.updateValue(browserPercentages["IE11"]!/Double(browserCounts[3]), forKey: "IE11")
+        browserPercentages.updateValue(browserPercentages["Firefox"]!/Double(browserCounts[4]), forKey: "Firefox")
+        browserPercentages.updateValue(browserPercentages["Chrome"]!/Double(browserCounts[5]), forKey: "Chrome")
+        browserPercentages.updateValue(browserPercentages["Safari"]!/Double(browserCounts[6]), forKey: "Safari")
+        settings.setObject(self.browserPercentages, forKey: "browserPercentages")
+        
+    }
+    
+    func parseLineGraphData(data : AnyObject) {
         var metricID = 0
         var date = ""
         var value = 0.0
@@ -321,32 +454,6 @@ class BrowserUsageViewController: UIViewController {
             numDates = lineGraphDates.count
         }
         println(self.lineGraphDates)
-        
-        for json in data as! Array<AnyObject>{
-            metricID = (json["MetricId"] as AnyObject? as? Int) ?? -1 // to get rid of null
-            date = (json["DateCapturedUtc"]  as AnyObject? as? String) ?? ""
-            value = (json["Value"] as AnyObject? as? Double) ?? -1.0
-            array = date.componentsSeparatedByString("T")
-            array = array[0].componentsSeparatedByString("-")
-            date = "\(array[1])-\(array[2])"
-            if date == self.lineGraphDates.last! {
-                if metricID == Constants.BrowserIDs.IE8_1 || metricID == Constants.BrowserIDs.IE8_2 || metricID == Constants.BrowserIDs.IE8_3 {
-                    self.browserPercentages.updateValue(self.browserPercentages["IE8"]! + value/3, forKey: "IE8")
-                } else if metricID == Constants.BrowserIDs.IE9_1 || metricID == Constants.BrowserIDs.IE9_2 || metricID == Constants.BrowserIDs.IE9_3 {
-                    self.browserPercentages.updateValue(self.browserPercentages["IE9"]! + value/3, forKey: "IE9")
-                } else if metricID == Constants.BrowserIDs.IE10_1 || metricID == Constants.BrowserIDs.IE10_2 || metricID == Constants.BrowserIDs.IE10_3 {
-                    self.browserPercentages.updateValue(self.browserPercentages["IE10"]! + value/3, forKey: "IE10")
-                } else if metricID == Constants.BrowserIDs.IE11_1 || metricID == Constants.BrowserIDs.IE11_2 || metricID == Constants.BrowserIDs.IE11_3 {
-                    self.browserPercentages.updateValue(self.browserPercentages["IE11"]! + value/3, forKey: "IE11")
-                } else if metricID == Constants.BrowserIDs.Firefox_1 || metricID == Constants.BrowserIDs.Firefox_2 || metricID == Constants.BrowserIDs.Firefox_3 {
-                    self.browserPercentages.updateValue(self.browserPercentages["Firefox"]! + value/3, forKey: "Firefox")
-                } else if metricID == Constants.BrowserIDs.Chrome_1 || metricID == Constants.BrowserIDs.Chrome_2 || metricID == Constants.BrowserIDs.Chrome_3 {
-                    self.browserPercentages.updateValue(self.browserPercentages["Chrome"]! + value/3, forKey: "Chrome")
-                } else if metricID == Constants.BrowserIDs.Safari_1 || metricID == Constants.BrowserIDs.Safari_2 || metricID == Constants.BrowserIDs.Safari_3 {
-                    self.browserPercentages.updateValue(self.browserPercentages["Safari"]! + value/3, forKey: "Safari")
-                }
-            }
-        }
         
         // Parse data for line graph
         var index = 0
@@ -380,8 +487,6 @@ class BrowserUsageViewController: UIViewController {
         }
         
         // Store the data
-        settings.setBool(true, forKey: "FetchedBrowserData")
-        settings.setObject(self.browserPercentages, forKey: "browserPercentages")
         settings.setObject(self.lineGraphDates, forKey: "browserDates")
         settings.setObject(self.ie8Vals, forKey: "ie8Values")
         settings.setObject(self.ie9Vals, forKey: "ie9Values")

@@ -9,7 +9,7 @@
 import UIKit
 
 class LoginViewController: UIViewController {
-
+    
     var dataObject: AnyObject?
     
     @IBOutlet weak var emailField: UITextField!
@@ -32,12 +32,12 @@ class LoginViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     @IBAction func backgroundTap(sender: AnyObject){
         self.view.endEditing(true)
     }
@@ -72,7 +72,7 @@ class LoginViewController: UIViewController {
                 if error != nil {
                     println("Uh oh... there was an error logging in.")
                     let alertController = UIAlertController(title: "", message: "", preferredStyle: UIAlertControllerStyle.Alert)
-                    statusCode == 500 ? (alertController.title = "Incorrect username or password.") : (alertController.title = "There was an error logging in (status code: \(statusCode)).")
+                    statusCode == 500 ? (alertController.title = "Incorrect username or password. (Status code: \(statusCode))") : (alertController.title = "There was an error logging in (status code: \(statusCode)).")
                     let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) { (action) -> Void in
                     }
                     alertController.addAction(okAction)

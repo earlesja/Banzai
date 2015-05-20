@@ -54,11 +54,13 @@ class OSUsageViewController: UIViewController {
     var timeFrame = 604800 // 604800 = 7 days
     var wVistaData = PNLineChartData(), w7Data = PNLineChartData(), w8Data = PNLineChartData(), w8OneData = PNLineChartData()
     var wVistaVals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], w7Vals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], w8Vals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], w8OneVals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-
+    var pieUpdated : Bool = false
+    var lineUpdated : Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-
+        
         // LINE GRAPH
         
         wVistaData.dataTitle = "W Vista"
@@ -106,7 +108,8 @@ class OSUsageViewController: UIViewController {
         super.viewDidAppear(animated)
         if settings.boolForKey("FetchedOSData") {
             getStoredData()
-            updateGraphs()
+            updatePieGraph()
+            updateLineGraph()
         } else {
             JHProgressHUD.sharedHUD.showInView(self.view, withHeader: "Fetching Data", andFooter: "")
             disableButtons()
@@ -148,7 +151,7 @@ class OSUsageViewController: UIViewController {
         self.linuxVals = settings.objectForKey("linuxValues") as! [Double]
     }
     
-    func updateGraphs() {
+    func updatePieGraph() {
         var keys = ["WVista", "W7", "W8", "W8One", "Mac", "iOS", "Android", "Linux"]
         var percentages : [Double] = []
         for key in keys {
@@ -186,7 +189,11 @@ class OSUsageViewController: UIViewController {
         var legend = pieChart.getLegendWithMaxWidth(LEGEND_WIDTH) as UIView
         legend.frame = CGRectMake(pieGraphView.bounds.width - LEGEND_WIDTH, pieGraphView.bounds.minY + pieGraphView.bounds.height / 4, LEGEND_WIDTH, pieGraphView.bounds.height/2)
         pieGraphView.addSubview(legend)
+        pieGraphView.addSubview(pieChart)
         
+    }
+    
+    func updateLineGraph() {
         
         // LINE GRAPH
         self.lineChart = PNLineChart(frame: CGRect(x: lineGraphView.bounds.minX, y: lineGraphView.bounds.minY, width: lineGraphView.bounds.width, height: lineGraphView.bounds.height))
@@ -204,7 +211,7 @@ class OSUsageViewController: UIViewController {
                 lineGraphDates[i] = ""
             }
         }
-
+        
         lineChart.setXLabels(lineGraphDates, withWidth: ((lineGraphView.bounds.width - 80) / CGFloat(lineGraphDates.count)))
         wVistaData.getData = ({ (index: UInt) -> PNLineChartDataItem in
             var yValue : CGFloat = CGFloat(self.wVistaVals[Int(index) as Int])
@@ -250,7 +257,6 @@ class OSUsageViewController: UIViewController {
         lineChart.chartData = [wVistaData, w7Data, w8Data, w8OneData, macData, iOSData, androidData, linuxData]
         lineChart.strokeChart()
         
-        pieGraphView.addSubview(pieChart)
         lineGraphView.addSubview(lineChart)
     }
     
@@ -265,6 +271,8 @@ class OSUsageViewController: UIViewController {
         androidVals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
         linuxVals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
         self.lineGraphDates = []
+        self.pieUpdated = false
+        self.lineUpdated = false
         
         var error : NSError? = nil
         let url = NSURL(string: "http://pan-banzai.cloudapp.net/banzai/api/data/historicaldata")
@@ -276,7 +284,8 @@ class OSUsageViewController: UIViewController {
         
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
-        var outerDictionary = NSDictionary(objects: ["Day", timeFrame, [wVista_1, wVista_2, wVista_3, w7_1, w7_2, w7_3, w8_1, w8_2, w8_3, w8One_1, w8One_2, w8One_3, mac_1, mac_2, mac_3, iOS_1, iOS_2, iOS_3, android_1, android_2, android_3, linux_1, linux_2, linux_3]], forKeys: ["GroupBy", "TimeFrame", "WidgetMetrics"])
+        // Pie Graph
+        var outerDictionary = NSDictionary(objects: ["Second", 10, [wVista_1, wVista_2, wVista_3, w7_1, w7_2, w7_3, w8_1, w8_2, w8_3, w8One_1, w8One_2, w8One_3, mac_1, mac_2, mac_3, iOS_1, iOS_2, iOS_3, android_1, android_2, android_3, linux_1, linux_2, linux_3]], forKeys: ["GroupBy", "TimeFrame", "WidgetMetrics"])
         var jsonData = NSJSONSerialization.dataWithJSONObject(outerDictionary, options: NSJSONWritingOptions.PrettyPrinted, error: &error)
         request.HTTPBody = jsonData!
         
@@ -300,17 +309,136 @@ class OSUsageViewController: UIViewController {
                 let anyObj: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(0), error: &error)
                 
                 if  anyObj is Array<AnyObject> {
-                    self.parseData(anyObj!)
+                    self.parsePieGraphData(anyObj!)
                 }
-                self.updateGraphs()
+                self.updatePieGraph()
+                self.pieUpdated = true
             }
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-            JHProgressHUD.sharedHUD.hide()
-            self.enableButtons()
+            if self.lineUpdated {
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                JHProgressHUD.sharedHUD.hide()
+                self.enableButtons()
+                self.settings.setBool(true, forKey: "FetchedOSData")
+            }
+            
+        }
+        
+        // Line Graph
+        outerDictionary = NSDictionary(objects: ["Day", timeFrame, [wVista_1, wVista_2, wVista_3, w7_1, w7_2, w7_3, w8_1, w8_2, w8_3, w8One_1, w8One_2, w8One_3, mac_1, mac_2, mac_3, iOS_1, iOS_2, iOS_3, android_1, android_2, android_3, linux_1, linux_2, linux_3]], forKeys: ["GroupBy", "TimeFrame", "WidgetMetrics"])
+        jsonData = NSJSONSerialization.dataWithJSONObject(outerDictionary, options: NSJSONWritingOptions.PrettyPrinted, error: &error)
+        request.HTTPBody = jsonData!
+        
+        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { (response, data, error) -> Void in
+            if error != nil {
+                println("Uh oh... there was an error getting the os data from the server.")
+                var statusCode = (response as! NSHTTPURLResponse).statusCode
+                let alertController = UIAlertController(title: "", message: "", preferredStyle: UIAlertControllerStyle.Alert)
+                alertController.title = "Server error. Status code: \(statusCode)"
+                let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) { (action) -> Void in
+                }
+                alertController.addAction(okAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
+            } else {
+                var responseText = NSString(data: data, encoding: NSASCIIStringEncoding)
+                
+                var data: NSData = responseText!.dataUsingEncoding(NSUTF8StringEncoding)!
+                var error: NSError?
+                
+                // convert NSData to 'AnyObject'
+                let anyObj: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(0), error: &error)
+                
+                if  anyObj is Array<AnyObject> {
+                    self.parseLineGraphData(anyObj!)
+                }
+                self.updateLineGraph()
+                self.lineUpdated = true
+            }
+            if self.pieUpdated {
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                JHProgressHUD.sharedHUD.hide()
+                self.enableButtons()
+                self.settings.setBool(true, forKey: "FetchedOSData")
+                
+            }
         }
     }
     
-    func parseData(data : AnyObject) {
+    func parsePieGraphData(data : AnyObject) {
+        var dates : [String] = []
+        var osCounts : [Int] = [0, 0, 0, 0, 0, 0, 0, 0]
+        var metricID = 0
+        var date = ""
+        var value = 0.0
+        var array = []
+        
+        // First, get the dates
+        for json in data as! Array<AnyObject> {
+            date = (json["DateCapturedUtc"] as AnyObject? as? String) ?? ""
+            array = date.componentsSeparatedByString("T")
+            array = array[0].componentsSeparatedByString("-")
+            if !contains(self.lineGraphDates, date) {
+                dates.append(date)
+            }
+        }
+        
+        // Sort the dates
+        dates = sorted(dates, {(d1: String, d2: String) -> Bool in
+            if d1.componentsSeparatedByString("-")[0] == d2.componentsSeparatedByString("-")[0] {
+                return d1.componentsSeparatedByString("-")[1].toInt() < d2.componentsSeparatedByString("-")[1].toInt()
+            } else {
+                return d1.componentsSeparatedByString("-")[0].toInt() < d2.componentsSeparatedByString("-")[0].toInt()
+            }
+        })
+        
+        var lastDate = dates.last
+        
+        for json in data as! Array<AnyObject>{
+            metricID = (json["MetricId"] as AnyObject? as? Int) ?? -1 // to get rid of null
+            date = (json["DateCapturedUtc"]  as AnyObject? as? String) ?? ""
+            value = (json["Value"] as AnyObject? as? Double) ?? -1.0
+            array = date.componentsSeparatedByString("T")
+            array = array[0].componentsSeparatedByString("-")
+            if date == lastDate! {
+                if metricID == Constants.OSIDs.WindowsVista_1 || metricID == Constants.OSIDs.WindowsVista_2 || metricID == Constants.OSIDs.WindowsVista_3 {
+                    self.osPercentages.updateValue(self.osPercentages["WVista"]! + value, forKey: "WVista")
+                    osCounts[0] += 1
+                } else if metricID == Constants.OSIDs.Windows7_1 || metricID == Constants.OSIDs.Windows7_2 || metricID == Constants.OSIDs.Windows7_3 {
+                    self.osPercentages.updateValue(self.osPercentages["W7"]! + value, forKey: "W7")
+                    osCounts[1] += 1
+                } else if metricID == Constants.OSIDs.Windows8_1 || metricID == Constants.OSIDs.Windows8_2 || metricID == Constants.OSIDs.Windows8_3 {
+                    self.osPercentages.updateValue(self.osPercentages["W8"]! + value, forKey: "W8")
+                    osCounts[2] += 1
+                } else if metricID == Constants.OSIDs.Windows8One_1 || metricID == Constants.OSIDs.Windows8One_2 || metricID == Constants.OSIDs.Windows8One_3 {
+                    self.osPercentages.updateValue(self.osPercentages["W8One"]! + value, forKey: "W8One")
+                    osCounts[3] += 1
+                } else if metricID == Constants.OSIDs.Mac_1 || metricID == Constants.OSIDs.Mac_2 || metricID == Constants.OSIDs.Mac_3 {
+                    self.osPercentages.updateValue(self.osPercentages["Mac"]! + value, forKey: "Mac")
+                    osCounts[4] += 1
+                } else if metricID == Constants.OSIDs.iOS_1 || metricID == Constants.OSIDs.iOS_2 || metricID == Constants.OSIDs.iOS_3 {
+                    self.osPercentages.updateValue(self.osPercentages["iOS"]! + value, forKey: "iOS")
+                    osCounts[5] += 1
+                } else if metricID == Constants.OSIDs.Android_1 || metricID == Constants.OSIDs.Android_2 || metricID == Constants.OSIDs.Android_3 {
+                    self.osPercentages.updateValue(self.osPercentages["Android"]! + value, forKey: "Android")
+                    osCounts[6] += 1
+                } else if metricID == Constants.OSIDs.Linux_1 || metricID == Constants.OSIDs.Linux_2 || metricID == Constants.OSIDs.Linux_3 {
+                    self.osPercentages.updateValue(self.osPercentages["Linux"]! + value, forKey: "Linux")
+                    osCounts[7] += 1
+                }
+            }
+        }
+        osPercentages.updateValue(osPercentages["WVista"]!/Double(osCounts[0]), forKey: "WVista")
+        osPercentages.updateValue(osPercentages["W7"]!/Double(osCounts[1]), forKey: "W7")
+        osPercentages.updateValue(osPercentages["W8"]!/Double(osCounts[2]), forKey: "W8")
+        osPercentages.updateValue(osPercentages["W8One"]!/Double(osCounts[3]), forKey: "W8One")
+        osPercentages.updateValue(osPercentages["Mac"]!/Double(osCounts[4]), forKey: "Mac")
+        osPercentages.updateValue(osPercentages["iOS"]!/Double(osCounts[5]), forKey: "iOS")
+        osPercentages.updateValue(osPercentages["Android"]!/Double(osCounts[6]), forKey: "Android")
+        osPercentages.updateValue(osPercentages["Linux"]!/Double(osCounts[7]), forKey: "Linux")
+        settings.setObject(self.osPercentages, forKey: "osPercentages")
+        
+    }
+    
+    func parseLineGraphData(data : AnyObject) {
         var metricID = 0
         var date = ""
         var value = 0.0
@@ -342,33 +470,6 @@ class OSUsageViewController: UIViewController {
             numDates = lineGraphDates.count
         }
         
-        for json in data as! Array<AnyObject>{
-            metricID = (json["MetricId"] as AnyObject? as? Int) ?? -1 // to get rid of null
-            date = (json["DateCapturedUtc"]  as AnyObject? as? String) ?? ""
-            value = (json["Value"] as AnyObject? as? Double) ?? -1.0
-            array = date.componentsSeparatedByString("T")
-            array = array[0].componentsSeparatedByString("-")
-            date = "\(array[1])-\(array[2])"
-            if date == self.lineGraphDates.last! {
-                if metricID == Constants.OSIDs.WindowsVista_1 || metricID == Constants.OSIDs.WindowsVista_2 || metricID == Constants.OSIDs.WindowsVista_3 {
-                    self.osPercentages.updateValue(self.osPercentages["WVista"]! + value/3, forKey: "WVista")
-                } else if metricID == Constants.OSIDs.Windows7_1 || metricID == Constants.OSIDs.Windows7_2 || metricID == Constants.OSIDs.Windows7_3 {
-                    self.osPercentages.updateValue(self.osPercentages["W7"]! + value/3, forKey: "W7")
-                } else if metricID == Constants.OSIDs.Windows8_1 || metricID == Constants.OSIDs.Windows8_2 || metricID == Constants.OSIDs.Windows8_3 {
-                    self.osPercentages.updateValue(self.osPercentages["W8"]! + value/3, forKey: "W8")
-                } else if metricID == Constants.OSIDs.Windows8One_1 || metricID == Constants.OSIDs.Windows8One_2 || metricID == Constants.OSIDs.Windows8One_3 {
-                    self.osPercentages.updateValue(self.osPercentages["W8One"]! + value/3, forKey: "W8One")
-                } else if metricID == Constants.OSIDs.Mac_1 || metricID == Constants.OSIDs.Mac_2 || metricID == Constants.OSIDs.Mac_3 {
-                    self.osPercentages.updateValue(self.osPercentages["Mac"]! + value/3, forKey: "Mac")
-                } else if metricID == Constants.OSIDs.iOS_1 || metricID == Constants.OSIDs.iOS_2 || metricID == Constants.OSIDs.iOS_3 {
-                    self.osPercentages.updateValue(self.osPercentages["iOS"]! + value/3, forKey: "iOS")
-                } else if metricID == Constants.OSIDs.Android_1 || metricID == Constants.OSIDs.Android_2 || metricID == Constants.OSIDs.Android_3 {
-                    self.osPercentages.updateValue(self.osPercentages["Android"]! + value/3, forKey: "Android")
-                } else if metricID == Constants.OSIDs.Linux_1 || metricID == Constants.OSIDs.Linux_2 || metricID == Constants.OSIDs.Linux_3 {
-                    self.osPercentages.updateValue(self.osPercentages["Linux"]! + value/3, forKey: "Linux")
-                }
-            }
-        }
         
         // Parse data for line graph
         var index = 0
@@ -404,8 +505,6 @@ class OSUsageViewController: UIViewController {
         }
         
         // Store the data
-        settings.setBool(true, forKey: "FetchedOSData")
-        settings.setObject(self.osPercentages, forKey: "osPercentages")
         settings.setObject(self.lineGraphDates, forKey: "osDates")
         settings.setObject(self.wVistaVals, forKey: "wVistaValues")
         settings.setObject(self.w7Vals, forKey: "w7Values")
@@ -426,6 +525,6 @@ class OSUsageViewController: UIViewController {
         
         return -1
     }
-
-
+    
+    
 }
