@@ -244,23 +244,7 @@ public class OsUsageFragment extends Fragment {
 		super.onPause();
 	}
 
-	public void updateContent(ArrayList<String> data) {
-		
-//		 Toast.makeText(this.getActivity(),
-//		 mPieChart.getData().getDataSet().getEntryForXIndex(0).getVal() +"\n"
-//		 +mPieChart.getData().getDataSet().getEntryForXIndex(1).getVal() +"\n"
-//		 +mPieChart.getData().getDataSet().getEntryForXIndex(2).getVal() +"\n"
-//		 +mPieChart.getData().getDataSet().getEntryForXIndex(3).getVal() +"\n"
-//		 +mPieChart.getData().getDataSet().getEntryForXIndex(4).getVal() +"\n"
-//		 +mPieChart.getData().getDataSet().getEntryForXIndex(5).getVal() +"\n"
-//		 +mPieChart.getData().getDataSet().getEntryForXIndex(6).getVal() +"\n"
-//		 +mPieChart.getData().getDataSet().getEntryForXIndex(7).getVal() +"\n"
-//		 +mPieChart.getData().getDataSet().getEntryForXIndex(8).getVal() +"\n"
-//		 +mPieChart.getData().getDataSet().getEntryForXIndex(9).getVal() +"\n"
-//		 ,Toast.LENGTH_LONG).show();
-		
-
-		
+	public void updateContent(ArrayList<String> data) {	
 		
 		int metricId = Integer.parseInt(data.get(0)); 
 		float value = Float.parseFloat(data.get(1));

@@ -28,6 +28,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.pan.banzai.DataCollectorService.DataCollectorBinder;
 
@@ -59,8 +60,8 @@ public class MainActivity extends Activity {
 
 		// signalr service
 		Intent dataService = new Intent(this, DataCollectorService.class);
-		// startService(dataService);
-		bindService(dataService, mConnection, Context.BIND_AUTO_CREATE);
+		startService(dataService);
+//		bindService(dataService, mConnection, Context.BIND_AUTO_CREATE);
 
 		// nav stuff
 		String[] navOptions = getResources().getStringArray(
@@ -160,6 +161,18 @@ public class MainActivity extends Activity {
 
 	}
 
+	public static List<Integer> getCPU_METRICIDS() {
+		return CPU_METRICIDS;
+	}
+
+	public static List<Integer> getRAM_METRICIDS() {
+		return RAM_METRICIDS;
+	}
+
+	public static List<Integer> getDISK_METRICIDS() {
+		return DISK_METRICIDS;
+	}
+
 	DataCollectorService mService;
 	boolean mBound;
 	private ServiceConnection mConnection = new ServiceConnection() {
@@ -195,124 +208,16 @@ public class MainActivity extends Activity {
 				JSONObject obj = new JSONObject(datapassed);
 				JSONObject data = (JSONObject) obj.getJSONArray("A").get(0);
 
-				// Toast.makeText(MainActivity.this,
-				// "Triggered by Service!\n"
-				// + "Data passed: " + String.valueOf(datapassed),
-				// Toast.LENGTH_LONG).show();
-
 				ArrayList<String> dataList = new ArrayList<String>();
 				dataList.add(data.get("MetricId").toString());
 				dataList.add(data.get("Value").toString());
 
-				int metricId = Integer.parseInt(dataList.get(0));
-				float value = Float.parseFloat(dataList.get(1));
-
-				boolean shouldNotify = false;
-				int metricType = 0;
-
-				if (MainActivity.CPU_METRICIDS.contains(metricId)
-						&& value > Storage.getCpuCriticalThreshold()) {
-					shouldNotify = true;
-					metricType = 1;
-				} else if (MainActivity.RAM_METRICIDS.contains(metricId)
-						&& value > Storage.getRamCriticalThreshold()) {
-					shouldNotify = true;
-					metricType = 2;
-				} else if (MainActivity.DISK_METRICIDS.contains(metricId)
-						&& value > Storage.getStorageCriticalThreshold()) {
-					shouldNotify = true;
-					metricType = 3;
-				}
-				
-				shouldNotify = shouldNotify && Storage.getNotificationsEnabled();
-				
-				if (shouldNotify) {
-
-//					ActivityManager activityManager = (ActivityManager) getApplicationContext()
-//							.getSystemService(Context.ACTIVITY_SERVICE);
-//					List<RunningTaskInfo> services = activityManager
-//							.getRunningTasks(Integer.MAX_VALUE);
-//					boolean isActivityFound = false;
-//
-//					if (services.get(0).topActivity
-//							.getPackageName()
-//							.toString()
-//							.equalsIgnoreCase(
-//									getApplicationContext().getPackageName().toString())) {
-//						isActivityFound = true;
-//					}
-
-//					if (!MainActivity.isInForeground) {
-
-						String tickerText = "Error";
-						String titleText = "Error";
-						String contentText = "Error";
-
-						// TODO: make this more specific and more dynamic
-						switch (metricType) {
-						case 1:
-							tickerText = "CPU Critical Threshold";
-							titleText = "Threshold Triggered!";
-							contentText = "Value: " + value;
-							break;
-						case 2:
-							tickerText = "RAM Critical Threshold";
-							titleText = "Threshold Triggered!";
-							contentText = "Value: " + value;
-							break;
-						case 3:
-							tickerText = "DB Critical Threshold";
-							titleText = "Threshold Triggered!";
-							contentText = "Value: " + value;
-							break;
-						default:
-							// TODO: log error
-							break;
-
-						}
-						NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-						Intent MyIntent = new Intent(context,
-								MainActivity.class);
-						PendingIntent StartIntent = PendingIntent.getActivity(
-								getApplicationContext(), 0, MyIntent,
-								PendingIntent.FLAG_CANCEL_CURRENT);
-						// A PendingIntent will be fired when the notification
-						// is clicked. The FLAG_CANCEL_CURRENT flag cancels the
-						// pendingintent
-
-						NotificationCompat.Builder builder = new NotificationCompat.Builder(
-								context);
-						Notification notification = builder
-								.setContentIntent(StartIntent)
-								.setSmallIcon(R.drawable.ic_launcher)
-								.setTicker(tickerText).setAutoCancel(true)
-								.setContentTitle(titleText)
-								.setContentText(contentText).build();
-
-						int NOTIFICATION_ID = 1;
-
-						notificationManager.notify(NOTIFICATION_ID,
-								notification);
-						// We are passing the notification to the
-						// NotificationManager with a unique id.
-//					}
-
-				}
 
 				if (MainActivity.sOsUsageFragment.isVisible()) {
-					// Toast.makeText(MainActivity.this,
-					// "OsUsageFragment shown",
-					// Toast.LENGTH_LONG).show();
-
 					MainActivity.sOsUsageFragment.updateContent(dataList);
 				}
 
 				if (MainActivity.sBrowserUsageFragment.isVisible()) {
-					// Toast.makeText(MainActivity.this,
-					// "OsUsageFragment shown",
-					// Toast.LENGTH_LONG).show();
-
 					MainActivity.sBrowserUsageFragment.updateContent(dataList);
 				}
 

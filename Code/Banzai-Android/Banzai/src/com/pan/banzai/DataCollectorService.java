@@ -1,16 +1,30 @@
 package com.pan.banzai;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import microsoft.aspnet.signalr.client.MessageReceivedHandler;
 import microsoft.aspnet.signalr.client.SignalRFuture;
 import microsoft.aspnet.signalr.client.hubs.HubConnection;
 import microsoft.aspnet.signalr.client.hubs.HubProxy;
+import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.app.TaskStackBuilder;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
+import android.os.SystemClock;
+import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.JsonElement;
@@ -43,8 +57,30 @@ public class DataCollectorService extends Service {
 			}
 		}
 		
+		public int onStartCommand(Intent intent, int flags, int startId){
+			startCollecting();
+			return START_STICKY;
+		}
+		
+		@Override
+		public void onTaskRemoved(Intent rootIntent){
+//			Log.d("TEST", "Notifications should restart.");
+			
+		    Intent restartServiceIntent = new Intent(getApplicationContext(), this.getClass());
+		    restartServiceIntent.setPackage(getPackageName());
+
+		    PendingIntent restartServicePendingIntent = PendingIntent.getService(getApplicationContext(), 1, restartServiceIntent, PendingIntent.FLAG_ONE_SHOT);
+		    AlarmManager alarmService = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+		    alarmService.set(
+		    AlarmManager.ELAPSED_REALTIME,
+		    SystemClock.elapsedRealtime() + 1000,
+		    restartServicePendingIntent);
+
+		    super.onTaskRemoved(rootIntent);
+		 }
+		
 		public void startCollecting(){
-            Toast.makeText(this, "Service Start", Toast.LENGTH_LONG).show();
+//            Toast.makeText(this, "Service Start", Toast.LENGTH_LONG).show();
             
             
         String server = "http://pan-banzai.cloudapp.net/banzai/signalr";
@@ -100,13 +136,14 @@ public class DataCollectorService extends Service {
         proxy.invoke("join", Arrays.asList("Memory DB 1__92"));
         proxy.invoke("join", Arrays.asList("Disk Utilization DB 1__99"));
         
+        final Context context = this;
             
         connection.received(new MessageReceivedHandler() {
 
 			@Override
 			public void onMessageReceived(JsonElement json) {
-				//Log.d("TEST", "RAW received message: " + json.toString());
-				
+//				Log.d("TEST", "RAW received message: " + json.toString());
+
 				Intent intent = new Intent();
 			       intent.setAction(DATA_RECEIVED);
 			      
@@ -115,39 +152,94 @@ public class DataCollectorService extends Service {
 			       sendBroadcast(intent);
 			       
 			       
-			      
-
 					
-//				   ArrayList<String> dataList = new ArrayList<String>();
-//				   try {
-//					   JSONObject obj = new JSONObject(json.toString());
-//					   JSONObject data = (JSONObject) obj.getJSONArray("A").get(0);
-//					   dataList.add(data.get("MetricId").toString());
-//					} catch (JSONException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//			       
-//			       if(Integer.parseInt(dataList.get(0)) == 85){
-//		             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//
-//		              String MyText = "Reminder";
-//		              Notification mNotification = new Notification(R.drawable.ic_launcher, MyText, System.currentTimeMillis() );
-//		              //The three parameters are: 1. an icon, 2. a title, 3. time when the notification appears
-//
-//		              String MyNotificationTitle = "Medicine!";
-//		              String MyNotificationText  = "Don't forget to take your medicine!";
-//
-//		              Intent MyIntent = new Intent(intent);
-//		              PendingIntent StartIntent = PendingIntent.getActivity(getApplicationContext(),0,MyIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-//		              //A PendingIntent will be fired when the notification is clicked. The FLAG_CANCEL_CURRENT flag cancels the pendingintent
-//
-//		              mNotification.setLatestEventInfo(getApplicationContext(), MyNotificationTitle, MyNotificationText, StartIntent);
-//
-//		              int NOTIFICATION_ID = 1;
-//		              notificationManager.notify(NOTIFICATION_ID , mNotification);  
-//		              //We are passing the notification to the NotificationManager with a unique id.
-//		            }
+				   ArrayList<String> dataList = new ArrayList<String>();
+				   try {
+					   JSONObject obj = new JSONObject(json.toString());
+					   JSONObject data = (JSONObject) obj.getJSONArray("A").get(0);
+					   dataList.add(data.get("MetricId").toString());
+					   dataList.add(data.get("Value").toString());
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			       
+					int metricId = Integer.parseInt(dataList.get(0));
+					float value = Float.parseFloat(dataList.get(1));
+
+					boolean shouldNotify = false;
+					int metricType = 0;
+
+					if (MainActivity.getCPU_METRICIDS().contains(metricId)
+							&& value > Storage.getCpuCriticalThreshold()) {
+						shouldNotify = true;
+						metricType = 1;
+					} else if (MainActivity.getRAM_METRICIDS().contains(metricId)
+							&& value > Storage.getRamCriticalThreshold()) {
+						shouldNotify = true;
+						metricType = 2;
+					} else if (MainActivity.getDISK_METRICIDS().contains(metricId)
+							&& value > Storage.getStorageCriticalThreshold()) {
+						shouldNotify = true;
+						metricType = 3;
+					}
+					
+					shouldNotify = shouldNotify && Storage.getNotificationsEnabled();
+					
+					if (shouldNotify) {
+						Log.d("TEST", "should notify");
+
+							String tickerText = "Error";
+							String titleText = "Error";
+							String contentText = "Error";
+
+							// TODO: make this more specific and more dynamic
+							switch (metricType) {
+							case 1:
+								tickerText = "CPU Critical Threshold";
+								titleText = "Threshold Triggered!";
+								contentText = "Value: " + value;
+								break;
+							case 2:
+								tickerText = "RAM Critical Threshold";
+								titleText = "Threshold Triggered!";
+								contentText = "Value: " + value;
+								break;
+							case 3:
+								tickerText = "DB Critical Threshold";
+								titleText = "Threshold Triggered!";
+								contentText = "Value: " + value;
+								break;
+							default:
+								// TODO: log error
+								break;
+
+							}
+							
+							
+							
+						NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
+					    .setSmallIcon(R.drawable.ic_launcher)
+					    .setContentTitle(titleText)
+					    .setContentText(contentText).setTicker(tickerText).setAutoCancel(true);
+
+
+						Intent resultIntent = new Intent(context, MainActivity.class);
+						TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+						stackBuilder.addParentStack(MainActivity.class); 
+						stackBuilder.addNextIntent(resultIntent);
+
+						PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(
+						                                    0, PendingIntent.FLAG_UPDATE_CURRENT );
+						mBuilder.setContentIntent(resultPendingIntent);
+						NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+						
+						
+						mNotificationManager.notify(1, mBuilder.build());	
+
+					}
+
 				}
 	
 		});
