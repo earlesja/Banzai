@@ -134,7 +134,9 @@
     if (self.showAbsoluteValues) {
         titleValue = [NSString stringWithFormat:@"%.0f",currentDataItem.value];
     }else{
-        titleValue = [NSString stringWithFormat:@"%.0f%%",[self ratioForItemAtIndex:index] * 100];
+        //titleValue = [NSString stringWithFormat:@"%.0f%%",[self ratioForItemAtIndex:index] * 100];
+        // CUSTOM!!!! FOR BANZAI
+        titleValue = [NSString stringWithFormat:@""];
     }
     if(!titleText || self.showOnlyValues){
         descriptionLabel.text = titleValue;

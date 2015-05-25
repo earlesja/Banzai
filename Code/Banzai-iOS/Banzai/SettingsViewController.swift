@@ -14,16 +14,17 @@ extension Double {
     }
 }
 
-class SettingsViewController: UIViewController {
+class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     let cpuSlider = RangeSlider(frame: CGRectZero)
     let memSlider = RangeSlider(frame: CGRectZero)
     let diskSlider = RangeSlider(frame: CGRectZero)
-    
     let settings = NSUserDefaults.standardUserDefaults()
+    let timeFrameOptions : [String] = ["Minute", "Hour", "Day", "Week", "Month"]
     
     var valueFormat = "01."
     
     @IBOutlet weak var sliderArea: UIView!
+    @IBOutlet weak var timeFramePicker: UIPickerView!
     
     var cpuLow = UILabel(frame: CGRectMake(0, 0, 200, 21))
     var memLow = UILabel(frame: CGRectMake(0, 0, 200, 21))
@@ -59,6 +60,21 @@ class SettingsViewController: UIViewController {
         diskSlider.addSubview(diskLabel)
         
         loadValues()
+        timeFramePicker.delegate = self
+        timeFramePicker.dataSource = self
+        
+        var val = settings.valueForKey("TimeFrameString") as! NSString
+        if val == "Minute" {
+            timeFramePicker.selectRow(0, inComponent: 0, animated: true)
+        } else if val == "Hour" {
+            timeFramePicker.selectRow(1, inComponent: 0, animated: true)
+        } else if val == "Day" {
+            timeFramePicker.selectRow(2, inComponent: 0, animated: true)
+        } else if val == "Week" {
+            timeFramePicker.selectRow(3, inComponent: 0, animated: true)
+        } else if val == "Month" {
+            timeFramePicker.selectRow(4, inComponent: 0, animated: true)
+        }
     }
     
     func loadValues() {
@@ -145,5 +161,53 @@ class SettingsViewController: UIViewController {
         settings.setDouble(memSlider.upperValue, forKey: "memUpper")
         settings.setDouble(diskSlider.lowerValue, forKey: "diskLower")
         settings.setDouble(diskSlider.upperValue, forKey: "diskUpper")
+        settings.setBool(false, forKey: "FetchedBrowserData")
+        settings.setBool(false, forKey: "FetchedOSData")
+        
+        var selectedRow = timeFramePicker.selectedRowInComponent(0)
+        if selectedRow == 0 { // Minute
+            settings.setInteger(60, forKey: "TimeFrame")
+            settings.setValue("Minute", forKey: "TimeFrameString")
+            settings.setValue("Second", forKey: "GroupBy")
+        } else if selectedRow == 1 { // Hour
+            settings.setInteger(60*60, forKey: "TimeFrame")
+            settings.setValue("Hour", forKey: "TimeFrameString")
+            settings.setValue("Minute", forKey: "GroupBy")
+        } else if selectedRow == 2 { // Day
+            settings.setInteger(60*60*24, forKey: "TimeFrame")
+            settings.setValue("Day", forKey: "TimeFrameString")
+            settings.setValue("Hour", forKey: "GroupBy")
+        } else if selectedRow == 3 { // Week
+            settings.setInteger(60*60*24*7, forKey: "TimeFrame")
+            settings.setValue("Week", forKey: "TimeFrameString")
+            settings.setValue("Day", forKey: "GroupBy")
+        } else { // Month
+            settings.setInteger(60*60*24*7*30, forKey: "TimeFrame")
+            settings.setValue("Month", forKey: "TimeFrameString")
+            settings.setValue("Day", forKey: "GroupBy")
+        }
+        
+        let alertController = UIAlertController(title: "", message: "", preferredStyle: UIAlertControllerStyle.Alert)
+        alertController.title = "Saved!"
+        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) { (action) -> Void in
+        }
+        alertController.addAction(okAction)
+        self.presentViewController(alertController, animated: true, completion: nil)
     }
+    
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    }
+    
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return 5
+    }
+    
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
+            return timeFrameOptions[row]
+    }
+    
 }

@@ -228,6 +228,9 @@ class DashboardViewController: UIViewController, UITableViewDataSource, UITableV
         settings.setDouble(0.2, forKey: "diskLower")
         settings.setDouble(0.8, forKey: "diskUpper")
         settings.setInteger(0, forKey: "RowSelected")
+        settings.setInteger(60*60*24, forKey: "TimeFrame")
+        settings.setValue("Day", forKey: "TimeFrameString")
+        settings.setValue("Hour", forKey: "GroupBy")
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int

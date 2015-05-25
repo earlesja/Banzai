@@ -66,10 +66,9 @@ class LoginViewController: UIViewController {
             request.addValue(credentialString, forHTTPHeaderField: "Authorization")
             
             NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { (response, data, error) -> Void in
-                var statusCode = (response as! NSHTTPURLResponse).statusCode
-                println(statusCode)
                 
                 if error != nil {
+                    var statusCode = (response as! NSHTTPURLResponse).statusCode
                     println("Uh oh... there was an error logging in.")
                     let alertController = UIAlertController(title: "", message: "", preferredStyle: UIAlertControllerStyle.Alert)
                     statusCode == 500 ? (alertController.title = "Incorrect username or password. (Status code: \(statusCode))") : (alertController.title = "There was an error logging in (status code: \(statusCode)).")
@@ -78,7 +77,8 @@ class LoginViewController: UIViewController {
                     alertController.addAction(okAction)
                     self.presentViewController(alertController, animated: true, completion: nil)
                 } else {
-                    
+                    var statusCode = (response as! NSHTTPURLResponse).statusCode
+                    println(statusCode)
                     if statusCode == 200 {
                         self.settings.setObject(base64Encoded, forKey: "credentials")
                         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main",bundle: nil)

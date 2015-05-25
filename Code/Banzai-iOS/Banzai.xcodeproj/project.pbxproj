@@ -29,7 +29,6 @@
 		0A7D111F1A4190C800580977 /* MainNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7D111E1A4190C800580977 /* MainNavigationController.swift */; };
 		0A7D11571A41919700580977 /* SideMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7D11561A41919700580977 /* SideMenuTableViewController.swift */; };
 		0A7D11591A41965300580977 /* ServerDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7D11581A41965300580977 /* ServerDetailsViewController.swift */; };
-		0A7D115B1A41965E00580977 /* SystemErrorsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7D115A1A41965E00580977 /* SystemErrorsViewController.swift */; };
 		0A7D115D1A41966600580977 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7D115C1A41966600580977 /* SettingsViewController.swift */; };
 		0A8661951A5D0C45009687FA /* OSUsageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8661941A5D0C45009687FA /* OSUsageViewController.swift */; };
 		0A8661971A5D0DE3009687FA /* BrowserUsageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8661961A5D0DE3009687FA /* BrowserUsageViewController.swift */; };
@@ -111,7 +110,6 @@
 		0A7D111E1A4190C800580977 /* MainNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainNavigationController.swift; sourceTree = "<group>"; };
 		0A7D11561A41919700580977 /* SideMenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuTableViewController.swift; sourceTree = "<group>"; };
 		0A7D11581A41965300580977 /* ServerDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerDetailsViewController.swift; sourceTree = "<group>"; };
-		0A7D115A1A41965E00580977 /* SystemErrorsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemErrorsViewController.swift; sourceTree = "<group>"; };
 		0A7D115C1A41966600580977 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; tabWidth = 4; };
 		0A8661941A5D0C45009687FA /* OSUsageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSUsageViewController.swift; sourceTree = "<group>"; };
 		0A8661961A5D0DE3009687FA /* BrowserUsageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserUsageViewController.swift; sourceTree = "<group>"; };
@@ -248,7 +246,6 @@
 				0A7D11581A41965300580977 /* ServerDetailsViewController.swift */,
 				0A7D115C1A41966600580977 /* SettingsViewController.swift */,
 				0A7D11561A41919700580977 /* SideMenuTableViewController.swift */,
-				0A7D115A1A41965E00580977 /* SystemErrorsViewController.swift */,
 				3D30D29F1A2E8B000046F694 /* Main.storyboard */,
 				0A251CDE1AEA48D3001732EC /* Supporting Files */,
 				3D30D2A21A2E8B000046F694 /* Images.xcassets */,
@@ -455,7 +452,6 @@
 				0A7D111F1A4190C800580977 /* MainNavigationController.swift in Sources */,
 				3D48E7B91A6F9D5F00A796A2 /* DashboardTableCell.swift in Sources */,
 				0A7D115D1A41966600580977 /* SettingsViewController.swift in Sources */,
-				0A7D115B1A41965E00580977 /* SystemErrorsViewController.swift in Sources */,
 				0A6730C91ADCE7820065F738 /* PNPieChartDataItem.m in Sources */,
 				0A6730C51ADCE7820065F738 /* PNLineChart.m in Sources */,
 				3D1CCFDE1A63A8970026BA86 /* RangeSlider.swift in Sources */,

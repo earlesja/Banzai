@@ -14,6 +14,7 @@ class BrowserUsageViewController: UIViewController {
     @IBOutlet weak var lineGraphView: UIView!
     @IBOutlet weak var menuButton: UIBarButtonItem!
     @IBOutlet weak var refreshButton: UIBarButtonItem!
+    @IBOutlet weak var lineGraphTitle: UILabel!
     
     // Constants
     let settings = NSUserDefaults.standardUserDefaults()
@@ -51,7 +52,6 @@ class BrowserUsageViewController: UIViewController {
     var lineChart : PNLineChart!
     var lineGraphDates : [String] = []
     var pieChart : PNPieChart!
-    var timeFrame = 604800 // 604800 = 7 days
     var pieUpdated : Bool = false
     var lineUpdated : Bool = false
     
@@ -115,7 +115,7 @@ class BrowserUsageViewController: UIViewController {
     }
     
     @IBAction func refreshData(sender: AnyObject) {
-        println("Referesh the Browser Usage page")
+        println("Refresh the Browser Usage page")
         disableButtons()
         JHProgressHUD.sharedHUD.showInView(self.view, withHeader: "Fetching Data", andFooter: "")
         getServerData()
@@ -191,10 +191,22 @@ class BrowserUsageViewController: UIViewController {
         lineChart.yValueMax = 100
         lineChart.yValueMin = 0
         
-        for (var i = 0; i < lineGraphDates.count; i++) {
-            if i % 2 != 0 {
-                lineGraphDates[i] = ""
-            }
+        var timeString = settings.valueForKey("TimeFrameString") as! NSString
+        if timeString == "Minute" {
+            lineGraphTitle.text = "Data for the last 60 seconds"
+        } else if timeString == "Hour" {
+            lineGraphTitle.text = "Data for the last 60 minutes"
+        } else if timeString == "Day" {
+            lineGraphTitle.text = "Data for the last 24 hours"
+        } else if timeString == "Week" {
+            lineGraphTitle.text = "Data for the last 7 days"
+        } else { // Month
+            lineGraphTitle.text = "Data for the last 30 days"
+        }
+        lineGraphTitle.hidden = false
+        
+        for(var i = 0; i < lineGraphDates.count; i++) {
+            lineGraphDates[i] = ""
         }
         
         lineChart.setXLabels(lineGraphDates, withWidth: ((lineGraphView.bounds.width - 80) / CGFloat(lineGraphDates.count)))
@@ -242,13 +254,6 @@ class BrowserUsageViewController: UIViewController {
     
     func getServerData() {
         self.browserPercentages = ["Firefox":0.0, "Chrome":0.0, "Safari":0.0, "IE8":0.0, "IE9":0.0, "IE10":0.0, "IE11":0.0]
-        ie8Vals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-        ie9Vals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-        ie10Vals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-        ie11Vals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-        firefoxVals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-        chromeVals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-        safariVals = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
         self.lineGraphDates = []
         self.pieUpdated = false
         self.lineUpdated = false
@@ -309,7 +314,7 @@ class BrowserUsageViewController: UIViewController {
         
         
         // Line Graph
-        outerDictionary = NSDictionary(objects: ["Day", timeFrame, [ie8_1, ie8_2, ie8_3, ie9_1, ie9_2, ie9_3, ie10_1, ie10_2, ie10_3, ie11_1, ie11_2, ie11_3, firefox_1, firefox_2, firefox_3, chrome_1, chrome_2, chrome_3, safari_1, safari_2, safari_3]], forKeys: ["GroupBy", "TimeFrame", "WidgetMetrics"])
+        outerDictionary = NSDictionary(objects: [settings.valueForKey("GroupBy") as! NSString, settings.integerForKey("TimeFrame"), [ie8_1, ie8_2, ie8_3, ie9_1, ie9_2, ie9_3, ie10_1, ie10_2, ie10_3, ie11_1, ie11_2, ie11_3, firefox_1, firefox_2, firefox_3, chrome_1, chrome_2, chrome_3, safari_1, safari_2, safari_3]], forKeys: ["GroupBy", "TimeFrame", "WidgetMetrics"])
         jsonData = NSJSONSerialization.dataWithJSONObject(outerDictionary, options: NSJSONWritingOptions.PrettyPrinted, error: &error)
         request.HTTPBody = jsonData!
         
@@ -431,9 +436,6 @@ class BrowserUsageViewController: UIViewController {
         // First, get the dates
         for json in data as! Array<AnyObject> {
             date = (json["DateCapturedUtc"] as AnyObject? as? String) ?? ""
-            array = date.componentsSeparatedByString("T")
-            array = array[0].componentsSeparatedByString("-")
-            date = "\(array[1])-\(array[2])"
             if !contains(self.lineGraphDates, date) {
                 self.lineGraphDates.append(date)
             }
@@ -449,11 +451,35 @@ class BrowserUsageViewController: UIViewController {
         })
         
         var numDates = lineGraphDates.count
-        while(numDates > 7) {
+        var limit = 0
+        var timeString = settings.valueForKey("TimeFrameString") as! NSString
+        
+        if timeString == "Minute" {
+            limit = 60
+        } else if timeString == "Hour" {
+            limit = 60
+        } else if timeString == "Day" {
+            limit = 24
+        } else if timeString == "Week" {
+            limit = 7
+        } else if timeString == "Month" {
+            limit = 30
+        }
+        
+        while(numDates > limit) {
             lineGraphDates.removeAtIndex(0)
             numDates = lineGraphDates.count
         }
         println(self.lineGraphDates)
+        
+        ie8Vals = Array(count: limit, repeatedValue: 0.0) as [Double]
+        ie9Vals = Array(count: limit, repeatedValue: 0.0) as [Double]
+        ie10Vals = Array(count: limit, repeatedValue: 0.0) as [Double]
+        ie11Vals = Array(count: limit, repeatedValue: 0.0) as [Double]
+        firefoxVals = Array(count: limit, repeatedValue: 0.0) as [Double]
+        chromeVals = Array(count: limit, repeatedValue: 0.0) as [Double]
+        safariVals = Array(count: limit, repeatedValue: 0.0) as [Double]
+        var browserCounts = Array(count: limit*7, repeatedValue: 0) as [Int]
         
         // Parse data for line graph
         var index = 0
@@ -461,29 +487,43 @@ class BrowserUsageViewController: UIViewController {
             metricID = (json["MetricId"] as AnyObject? as? Int) ?? -1 // to get rid of null
             date = (json["DateCapturedUtc"]  as AnyObject? as? String) ?? ""
             value = (json["Value"] as AnyObject? as? Double) ?? -1.0
-            array = date.componentsSeparatedByString("T")
-            array = array[0].componentsSeparatedByString("-")
-            date = "\(array[1])-\(array[2])"
             index = getIndexOfDate(date)
             if index != -1 {
                 if metricID == Constants.BrowserIDs.IE8_1 || metricID == Constants.BrowserIDs.IE8_2 || metricID == Constants.BrowserIDs.IE8_3 {
-                    ie8Vals[index] += value/3
+                    ie8Vals[index] += value
+                    browserCounts[7*index] += 1
                 } else if metricID == Constants.BrowserIDs.IE9_1 || metricID == Constants.BrowserIDs.IE9_2 || metricID == Constants.BrowserIDs.IE9_3 {
                     ie9Vals[index] += value/3
+                    browserCounts[7*index + 1] += 1
                 } else if metricID == Constants.BrowserIDs.IE10_1 || metricID == Constants.BrowserIDs.IE10_2 || metricID == Constants.BrowserIDs.IE10_3 {
                     ie10Vals[index] += value/3
+                    browserCounts[7*index + 2] += 1
                 } else if metricID == Constants.BrowserIDs.IE11_1 || metricID == Constants.BrowserIDs.IE11_2 || metricID == Constants.BrowserIDs.IE11_3 {
                     ie11Vals[index] += value/3
+                    browserCounts[7*index + 3] += 1
                 } else if metricID == Constants.BrowserIDs.Firefox_1 || metricID == Constants.BrowserIDs.Firefox_2 || metricID == Constants.BrowserIDs.Firefox_3 {
                     firefoxVals[index] += value/3
+                    browserCounts[7*index + 4] += 1
                 } else if metricID == Constants.BrowserIDs.Chrome_1 || metricID == Constants.BrowserIDs.Chrome_2 || metricID == Constants.BrowserIDs.Chrome_3 {
                     chromeVals[index] += value/3
+                    browserCounts[7*index + 5] += 1
                 } else if metricID == Constants.BrowserIDs.Safari_1 || metricID == Constants.BrowserIDs.Safari_2 || metricID == Constants.BrowserIDs.Safari_3 {
                     safariVals[index] += value/3
+                    browserCounts[7*index + 6] += 1
                 } else {
                     println("Something went wrong in getting the line graph data.")
                 }
             }
+        }
+        
+        for (var i = 0; i < limit; i++) {
+            self.ie8Vals[i] = self.ie8Vals[i]/Double(browserCounts[i*7])
+            self.ie9Vals[i] = self.ie9Vals[i]/Double(browserCounts[i*7 + 1])
+            self.ie10Vals[i] = self.ie10Vals[i]/Double(browserCounts[i*7 + 2])
+            self.ie11Vals[i] = self.ie11Vals[i]/Double(browserCounts[i*7 + 3])
+            self.firefoxVals[i] = self.firefoxVals[i]/Double(browserCounts[i*7 + 4])
+            self.chromeVals[i] = self.chromeVals[i]/Double(browserCounts[i*7 + 5])
+            self.safariVals[i] = self.safariVals[i]/Double(browserCounts[i*7 + 6])
         }
         
         // Store the data
