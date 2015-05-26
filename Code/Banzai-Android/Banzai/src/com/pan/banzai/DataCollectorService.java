@@ -66,17 +66,17 @@ public class DataCollectorService extends Service {
 		public void onTaskRemoved(Intent rootIntent){
 //			Log.d("TEST", "Notifications should restart.");
 			
-			//TODO: restart service if closed. goes along with notifications
+			//TODO: NOTIFICATIONS: restart service if closed
 			
-//		    Intent restartServiceIntent = new Intent(getApplicationContext(), this.getClass());
-//		    restartServiceIntent.setPackage(getPackageName());
-//
-//		    PendingIntent restartServicePendingIntent = PendingIntent.getService(getApplicationContext(), 1, restartServiceIntent, PendingIntent.FLAG_ONE_SHOT);
-//		    AlarmManager alarmService = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
-//		    alarmService.set(
-//		    AlarmManager.ELAPSED_REALTIME,
-//		    SystemClock.elapsedRealtime() + 1000,
-//		    restartServicePendingIntent);
+		    Intent restartServiceIntent = new Intent(getApplicationContext(), this.getClass());
+		    restartServiceIntent.setPackage(getPackageName());
+
+		    PendingIntent restartServicePendingIntent = PendingIntent.getService(getApplicationContext(), 1, restartServiceIntent, PendingIntent.FLAG_ONE_SHOT);
+		    AlarmManager alarmService = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+		    alarmService.set(
+		    AlarmManager.ELAPSED_REALTIME,
+		    SystemClock.elapsedRealtime() + 1000,
+		    restartServicePendingIntent);
 
 		    super.onTaskRemoved(rootIntent);
 		 }
@@ -218,27 +218,25 @@ public class DataCollectorService extends Service {
 
 							}
 							
-						//TODO: fix notifications	
+						//TODO: NOTIFICATIONS: get notifications more reliably	
 							
-//						NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
-//					    .setSmallIcon(R.drawable.ic_launcher)
-//					    .setContentTitle(titleText)
-//					    .setContentText(contentText).setTicker(tickerText).setAutoCancel(true);
-//
-//
-//						Intent resultIntent = new Intent(context, MainActivity.class);
-//						TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-//						stackBuilder.addParentStack(MainActivity.class); 
-//						stackBuilder.addNextIntent(resultIntent);
-//
-//						PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(
-//						                                    0, PendingIntent.FLAG_UPDATE_CURRENT );
-//						mBuilder.setContentIntent(resultPendingIntent);
-//						NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//
-//						
-//						
-//						mNotificationManager.notify(1, mBuilder.build());	
+						NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
+					    .setSmallIcon(R.drawable.ic_launcher)
+					    .setContentTitle(titleText)
+					    .setContentText(contentText).setTicker(tickerText).setAutoCancel(true);
+
+
+						Intent resultIntent = new Intent(context, MainActivity.class);
+						TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+						stackBuilder.addParentStack(MainActivity.class); 
+						stackBuilder.addNextIntent(resultIntent);
+
+						PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(
+						                                    0, PendingIntent.FLAG_UPDATE_CURRENT );
+						mBuilder.setContentIntent(resultPendingIntent);
+						NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);						
+						
+						mNotificationManager.notify(1, mBuilder.build());	
 
 					}
 
